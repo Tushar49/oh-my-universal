@@ -31,6 +31,10 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **pre-commit-check** | `skills/pre-commit-check.md` | Quality gate: verify + review + security before commit |
 | **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
 | **notify** | `skills/notify.md` | Notifications: console, system toast, Discord webhook |
+| **refactor** | `skills/refactor.md` | Detect code smells, apply improvements preserving behavior |
+| **perf-audit** | `skills/perf-audit.md` | Performance profiling: identify bottlenecks, measure, optimize |
+| **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
+| **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
 
 ## How to Use From Another Project
 

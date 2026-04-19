@@ -30,6 +30,10 @@ Read the skill file based on `{{skill_name}}`:
 | `pre-commit-check` or `pre-commit` | `skills/pre-commit-check.md` |
 | `session-protocol` or `wrap-up` | `skills/session-protocol.md` |
 | `notify` | `skills/notify.md` |
+| `refactor` | `skills/refactor.md` |
+| `perf-audit` or `perf` | `skills/perf-audit.md` |
+| `multi-model-review` or `thorough-review` | `skills/multi-model-review.md` |
+| `skillify` | `skills/skillify.md` |
 | (empty / no args) | Show this menu |
 | (JD or task text) | Default to `ultrawork` |
 

@@ -79,17 +79,17 @@
 | 4.6 | Setup guide | done | docs/SETUP.md with per-CLI instructions |
 | 4.7 | GitHub repo created | done | https://github.com/Tushar49/oh-my-universal |
 
-## Phase 5: Future Enhancements (Backlog)
+## Phase 5: Advanced Skills
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 5.1 | Refactor skill | backlog | From claude-forge: auto-detect patterns, suggest refactoring |
-| 5.2 | Performance audit skill | backlog | From claude-forge: profiling and perf optimization |
-| 5.3 | Multi-model review | backlog | From everything-claude-code: use different model for review |
-| 5.4 | Memory injection | backlog | From everything-claude-code: inject memory into system prompts |
-| 5.5 | Diff-aware verify | backlog | From claude-workflow-v2: verify only changed areas |
-| 5.6 | Cursor/Windsurf adapters | backlog | From ok-skills: expand adapter coverage |
-| 5.7 | npm package distribution | backlog | From agent-toolkit: publish as installable package |
+| 5.1 | Refactor skill | done | skills/refactor.md - detect smells, preserve behavior |
+| 5.2 | Performance audit skill | done | skills/perf-audit.md - profile, measure, optimize |
+| 5.3 | Multi-model review | done | skills/multi-model-review.md - 4-perspective review |
+| 5.4 | Skillify skill | done | skills/skillify.md - create new skills from patterns |
+| 5.5 | Diff-aware verify | backlog | Enhance verify to check only changed areas |
+| 5.6 | Cursor/Windsurf adapters | backlog | Expand adapter coverage |
+| 5.7 | npm package distribution | backlog | Publish as installable package |
 
 ---
 
@@ -104,3 +104,4 @@
 | 2026-04-19 | Phase 2: Built 5 cross-project skills (security-review, tdd, build-fix, team, repo-merge) | Copilot CLI |
 | 2026-04-19 | Phase 3: Built 3 workflow specs (pre-commit-check, session-protocol, notify) | Copilot CLI |
 | 2026-04-19 | Phase 4: CLI adapters (Copilot .instructions.md, Claude SKILL.md, setup guide), GitHub repo created + pushed | Copilot CLI |
+| 2026-04-19 | Phase 5: Built 4 advanced skills (refactor, perf-audit, multi-model-review, skillify). Total: 20 skills. | Copilot CLI |

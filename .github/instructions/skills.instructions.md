@@ -26,6 +26,10 @@ development skills. Use them proactively.
 | "map this codebase" | architecture | Understand structure quickly |
 | "pre-commit check" | pre-commit-check | Quality gate before commit |
 | "wrap up" | session-protocol | End-of-session cleanup |
+| "refactor this" | refactor | Detect smells, improve structure |
+| "optimize / profile" | perf-audit | Find and fix performance bottlenecks |
+| "thorough review" | multi-model-review | 4-perspective deep review |
+| "make this a skill" | skillify | Extract repeatable pattern into new skill |
 
 ## Auto-Trigger Guidance
 

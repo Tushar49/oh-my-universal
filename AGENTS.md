@@ -28,3 +28,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | pre-commit-check | `skills/pre-commit-check.md` | Quality gate before commit |
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
 | notify | `skills/notify.md` | Notifications (console, system, Discord) |
+| refactor | `skills/refactor.md` | Detect code smells, improve structure |
+| perf-audit | `skills/perf-audit.md` | Performance profiling and optimization |
+| multi-model-review | `skills/multi-model-review.md` | 4-perspective thorough review |
+| skillify | `skills/skillify.md` | Create new skills from patterns |

@@ -89,3 +89,25 @@ oh-my-universal/
 - [x] Claude Code: `.claude/skills/oh-my-universal/SKILL.md`
 - [x] Codex/Gemini/OpenCode: `AGENTS.md`
 - [x] Setup guide: `docs/SETUP.md`
+
+### Advanced Skills (Phase 5) ✅
+- [x] **refactor** — Detect code smells, apply improvements preserving behavior
+- [x] **perf-audit** — Performance profiling: identify bottlenecks, measure, optimize
+- [x] **multi-model-review** — 4-perspective review: bug hunter, security, maintainer, perf
+- [x] **skillify** — Create new skills from observed repeatable patterns
+
+## Sources
+
+Built by combining the best patterns from:
+
+| Source | Stars | What we took |
+|--------|-------|-------------|
+| [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | - | plan, ultrawork, team, build-fix, tdd, code-review |
+| [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | - | remember, team, session hooks, skill routing |
+| [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | - | architecture (Atlas), review (Momus), doc-maintainer (Librarian) |
+| [clawhip](https://github.com/Yeachan-Heo/clawhip) | - | notify (Discord), memory offload |
+| [planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 19K | Persistent markdown planning approach |
+| [caveman](https://github.com/JuliusBrussee/caveman) | 38K | Compact token-light skill design |
+| [claude-forge](https://github.com/sangrokjung/claude-forge) | 659 | Security hooks, pre-commit gates, refactor patterns |
+| [everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 160K | Skill taxonomy, multi-perspective review |
+| [career-ops](https://github.com/santifer/career-ops) | - | repo-merge workflow (real-world tested) |

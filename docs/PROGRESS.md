@@ -20,26 +20,33 @@
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 0.1 | Research oh-my-codex features | researching | Hooks, delegation, planning |
-| 0.2 | Research oh-my-claudecode features | researching | Team mode, plugins, memory |
-| 0.3 | Research oh-my-openagent features | researching | Agent stack, deep init |
-| 0.4 | Research clawhip features | researching | Discord hooks, memory offload |
-| 0.5 | Research claw-code patterns | researching | CLI harness reference |
+| 0.1 | Research oh-my-codex features | done | Hooks, delegation, planning, skills |
+| 0.2 | Research oh-my-claudecode features | done | Team mode, plugins, memory, hooks |
+| 0.3 | Research oh-my-openagent features | done | 11 agents, intent routing, MCP |
+| 0.4 | Research clawhip features | done | Discord hooks, memory offload |
+| 0.5 | Research claw-code patterns | done | CLI harness reference only |
 | 0.6 | Create repo structure | done | README, docs, .research |
 | 0.7 | Create requirements doc | done | docs/REQUIREMENTS.md |
 | 0.8 | Create progress tracker | done | This file |
-| 0.9 | Save research findings | in-progress | .research/ directories |
+| 0.9 | Save research findings | done | .research/ with 5 findings + unified matrix |
+| 0.10 | Search for additional repos | done | Found 11 more repos, saved to additional-repos.md |
 
 ## Phase 1: Core Agent Infrastructure
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 1.1 | Create copilot-instructions.md | backlog | Universal agent rules |
-| 1.2 | Create AGENTS.md | backlog | Codex/Gemini entry |
-| 1.3 | Create CLAUDE.md | backlog | Claude Code entry |
-| 1.4 | Create planner agent | backlog | Plan before implementing |
-| 1.5 | Create reviewer agent | backlog | Auto code-review |
-| 1.6 | Create doc-maintainer skill | backlog | Auto-update docs |
+| 1.1 | Create copilot-instructions.md | done | Universal agent rules with skill table |
+| 1.2 | Create AGENTS.md | done | Codex/Gemini entry with skill list |
+| 1.3 | Create CLAUDE.md | done | Claude Code entry |
+| 1.4 | Create plan skill | done | skills/plan.md - structured planning |
+| 1.5 | Create review skill | done | skills/review.md - high-signal code review |
+| 1.6 | Create ultrawork skill | done | skills/ultrawork.md - full lifecycle |
+| 1.7 | Create doc-maintainer skill | done | skills/doc-maintainer.md - auto-update docs |
+| 1.8 | Create remember skill | done | skills/remember.md - memory persistence |
+| 1.9 | Create architecture skill | done | skills/architecture.md - codebase mapping |
+| 1.10 | Create doctor skill | done | skills/doctor.md - health check |
+| 1.11 | Create verify skill | done | skills/verify.md - change verification |
+| 1.12 | Critic review + fixes | done | Applied cross-CLI compatibility fixes |
 
 ## Phase 2: Cross-Project Skills
 
@@ -76,3 +83,6 @@
 | Date | What was done | Agent |
 |------|--------------|-------|
 | 2026-04-19 | Created repo structure, requirements, progress tracker, research started | Copilot CLI |
+| 2026-04-19 | Deep research on all 5 source repos, unified feature matrix, found 11 additional repos | Copilot CLI |
+| 2026-04-19 | Built 8 Tier 1 skills (plan, review, ultrawork, doc-maintainer, remember, architecture, doctor, verify) | Copilot CLI |
+| 2026-04-19 | Critic review applied: cross-CLI fixes, boundary rules, trigger clarity, verify skill added | Copilot CLI |

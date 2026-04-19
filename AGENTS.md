@@ -6,14 +6,16 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 - This is a cross-project skills repo, not a standalone project
 - Skills in `skills/` can be used from any project directory
-- Agents in `.github/agents/` provide planning, reviewing, and doc maintenance
 - Always update `docs/PROGRESS.md` after every session
 
 ## Available Skills
 
-| Skill | Description |
-|-------|-------------|
-| (planned) planner | Plan before implementing |
-| (planned) reviewer | Auto code-review |
-| (planned) doc-maintainer | Auto-update documentation |
-| (planned) repo-merger | Merge features from external repos |
+| Skill | File | What it does |
+|-------|------|-------------|
+| plan | `skills/plan.md` | Structured planning before implementation |
+| review | `skills/review.md` | High-signal code review |
+| ultrawork | `skills/ultrawork.md` | Full lifecycle: plan -> implement -> verify -> review -> commit |
+| doc-maintainer | `skills/doc-maintainer.md` | Auto-update documentation |
+| remember | `skills/remember.md` | Memory persistence across sessions |
+| architecture | `skills/architecture.md` | Codebase structure mapping |
+| doctor | `skills/doctor.md` | Project health check |

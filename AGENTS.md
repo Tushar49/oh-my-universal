@@ -19,3 +19,12 @@ Read `.github/copilot-instructions.md` for all project rules.
 | remember | `skills/remember.md` | Memory persistence across sessions |
 | architecture | `skills/architecture.md` | Codebase structure mapping |
 | doctor | `skills/doctor.md` | Project health check |
+| verify | `skills/verify.md` | Evidence-based change verification |
+| security-review | `skills/security-review.md` | Repo-wide security audit |
+| tdd | `skills/tdd.md` | Test-driven development: Red -> Green -> Refactor |
+| build-fix | `skills/build-fix.md` | Auto-fix build failures (3 attempts max) |
+| team | `skills/team.md` | Multi-agent delegation with serial fallback |
+| repo-merge | `skills/repo-merge.md` | Merge features from external repos |
+| pre-commit-check | `skills/pre-commit-check.md` | Quality gate before commit |
+| session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
+| notify | `skills/notify.md` | Notifications (console, system, Discord) |

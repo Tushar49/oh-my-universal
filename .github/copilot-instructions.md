@@ -22,6 +22,15 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **remember** | `skills/remember.md` | Persist learnings across sessions in .memory/ files |
 | **architecture** | `skills/architecture.md` | Map and understand codebase structure quickly |
 | **doctor** | `skills/doctor.md` | Project health check and setup validation |
+| **verify** | `skills/verify.md` | Evidence-based change verification (tests, build, manual checks) |
+| **security-review** | `skills/security-review.md` | Repo-wide security audit (threats, auth, deps, trust boundaries) |
+| **tdd** | `skills/tdd.md` | Test-driven development: Red -> Green -> Refactor |
+| **build-fix** | `skills/build-fix.md` | Auto-fix build/test failures (max 3 attempts, then escalate) |
+| **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
+| **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
+| **pre-commit-check** | `skills/pre-commit-check.md` | Quality gate: verify + review + security before commit |
+| **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
+| **notify** | `skills/notify.md` | Notifications: console, system toast, Discord webhook |
 
 ## How to Use From Another Project
 

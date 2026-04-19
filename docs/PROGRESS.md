@@ -52,19 +52,20 @@
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 2.1 | Repo merge skill | backlog | Merge features from external repos |
-| 2.2 | Architecture analyzer skill | backlog | Understand codebase structure |
-| 2.3 | Dependency auditor skill | backlog | Check for outdated deps |
-| 2.4 | Test generator skill | backlog | Generate tests for new code |
+| 2.1 | Security review skill | done | skills/security-review.md - repo-scoped (not diff-scoped like review) |
+| 2.2 | TDD skill | done | skills/tdd.md - Red -> Green -> Refactor cycle |
+| 2.3 | Build-fix skill | done | skills/build-fix.md - auto-fix with 3 attempt max |
+| 2.4 | Team skill | done | skills/team.md - multi-agent delegation with serial fallback |
+| 2.5 | Repo merge skill | done | skills/repo-merge.md - structured external repo integration |
 
-## Phase 3: Hooks & Automation
+## Phase 3: Workflow Specs
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 3.1 | Pre-commit hook | backlog | Auto-review before commit |
-| 3.2 | Post-session hook | backlog | Update docs, commit, push |
-| 3.3 | Discord notification hook | backlog | Notify on task completion |
-| 3.4 | Memory persistence | backlog | Save context across sessions |
+| 3.1 | Pre-commit check spec | done | skills/pre-commit-check.md - quality gate (verify + review + security) |
+| 3.2 | Session protocol spec | done | skills/session-protocol.md - end-of-session cleanup workflow |
+| 3.3 | Notification spec | done | skills/notify.md - console + system + Discord backends |
+| 3.4 | Memory persistence | done | Covered by skills/remember.md (Phase 1) |
 
 ## Phase 4: CLI-Specific Integration
 
@@ -86,3 +87,5 @@
 | 2026-04-19 | Deep research on all 5 source repos, unified feature matrix, found 11 additional repos | Copilot CLI |
 | 2026-04-19 | Built 8 Tier 1 skills (plan, review, ultrawork, doc-maintainer, remember, architecture, doctor, verify) | Copilot CLI |
 | 2026-04-19 | Critic review applied: cross-CLI fixes, boundary rules, trigger clarity, verify skill added | Copilot CLI |
+| 2026-04-19 | Phase 2: Built 5 cross-project skills (security-review, tdd, build-fix, team, repo-merge) | Copilot CLI |
+| 2026-04-19 | Phase 3: Built 3 workflow specs (pre-commit-check, session-protocol, notify) | Copilot CLI |

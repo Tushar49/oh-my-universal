@@ -19,11 +19,13 @@ Adds superpowers to your AI coding agents - regardless of which CLI you use:
 
 | CLI | How it connects | Status |
 |-----|----------------|--------|
-| Copilot CLI | `/add-dir E:\Projects\oh-my-universal` | Planned |
-| Claude Code | `--plugin-dir` or symlink `.claude/` | Planned |
-| OpenAI Codex | Global hooks via `.codex/` | Planned |
-| Gemini CLI | AGENTS.md symlink or copy | Planned |
-| OpenCode | Plugin system | Planned |
+| Copilot CLI | `/add-dir` or copy `.github/instructions/` to `~/.copilot/instructions/` | ✅ Ready |
+| Claude Code | `--plugin-dir` or symlink `.claude/skills/` | ✅ Ready |
+| OpenAI Codex | AGENTS.md routes to skills/ | ✅ Ready |
+| Gemini CLI | AGENTS.md routes to skills/ | ✅ Ready |
+| OpenCode | Plugin or AGENTS.md | ✅ Ready |
+
+See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup instructions.
 
 ## Quick Start
 
@@ -58,30 +60,32 @@ oh-my-universal/
 └── README.md
 ```
 
-## Features (Planned)
+## Features
 
-### From oh-my-codex
-- [ ] Task delegation with tmux workers
-- [ ] Pre/post hooks for quality gates
-- [ ] Auto-planning before implementation
+### Core Skills (Phase 1) ✅
+- [x] **plan** — Structured planning with self-critique before implementation
+- [x] **review** — High-signal code review (bugs, security, logic only)
+- [x] **ultrawork** — Full lifecycle: plan → implement → verify → review → commit
+- [x] **verify** — Evidence-based change verification (tests + manual checks)
+- [x] **doc-maintainer** — Auto-update documentation after code changes
+- [x] **remember** — Memory persistence across sessions (native tools → .memory/ fallback)
+- [x] **architecture** — Map and understand codebase structure
+- [x] **doctor** — Project health check (fast + full modes)
 
-### From oh-my-claudecode
-- [ ] Team mode (multi-agent orchestration)
-- [ ] Plugin system
-- [ ] Session memory persistence
+### Cross-Project Skills (Phase 2) ✅
+- [x] **security-review** — Repo-wide security audit (threats, auth, deps, CVEs)
+- [x] **tdd** — Test-driven development: Red → Green → Refactor
+- [x] **build-fix** — Auto-fix build failures (3 attempts max, then escalate)
+- [x] **team** — Multi-agent delegation with serial fallback
+- [x] **repo-merge** — Merge features from external repos (research → matrix → port)
 
-### From oh-my-openagent
-- [ ] Agent stack initialization
-- [ ] Deep init for project understanding
-- [ ] Cross-provider support
+### Workflow Specs (Phase 3) ✅
+- [x] **pre-commit-check** — Quality gate: verify + review + security before commit
+- [x] **session-protocol** — End-of-session: docs + memory + verify + commit prep
+- [x] **notify** — Notifications: console, system toast, Discord webhook
 
-### From clawhip
-- [ ] Discord notification hooks
-- [ ] Memory offload to persistent storage
-- [ ] Event-driven architecture
-
-### Universal additions
-- [ ] Auto-maintain docs (agents update docs at every run)
-- [ ] Self-reviewing code (auto code-review before commit)
-- [ ] Cross-project skill loading
-- [ ] Unified config across all CLIs
+### CLI Adapters (Phase 4) ✅
+- [x] Copilot CLI: `.github/instructions/skills.instructions.md`
+- [x] Claude Code: `.claude/skills/oh-my-universal/SKILL.md`
+- [x] Codex/Gemini/OpenCode: `AGENTS.md`
+- [x] Setup guide: `docs/SETUP.md`

@@ -15,10 +15,22 @@
 | levnikolaevich/claude-code-skills | 411 | Multi-model review, codebase audit, verification pipeline |
 | mxyhi/ok-skills | 270 | Cross-agent portable skills (Codex/Claude/Cursor) |
 
-## Key Patterns to Adopt
+## Key Patterns Already Adopted
 
-1. **From planning-with-files**: persistent plan.md with phase tracking - we already do this
-2. **From caveman**: ultra-compact skill files that minimize token usage
-3. **From claude-forge**: hook-based safety gates (review before commit)
-4. **From everything-claude-code**: skill taxonomy with categories
-5. **From ok-skills**: portable skills that work across Codex/Claude/Cursor - our core approach
+1. **From planning-with-files**: persistent plan.md with phase tracking -> our `plan` skill
+2. **From caveman**: ultra-compact skill files -> our skills are concise markdown
+3. **From claude-forge**: hook-based safety gates -> our `pre-commit-check` workflow spec
+4. **From everything-claude-code**: skill taxonomy with categories -> our skill organization
+5. **From ok-skills**: portable skills across Codex/Claude/Cursor -> our cross-CLI approach
+
+## Features Still Worth Porting (Future Phases)
+
+| Source | Feature | Our target |
+|--------|---------|-----------|
+| everything-claude-code | Memory injection into system prompts | Enhance `remember` skill |
+| everything-claude-code | Multi-model review (use different model for review) | New skill or enhance `review` |
+| claude-forge | Refactor agent with auto-detect patterns | New `refactor` skill |
+| claude-forge | Performance profiling skill | New `perf-audit` skill |
+| claude-workflow-v2 | Diff-aware verify (only verify changed areas) | Enhance `verify` skill |
+| agent-toolkit | Skill packaging as npm modules | Future distribution model |
+| ok-skills | Cursor/Windsurf adapter format | Expand Phase 4 adapters |

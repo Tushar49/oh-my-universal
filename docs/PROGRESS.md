@@ -87,9 +87,10 @@
 | 5.2 | Performance audit skill | done | skills/perf-audit.md - profile, measure, optimize |
 | 5.3 | Multi-model review | done | skills/multi-model-review.md - 4-perspective review |
 | 5.4 | Skillify skill | done | skills/skillify.md - create new skills from patterns |
-| 5.5 | Diff-aware verify | backlog | Enhance verify to check only changed areas |
-| 5.6 | Cursor/Windsurf adapters | backlog | Expand adapter coverage |
-| 5.7 | npm package distribution | backlog | Publish as installable package |
+| 5.5 | Diff-aware verify | done | Enhanced verify.md with diff-aware mode |
+| 5.6 | Cursor/Windsurf adapters | done | .cursor/rules/skills.mdc + .windsurfrules |
+| 5.7 | npm package + CLI tool | done | package.json + bin/omu.mjs (list, setup, doctor, link) |
+| 5.8 | MIT License | done | LICENSE file |
 
 ---
 
@@ -105,3 +106,4 @@
 | 2026-04-19 | Phase 3: Built 3 workflow specs (pre-commit-check, session-protocol, notify) | Copilot CLI |
 | 2026-04-19 | Phase 4: CLI adapters (Copilot .instructions.md, Claude SKILL.md, setup guide), GitHub repo created + pushed | Copilot CLI |
 | 2026-04-19 | Phase 5: Built 4 advanced skills (refactor, perf-audit, multi-model-review, skillify). Total: 20 skills. | Copilot CLI |
+| 2026-04-19 | Phase 5 complete: diff-aware verify, Cursor/Windsurf adapters, npm package + CLI (omu), LICENSE. Pushed to GitHub. | Copilot CLI |

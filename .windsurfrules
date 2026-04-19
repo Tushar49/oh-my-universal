@@ -1,0 +1,30 @@
+# oh-my-universal Skills for Windsurf
+
+You have access to 20 development skills from the oh-my-universal skills library.
+Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
+when the user invokes it or when the situation calls for it.
+
+## Skills
+
+| Skill | File | Description |
+|-------|------|-------------|
+| plan | skills/plan.md | Structured planning with self-critique |
+| review | skills/review.md | High-signal code review |
+| ultrawork | skills/ultrawork.md | Full lifecycle: plan→impl→verify→review→commit |
+| verify | skills/verify.md | Evidence-based verification (diff-aware) |
+| security-review | skills/security-review.md | Repo-wide security audit |
+| tdd | skills/tdd.md | Test-driven development |
+| build-fix | skills/build-fix.md | Auto-fix build errors |
+| team | skills/team.md | Multi-agent delegation |
+| repo-merge | skills/repo-merge.md | External repo integration |
+| refactor | skills/refactor.md | Code smell detection + fixes |
+| perf-audit | skills/perf-audit.md | Performance optimization |
+| multi-model-review | skills/multi-model-review.md | 4-perspective review |
+| doctor | skills/doctor.md | Project health check |
+| architecture | skills/architecture.md | Codebase structure mapping |
+| doc-maintainer | skills/doc-maintainer.md | Auto-update docs |
+| remember | skills/remember.md | Memory persistence |
+| pre-commit-check | skills/pre-commit-check.md | Quality gate |
+| session-protocol | skills/session-protocol.md | End-of-session cleanup |
+| skillify | skills/skillify.md | Create new skills |
+| notify | skills/notify.md | Completion notifications |

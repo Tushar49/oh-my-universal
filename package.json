@@ -1,0 +1,46 @@
+{
+  "name": "oh-my-universal",
+  "version": "1.0.0",
+  "description": "20 cross-project development skills for AI coding CLIs (Copilot, Claude, Codex, Gemini, OpenCode, Cursor, Windsurf)",
+  "main": "index.mjs",
+  "bin": {
+    "omu": "bin/omu.mjs",
+    "oh-my-universal": "bin/omu.mjs"
+  },
+  "scripts": {
+    "setup": "node bin/omu.mjs setup",
+    "doctor": "node bin/omu.mjs doctor",
+    "list": "node bin/omu.mjs list"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "skills",
+    "copilot",
+    "claude-code",
+    "codex",
+    "gemini",
+    "opencode",
+    "cursor",
+    "windsurf",
+    "code-review",
+    "tdd",
+    "planning"
+  ],
+  "author": "Tushar Agarwal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tushar49/oh-my-universal"
+  },
+  "files": [
+    "skills/",
+    ".github/",
+    ".claude/",
+    ".cursor/",
+    "bin/",
+    "AGENTS.md",
+    "CLAUDE.md",
+    ".windsurfrules"
+  ]
+}

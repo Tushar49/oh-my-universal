@@ -4,11 +4,11 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 ## Key Points
 
-- This is a cross-project skills repo with **38 skills**, not a standalone project
+- This is a cross-project skills repo with **39 skills**, not a standalone project
 - Skills in `skills/` can be used from any project directory
 - Always update `docs/PROGRESS.md` after every session
 
-## Available Skills (38)
+## Available Skills (39)
 
 ### Core Workflow
 
@@ -73,6 +73,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | mcp-setup | `skills/mcp-setup.md` | Auto-configure MCP servers |
 | session-manager | `skills/session-manager.md` | Manage, resume, fork agent sessions |
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
+| mission-runner | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
 
 ### Collaboration
 

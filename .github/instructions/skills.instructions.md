@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (38 total)
+# oh-my-universal Skills (39 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -72,6 +72,7 @@ development skills. Use them proactively.
 | "setup mcp" | mcp-setup | Auto-configure MCP servers |
 | "resume session" | session-manager | Manage, resume, fork agent sessions |
 | "wrap up" | session-protocol | End-of-session cleanup |
+| "run mission" | mission-runner | Execute scoped task missions from missions/ |
 
 ### Collaboration
 

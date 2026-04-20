@@ -746,3 +746,46 @@ Some "skills" are better as conventions embedded in instruction files:
 - run-tagging → fold into session-protocol
 - dirty-guard → fold into pre-commit-check or session-protocol
 - writer-memory → mode of remember skill
+
+---
+
+## Missions System
+
+**Source:** oh-my-codex (Yeachan-Heo) `missions/` directory
+**Purpose:** Scoped task specifications that AI agents pick up and execute autonomously. Missions are the WHAT (specific tasks) while skills are the HOW (reusable patterns).
+
+**Architecture:**
+- Each mission lives in `missions/{name}/` with two files:
+  - `mission.md` — Goal, focus areas, success criteria (required)
+  - `sandbox.md` — Evaluation constraints, scope boundaries (recommended)
+- `missions/_template/` provides a copy-paste starter for new missions
+- `missions/README.md` documents the system, creation workflow, and examples
+
+**Execution via `mission-runner` skill:**
+1. List available missions by scanning `missions/` subdirectories
+2. User picks one (or agent auto-selects based on context)
+3. Load mission.md (goals) + sandbox.md (constraints)
+4. Decompose into steps using the `plan` skill
+5. Execute each step using appropriate skills (trace, build-fix, verify, security-review, perf-audit, wiki, etc.)
+6. Validate against success criteria — produce PASS/FAIL report with evidence
+7. sandbox.md can specify an `evaluator.command` in YAML frontmatter for automated validation
+
+**Key Design Decisions:**
+- Missions are project-specific; skills are project-agnostic. A mission like "security-hardening" is a concrete task with an end state. A skill like "security-review" is a reusable pattern.
+- Success criteria must be measurable — a tool or command can verify them.
+- sandbox.md acts as a guardrail: hard boundaries the agent MUST NOT cross during execution.
+- The mission-runner skill composes other skills rather than duplicating their logic.
+
+**Shipped Example Missions (generic, usable in any project):**
+- `security-hardening` — Audit and harden security (uses security-review skill)
+- `test-coverage-boost` — Increase test coverage by 15%+ (uses tdd, verify skills)
+- `performance-baseline` — Establish perf baselines, fix top 3 bottlenecks (uses perf-audit skill)
+- `docs-from-scratch` — Generate complete docs for undocumented project (uses wiki skill)
+- `dependency-cleanup` — Remove unused deps, patch vulnerabilities, clean lockfile
+
+**Relationship to Existing Skills:**
+- `plan` — missions use plan for decomposition
+- `verify` — missions use verify for per-criterion validation
+- `build-fix` — missions use build-fix when execution breaks the build
+- `security-review`, `perf-audit`, `wiki`, `tdd` — domain skills missions delegate to
+- `autopilot` — autopilot could auto-select and run missions in fully autonomous mode

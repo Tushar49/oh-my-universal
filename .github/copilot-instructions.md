@@ -55,6 +55,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **mcp-setup** | `skills/mcp-setup.md` | Auto-detect project type and configure MCP servers |
 | **session-manager** | `skills/session-manager.md` | Manage, resume, and fork agent sessions with persistent state |
 | **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
+| **mission-runner** | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
 | | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |

@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "38 cross-project development skills: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "39 cross-project development skills: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (38 skills)
+# oh-my-universal — Skill Router for Claude Code (39 skills)
 
 ## Routing
 
@@ -69,6 +69,7 @@ Read the skill file based on `{{skill_name}}`:
 | `mcp-setup` or `mcp` | `skills/mcp-setup.md` |
 | `session-manager` or `sessions` | `skills/session-manager.md` |
 | `session-protocol` or `wrap-up` | `skills/session-protocol.md` |
+| `mission-runner` or `mission` or `run-mission` | `skills/mission-runner.md` |
 
 ### Collaboration
 | Input | Skill file |

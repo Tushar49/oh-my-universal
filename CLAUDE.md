@@ -2,12 +2,12 @@
 
 Read `.github/copilot-instructions.md` for all project rules.
 
-This is a cross-project skills repo with **38 skills**. Use it from any project:
+This is a cross-project skills repo with **39 skills**. Use it from any project:
 ```
 claude --plugin-dir E:\Projects\oh-my-universal
 ```
 
-## All 38 Skills
+## All 39 Skills
 
 ### Core Workflow
 | Skill | File | Description |
@@ -66,6 +66,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | mcp-setup | `skills/mcp-setup.md` | Auto-configure MCP servers |
 | session-manager | `skills/session-manager.md` | Manage, resume, fork agent sessions |
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
+| mission-runner | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
 
 ### Collaboration
 | Skill | File | Description |

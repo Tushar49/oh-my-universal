@@ -1,6 +1,6 @@
 # oh-my-universal
 
-**38 cross-project skills** for AI coding CLIs. Universal agent enhancement layer
+**39 cross-project skills** for AI coding CLIs. Universal agent enhancement layer
 that works across ALL major AI coding CLIs. Combines the best patterns from
 oh-my-codex, oh-my-claudecode, oh-my-openagent, clawhip, and more into a single
 unified system.
@@ -70,7 +70,7 @@ oh-my-universal/
 └── README.md
 ```
 
-## Skills (38 total)
+## Skills (39 total)
 
 ### Core Workflow (6 skills)
 | Skill | Description |
@@ -120,7 +120,7 @@ oh-my-universal/
 | **status-line** | Compact terminal progress indicators during long operations |
 | **hud** | Heads-up display - compact status showing agent progress |
 
-### Meta (6 skills)
+### Meta (7 skills)
 | Skill | Description |
 |-------|-------------|
 | **self-improve** | Analyze agent failures, improve skills to prevent recurrence |
@@ -129,13 +129,33 @@ oh-my-universal/
 | **mcp-setup** | Auto-detect project type and configure MCP servers |
 | **session-manager** | Manage, resume, and fork agent sessions with persistent state |
 | **session-protocol** | End-of-session: docs + memory + verify + commit prep |
+| **mission-runner** | Execute scoped task missions from missions/ directory |
 
-### Collaboration (3 skills)
+### Collaboration(3 skills)
 | Skill | Description |
 |-------|-------------|
 | **team** | Multi-agent delegation with serial fallback |
 | **repo-merge** | Merge features from external repos (research -> matrix -> port) |
 | **notify** | Notifications: console, system toast, Discord webhook |
+
+## Missions
+
+Missions are scoped task specifications - self-contained work packages with clear success criteria.
+While skills define HOW to work, missions define WHAT to do.
+
+See `missions/README.md` for full documentation.
+
+### Example Missions
+
+| Mission | What it does |
+|---------|-------------|
+| `security-hardening` | Audit and fix security vulnerabilities |
+| `test-coverage-boost` | Increase test coverage by 15%+ |
+| `performance-baseline` | Establish perf baselines, fix bottlenecks |
+| `docs-from-scratch` | Generate comprehensive project docs |
+| `dependency-cleanup` | Remove unused deps, patch CVEs |
+
+Create your own: copy `missions/_template/` and customize.
 
 ### CLI Adapters ✅
 - Copilot CLI: `.github/instructions/skills.instructions.md`

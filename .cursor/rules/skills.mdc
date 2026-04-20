@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Cursor (38 total)
+# oh-my-universal Skills for Cursor (39 total)
 
-You have access to 38 development skills from the oh-my-universal skills library.
+You have access to 39 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -69,6 +69,7 @@ when the user invokes it or when the situation calls for it.
 | "setup mcp" | skills/mcp-setup.md | Auto-configure MCP servers |
 | "resume session" | skills/session-manager.md | Manage, resume, fork sessions |
 | "wrap up" | skills/session-protocol.md | End-of-session cleanup |
+| "run mission" | skills/mission-runner.md | Execute scoped task missions from missions/ |
 
 ### Collaboration
 

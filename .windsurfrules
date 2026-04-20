@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Windsurf (38 total)
+# oh-my-universal Skills for Windsurf (39 total)
 
-You have access to 38 development skills from the oh-my-universal skills library.
+You have access to 39 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -67,6 +67,7 @@ when the user invokes it or when the situation calls for it.
 | mcp-setup | skills/mcp-setup.md | Auto-configure MCP servers |
 | session-manager | skills/session-manager.md | Manage, resume, fork agent sessions |
 | session-protocol | skills/session-protocol.md | End-of-session cleanup |
+| mission-runner | skills/mission-runner.md | Execute scoped task missions from missions/ directory |
 
 ## Collaboration
 

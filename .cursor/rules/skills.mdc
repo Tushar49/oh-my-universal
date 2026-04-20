@@ -1,33 +1,83 @@
-# oh-my-universal Skills for Cursor
+# oh-my-universal Skills for Cursor (38 total)
 
-You have access to 20 development skills from the oh-my-universal skills library.
+You have access to 38 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
 ## Quick Reference
 
+### Core Workflow
+
 | Trigger | Skill file | What it does |
 |---------|-----------|-------------|
 | "plan this" | skills/plan.md | Structured planning with self-critique |
-| "review" | skills/review.md | High-signal code review (bugs/security only) |
-| "ultrawork: {task}" | skills/ultrawork.md | Full lifecycle: plan→implement→verify→review→commit |
-| "verify" | skills/verify.md | Evidence-based verification (supports diff-aware mode) |
-| "security audit" | skills/security-review.md | Repo-wide security scan |
-| "tdd: {feature}" | skills/tdd.md | Red → Green → Refactor |
+| "ultrawork: {task}" | skills/ultrawork.md | Full lifecycle: plan -> implement -> verify -> review -> commit |
+| "autopilot: {idea}" | skills/autopilot.md | Autonomous 5-phase pipeline: idea to working code |
+| "verify" | skills/verify.md | Evidence-based verification (diff-aware) |
 | "fix build" | skills/build-fix.md | Auto-fix errors (3 attempts max) |
+| "tdd: {feature}" | skills/tdd.md | Red -> Green -> Refactor |
+
+### Investigation
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
+| "deep dive" | skills/deep-dive.md | Causal tracing + Socratic questioning |
+| "trace this" | skills/trace.md | Structured hypothesis-driven debugging |
+| "ask codex" | skills/ask.md | Query multiple AI models, cross-validate |
+| "map codebase" | skills/architecture.md | Understand structure |
+
+### Quality
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
+| "review" | skills/review.md | High-signal code review (bugs/security only) |
+| "thorough review" | skills/multi-model-review.md | 4-perspective deep review |
+| "security audit" | skills/security-review.md | Repo-wide security scan |
+| "visual check" | skills/visual-verdict.md | Screenshot-based UI review |
+| "optimize" | skills/perf-audit.md | Performance profiling |
+| "pre-commit" | skills/pre-commit-check.md | Quality gate before commit |
+
+### Documentation
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
+| "update docs" | skills/doc-maintainer.md | Update affected docs |
+| "update wiki" | skills/wiki.md | Auto-maintained project knowledge base |
+| "remember" | skills/remember.md | Save learnings for future |
+| "keep writing style" | skills/writer-memory.md | Persist tone, style, narrative continuity |
+
+### Operations
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
+| "cut a release" | skills/release.md | Changelog, version bump, git tag, publish |
+| "list hooks" | skills/hooks.md | Pre/post hooks for agent lifecycle events |
+| "check dirty" | skills/dirty-guard.md | Block dangerous git ops on dirty worktree |
+| "tag this run" | skills/run-tagging.md | Unique session identity for audit trails |
+| "parity check" | skills/parity-check.md | Smoke test tools, skills, environment |
+| "hand off" | skills/handoff.md | State handoff between agent runs |
+| "show progress" | skills/status-line.md | Terminal progress indicators |
+| "show status" | skills/hud.md | Heads-up display for agent progress |
+
+### Meta
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
+| "improve yourself" | skills/self-improve.md | Learn from failures, improve skills |
+| "make skill" | skills/skillify.md | Create new skill from pattern |
+| "doctor" | skills/doctor.md | Project health check |
+| "setup mcp" | skills/mcp-setup.md | Auto-configure MCP servers |
+| "resume session" | skills/session-manager.md | Manage, resume, fork sessions |
+| "wrap up" | skills/session-protocol.md | End-of-session cleanup |
+
+### Collaboration
+
+| Trigger | Skill file | What it does |
+|---------|-----------|-------------|
 | "delegate" | skills/team.md | Split into parallel subtasks |
 | "merge {repo}" | skills/repo-merge.md | External repo feature integration |
-| "refactor" | skills/refactor.md | Improve structure, preserve behavior |
-| "optimize" | skills/perf-audit.md | Performance profiling |
-| "thorough review" | skills/multi-model-review.md | 4-perspective deep review |
-| "doctor" | skills/doctor.md | Project health check |
-| "map codebase" | skills/architecture.md | Understand structure |
-| "update docs" | skills/doc-maintainer.md | Update affected docs |
-| "remember" | skills/remember.md | Save learnings for future |
-| "pre-commit" | skills/pre-commit-check.md | Quality gate before commit |
-| "wrap up" | skills/session-protocol.md | End-of-session cleanup |
-| "make skill" | skills/skillify.md | Create new skill from pattern |
 | "notify" | skills/notify.md | Send completion notification |
+| "refactor" | skills/refactor.md | Improve structure, preserve behavior |
 
 ## Proactive Use
 
@@ -36,3 +86,5 @@ when the user invokes it or when the situation calls for it.
 - After implementing: read skills/verify.md
 - End of session: read skills/session-protocol.md
 - When build fails: read skills/build-fix.md
+- On dirty worktree: read skills/dirty-guard.md
+- Session start: read skills/run-tagging.md

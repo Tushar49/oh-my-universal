@@ -1,8 +1,9 @@
 # oh-my-universal
 
-Universal agent enhancement layer that works across ALL AI coding CLIs.
-Combines the best features from oh-my-codex, oh-my-claudecode, oh-my-openagent,
-and clawhip into a single unified system.
+**38 cross-project skills** for AI coding CLIs. Universal agent enhancement layer
+that works across ALL major AI coding CLIs. Combines the best patterns from
+oh-my-codex, oh-my-claudecode, oh-my-openagent, clawhip, and more into a single
+unified system.
 
 ## What This Does
 
@@ -14,16 +15,21 @@ Adds superpowers to your AI coding agents - regardless of which CLI you use:
 - **Self-maintaining docs** - agents update documentation as they work
 - **Discord notifications** when long tasks complete
 - **Cross-project skills** - use these skills from any project directory
+- **Autonomous pipelines** - idea to validated code with zero intervention
+- **Screenshot-based UI review** - visual feedback on UI changes
+- **Lifecycle hooks** - intercept agent events to guard and extend behavior
 
-## Supported CLIs
+## Compatible CLIs
 
-| CLI | How it connects | Status |
-|-----|----------------|--------|
-| Copilot CLI | `/add-dir` or copy `.github/instructions/` to `~/.copilot/instructions/` | ✅ Ready |
-| Claude Code | `--plugin-dir` or symlink `.claude/skills/` | ✅ Ready |
-| OpenAI Codex | AGENTS.md routes to skills/ | ✅ Ready |
-| Gemini CLI | AGENTS.md routes to skills/ | ✅ Ready |
-| OpenCode | Plugin or AGENTS.md | ✅ Ready |
+| CLI | How it connects | Entry file | Status |
+|-----|----------------|------------|--------|
+| Copilot CLI | `/add-dir` or copy `.github/instructions/` | `.github/copilot-instructions.md` | ✅ Ready |
+| Claude Code | `--plugin-dir` or symlink `.claude/skills/` | `CLAUDE.md` | ✅ Ready |
+| OpenAI Codex | AGENTS.md routes to skills/ | `AGENTS.md` | ✅ Ready |
+| Gemini CLI | GEMINI.md / AGENTS.md routes to skills/ | `GEMINI.md` | ✅ Ready |
+| OpenCode | Plugin or AGENTS.md | `AGENTS.md` | ✅ Ready |
+| Cursor | Rules file | `.cursor/rules/skills.mdc` | ✅ Ready |
+| Windsurf | Rules file | `.windsurfrules` | ✅ Ready |
 
 See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup instructions.
 
@@ -39,6 +45,9 @@ copilot
 # Claude Code  
 claude --plugin-dir E:\Projects\oh-my-universal
 
+# Gemini CLI
+# (reads GEMINI.md / AGENTS.md automatically - see docs/SETUP.md)
+
 # OpenAI Codex
 # (install hooks globally - see docs/SETUP.md)
 ```
@@ -52,49 +61,90 @@ oh-my-universal/
 │   ├── agents/                   # Custom agents (planner, reviewer, etc.)
 │   └── prompts/                  # Reusable workflow prompts
 ├── .research/                    # Source research from all oh-my repos
-├── skills/                       # Cross-project skills
+├── skills/                       # 38 cross-project skills
 ├── config/                       # Configuration
 ├── docs/                         # Setup guides, architecture
 ├── AGENTS.md                     # Codex/Gemini entry
+├── GEMINI.md                     # Gemini CLI entry
 ├── CLAUDE.md                     # Claude Code entry
 └── README.md
 ```
 
-## Features
+## Skills (38 total)
 
-### Core Skills (Phase 1) ✅
-- [x] **plan** — Structured planning with self-critique before implementation
-- [x] **review** — High-signal code review (bugs, security, logic only)
-- [x] **ultrawork** — Full lifecycle: plan → implement → verify → review → commit
-- [x] **verify** — Evidence-based change verification (tests + manual checks)
-- [x] **doc-maintainer** — Auto-update documentation after code changes
-- [x] **remember** — Memory persistence across sessions (native tools → .memory/ fallback)
-- [x] **architecture** — Map and understand codebase structure
-- [x] **doctor** — Project health check (fast + full modes)
+### Core Workflow (6 skills)
+| Skill | Description |
+|-------|-------------|
+| **plan** | Structured planning with self-critique before implementation |
+| **ultrawork** | Full lifecycle: plan -> implement -> verify -> review -> commit |
+| **autopilot** | Fully autonomous 5-phase pipeline: idea to validated working code |
+| **verify** | Evidence-based change verification (tests + manual checks) |
+| **build-fix** | Auto-fix build failures (3 attempts max, then escalate) |
+| **tdd** | Test-driven development: Red -> Green -> Refactor |
 
-### Cross-Project Skills (Phase 2) ✅
-- [x] **security-review** — Repo-wide security audit (threats, auth, deps, CVEs)
-- [x] **tdd** — Test-driven development: Red → Green → Refactor
-- [x] **build-fix** — Auto-fix build failures (3 attempts max, then escalate)
-- [x] **team** — Multi-agent delegation with serial fallback
-- [x] **repo-merge** — Merge features from external repos (research → matrix → port)
+### Investigation (4 skills)
+| Skill | Description |
+|-------|-------------|
+| **deep-dive** | Two-stage investigation: causal tracing + Socratic questioning |
+| **trace** | Evidence-driven debugging with structured hypothesis testing |
+| **ask** | Query multiple AI models and cross-validate answers |
+| **architecture** | Map and understand codebase structure |
 
-### Workflow Specs (Phase 3) ✅
-- [x] **pre-commit-check** — Quality gate: verify + review + security before commit
-- [x] **session-protocol** — End-of-session: docs + memory + verify + commit prep
-- [x] **notify** — Notifications: console, system toast, Discord webhook
+### Quality (6 skills)
+| Skill | Description |
+|-------|-------------|
+| **review** | High-signal code review (bugs, security, logic only) |
+| **multi-model-review** | 4-perspective review: bug hunter, security, maintainer, perf |
+| **security-review** | Repo-wide security audit (threats, auth, deps, CVEs) |
+| **visual-verdict** | Screenshot-based UI review with structured visual feedback |
+| **perf-audit** | Performance profiling: identify bottlenecks, measure, optimize |
+| **pre-commit-check** | Quality gate: verify + review + security before commit |
 
-### CLI Adapters (Phase 4) ✅
-- [x] Copilot CLI: `.github/instructions/skills.instructions.md`
-- [x] Claude Code: `.claude/skills/oh-my-universal/SKILL.md`
-- [x] Codex/Gemini/OpenCode: `AGENTS.md`
-- [x] Setup guide: `docs/SETUP.md`
+### Documentation (4 skills)
+| Skill | Description |
+|-------|-------------|
+| **doc-maintainer** | Auto-update documentation after code changes |
+| **wiki** | Auto-maintained project knowledge base (reduces token usage) |
+| **remember** | Memory persistence across sessions (native tools -> .memory/ fallback) |
+| **writer-memory** | Enhanced persistent context for writing projects (tone, style, narrative) |
 
-### Advanced Skills (Phase 5) ✅
-- [x] **refactor** — Detect code smells, apply improvements preserving behavior
-- [x] **perf-audit** — Performance profiling: identify bottlenecks, measure, optimize
-- [x] **multi-model-review** — 4-perspective review: bug hunter, security, maintainer, perf
-- [x] **skillify** — Create new skills from observed repeatable patterns
+### Operations (8 skills)
+| Skill | Description |
+|-------|-------------|
+| **release** | Release management: changelog, version bump, git tag, publish |
+| **hooks** | Pre/post hooks for agent operations - intercept lifecycle events |
+| **dirty-guard** | Block dangerous git operations with uncommitted changes |
+| **run-tagging** | Unique identity per agent session for audit trails |
+| **parity-check** | Agent health and contract smoke tests |
+| **handoff** | Structured state handoff between agent runs |
+| **status-line** | Compact terminal progress indicators during long operations |
+| **hud** | Heads-up display - compact status showing agent progress |
+
+### Meta (6 skills)
+| Skill | Description |
+|-------|-------------|
+| **self-improve** | Analyze agent failures, improve skills to prevent recurrence |
+| **skillify** | Create new skills from observed repeatable patterns |
+| **doctor** | Project health check (fast + full modes) |
+| **mcp-setup** | Auto-detect project type and configure MCP servers |
+| **session-manager** | Manage, resume, and fork agent sessions with persistent state |
+| **session-protocol** | End-of-session: docs + memory + verify + commit prep |
+
+### Collaboration (3 skills)
+| Skill | Description |
+|-------|-------------|
+| **team** | Multi-agent delegation with serial fallback |
+| **repo-merge** | Merge features from external repos (research -> matrix -> port) |
+| **notify** | Notifications: console, system toast, Discord webhook |
+
+### CLI Adapters ✅
+- Copilot CLI: `.github/instructions/skills.instructions.md`
+- Claude Code: `.claude/skills/oh-my-universal/SKILL.md`
+- Codex/OpenCode: `AGENTS.md`
+- Gemini CLI: `GEMINI.md`
+- Cursor: `.cursor/rules/skills.mdc`
+- Windsurf: `.windsurfrules`
+- Setup guide: `docs/SETUP.md`
 
 ## Sources
 
@@ -102,12 +152,13 @@ Built by combining the best patterns from:
 
 | Source | Stars | What we took |
 |--------|-------|-------------|
-| [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | - | plan, ultrawork, team, build-fix, tdd, code-review |
-| [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | - | remember, team, session hooks, skill routing |
+| [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | - | plan, ultrawork, team, build-fix, tdd, dirty-guard, run-tagging, parity-check, handoff |
+| [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | - | remember, team, session hooks, skill routing, autopilot, deep-dive, ask, trace, visual-verdict, wiki, writer-memory, release, self-improve, hud, session-manager, mcp-setup, hooks |
 | [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | - | architecture (Atlas), review (Momus), doc-maintainer (Librarian) |
 | [clawhip](https://github.com/Yeachan-Heo/clawhip) | - | notify (Discord), memory offload |
 | [planning-with-files](https://github.com/OthmanAdi/planning-with-files) | 19K | Persistent markdown planning approach |
 | [caveman](https://github.com/JuliusBrussee/caveman) | 38K | Compact token-light skill design |
 | [claude-forge](https://github.com/sangrokjung/claude-forge) | 659 | Security hooks, pre-commit gates, refactor patterns |
 | [everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 160K | Skill taxonomy, multi-perspective review |
+| [awesome-claude-code](https://github.com/xavimondev/awesome-claude-code) | - | status-line patterns (claude-pace, claude-powerline) |
 | [career-ops](https://github.com/santifer/career-ops) | - | repo-merge workflow (real-world tested) |

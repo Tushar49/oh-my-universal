@@ -2,8 +2,20 @@
 
 ## Prerequisites
 
-- An AI coding CLI: Copilot CLI, Claude Code, OpenAI Codex, Gemini CLI, or OpenCode
+- An AI coding CLI: Copilot CLI, Claude Code, OpenAI Codex, Gemini CLI, OpenCode, Cursor, or Windsurf
 - This repo cloned to a known location (e.g., `E:\Projects\oh-my-universal`)
+
+### Optional Prerequisites
+
+Some skills benefit from external tools (all are optional):
+
+| Skill | External tool | Why |
+|-------|--------------|-----|
+| **ask** | Multiple CLI tools (e.g., `claude`, `codex`, `gemini`) | Cross-validates answers across models |
+| **notify** | Discord webhook URL | Sends notifications when tasks complete |
+| **visual-verdict** | Screenshot capability (browser or system) | UI review via screenshots |
+| **release** | `npm` / `git` | Version bump, changelog, publish |
+| **mcp-setup** | MCP-compatible CLI | Auto-configures MCP servers |
 
 ## Per-CLI Setup
 
@@ -65,7 +77,32 @@ in /path/to/oh-my-universal/skills/
 
 ### Gemini CLI
 
-Same as Codex — reads AGENTS.md.
+Gemini CLI reads `GEMINI.md` (preferred) or `AGENTS.md` from cwd.
+
+**Option A: Symlink GEMINI.md**
+```bash
+# From your project (if you don't have your own GEMINI.md):
+ln -s /path/to/oh-my-universal/GEMINI.md GEMINI.md
+```
+
+**Option B: Include in your GEMINI.md**
+Add to your project's GEMINI.md:
+```markdown
+For development skills (plan, review, tdd, etc.), read the skill files
+in /path/to/oh-my-universal/skills/
+```
+
+### Cursor
+
+Skills are loaded via `.cursor/rules/skills.mdc`. Either:
+- Symlink the `.cursor/` directory from oh-my-universal
+- Copy `.cursor/rules/skills.mdc` to your project
+
+### Windsurf
+
+Skills are loaded via `.windsurfrules`. Either:
+- Symlink `.windsurfrules` from oh-my-universal
+- Copy `.windsurfrules` to your project root
 
 ### OpenCode
 
@@ -84,19 +121,31 @@ After connecting, test with:
 ```
 If the agent recognizes the doctor skill and runs a health check, setup is working.
 
+You can also run:
+```
+"run parity-check"
+```
+This verifies all skills, tools, and environment are configured correctly.
+
 ## Using Skills
 
-Once connected, just use natural language:
+Once connected, just use natural language. All 38 skills are available:
 
 | Say this | What happens |
 |----------|-------------|
 | "plan this refactoring" | Creates structured plan with self-critique |
 | "review my changes" | High-signal code review |
 | "ultrawork: add auth" | Full lifecycle: plan -> implement -> verify -> review |
+| "autopilot: build the API" | Fully autonomous 5-phase pipeline |
 | "tdd: add login" | Test-driven: failing test -> implement -> refactor |
 | "fix the build" | Auto-fix (3 attempts max) |
+| "deep-dive into the auth bug" | Two-stage causal tracing + Socratic questioning |
+| "trace this error" | Hypothesis-driven debugging |
+| "ask: is this approach correct?" | Cross-validate with multiple models |
+| "visual-verdict on the homepage" | Screenshot-based UI review |
 | "merge features from {repo}" | Structured external repo integration |
+| "release a new version" | Changelog, version bump, git tag |
 | "wrap up" | End-of-session cleanup |
 
-Skills work with ANY project — they read the project's own structure, conventions,
+Skills work with ANY project - they read the project's own structure, conventions,
 and config files to adapt their behavior.

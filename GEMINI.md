@@ -1,15 +1,16 @@
-# oh-my-universal for Claude Code
+# oh-my-universal for Gemini CLI
 
 Read `.github/copilot-instructions.md` for all project rules.
 
 This is a cross-project skills repo with **38 skills**. Use it from any project:
 ```
-claude --plugin-dir E:\Projects\oh-my-universal
+gemini --plugin-dir E:\Projects\oh-my-universal
 ```
 
 ## All 38 Skills
 
 ### Core Workflow
+
 | Skill | File | Description |
 |-------|------|-------------|
 | plan | `skills/plan.md` | Structured planning (plan -> critique -> execute) |
@@ -20,6 +21,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | tdd | `skills/tdd.md` | Test-driven development: Red -> Green -> Refactor |
 
 ### Investigation
+
 | Skill | File | Description |
 |-------|------|-------------|
 | deep-dive | `skills/deep-dive.md` | Causal tracing + Socratic questioning |
@@ -28,6 +30,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | architecture | `skills/architecture.md` | Map and understand codebase structure |
 
 ### Quality
+
 | Skill | File | Description |
 |-------|------|-------------|
 | review | `skills/review.md` | High-signal code review (bugs/security only) |
@@ -38,6 +41,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | pre-commit-check | `skills/pre-commit-check.md` | Quality gate before commit |
 
 ### Documentation
+
 | Skill | File | Description |
 |-------|------|-------------|
 | doc-maintainer | `skills/doc-maintainer.md` | Auto-update docs after code changes |
@@ -46,6 +50,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | writer-memory | `skills/writer-memory.md` | Writing context: tone, style, continuity |
 
 ### Operations
+
 | Skill | File | Description |
 |-------|------|-------------|
 | release | `skills/release.md` | Changelog, version bump, git tag, publish |
@@ -58,6 +63,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | hud | `skills/hud.md` | Heads-up display for agent progress |
 
 ### Meta
+
 | Skill | File | Description |
 |-------|------|-------------|
 | self-improve | `skills/self-improve.md` | Learn from failures, improve skills |
@@ -68,6 +74,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
 
 ### Collaboration
+
 | Skill | File | Description |
 |-------|------|-------------|
 | team | `skills/team.md` | Multi-agent delegation with fallback |
@@ -75,4 +82,9 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | notify | `skills/notify.md` | Notifications: console, system, Discord |
 | refactor | `skills/refactor.md` | Code smell detection + improvements |
 
-Always update `docs/PROGRESS.md` after every session.
+## Key Points
+
+- This is a cross-project skills repo, not a standalone project
+- Skills in `skills/` can be used from any project directory
+- Always update `docs/PROGRESS.md` after every session
+- Read full skill files from `skills/{name}.md` for detailed workflows

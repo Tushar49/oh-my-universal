@@ -107,3 +107,29 @@
 | 2026-04-19 | Phase 4: CLI adapters (Copilot .instructions.md, Claude SKILL.md, setup guide), GitHub repo created + pushed | Copilot CLI |
 | 2026-04-19 | Phase 5: Built 4 advanced skills (refactor, perf-audit, multi-model-review, skillify). Total: 20 skills. | Copilot CLI |
 | 2026-04-19 | Phase 5 complete: diff-aware verify, Cursor/Windsurf adapters, npm package + CLI (omu), LICENSE. Pushed to GitHub. | Copilot CLI |
+| 2026-04-21 | Phase 6: Full feature parity - added 18 new skills (total: 38), updated all 7 CLI adapters, created GEMINI.md | Copilot CLI |
+
+---
+
+## 2026-04-21 - Phase 6: Full Feature Parity
+
+- Added 18 new skills (total: 38)
+- New skills: autopilot, deep-dive, ask, trace, visual-verdict, wiki, writer-memory, release, self-improve, hud, session-manager, mcp-setup, dirty-guard, run-tagging, parity-check, handoff, hooks, status-line
+- Updated all 7 CLI adapters (Copilot, Claude, Codex, Gemini, Cursor, Windsurf, OpenCode)
+- Created GEMINI.md for Gemini CLI support
+- Research stored in .research/phase2-skills-research.md and .research/cli-detection-strategy.md
+- Sources: oh-my-claudecode (29 agents, 35 skills, 20 hooks), oh-my-codex (missions), claw-code, awesome-claude-code
+
+### Phase 6 Task Table
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 6.1 | Research oh-my-claudecode Phase 2 features | done | 35 skills, 29 agents, 20 hooks |
+| 6.2 | Research oh-my-codex missions and patterns | done | dirty-guard, run-tagging, parity-check, handoff |
+| 6.3 | Research awesome-claude-code patterns | done | status-line, hud patterns |
+| 6.4 | Create 18 new skill files | done | All in skills/ directory |
+| 6.5 | Update CLI adapters (all 7) | done | Copilot, Claude, Codex, Gemini, Cursor, Windsurf, OpenCode |
+| 6.6 | Create GEMINI.md | done | Gemini CLI entry point |
+| 6.7 | Update README (20 -> 38 skills) | done | Categorized into 7 groups |
+| 6.8 | Update package.json | done | Version bump, new keywords |
+| 6.9 | Update docs (PROGRESS, REQUIREMENTS, SETUP) | done | All docs current |

@@ -15,26 +15,51 @@ It is NOT a standalone project - it's used FROM other project directories via
 
 | Skill | File | What it does |
 |-------|------|-------------|
+| | | **Core Workflow** |
 | **plan** | `skills/plan.md` | Structured planning before implementation (plan -> critique -> execute) |
-| **review** | `skills/review.md` | High-signal code review (bugs, security, logic errors only) |
 | **ultrawork** | `skills/ultrawork.md` | Full lifecycle: plan -> implement -> verify -> review -> document -> commit |
-| **doc-maintainer** | `skills/doc-maintainer.md` | Auto-update documentation after code changes |
-| **remember** | `skills/remember.md` | Persist learnings across sessions in .memory/ files |
-| **architecture** | `skills/architecture.md` | Map and understand codebase structure quickly |
-| **doctor** | `skills/doctor.md` | Project health check and setup validation |
+| **autopilot** | `skills/autopilot.md` | Autonomous 5-phase pipeline: idea to validated working code, zero intervention |
 | **verify** | `skills/verify.md` | Evidence-based change verification (tests, build, manual checks) |
-| **security-review** | `skills/security-review.md` | Repo-wide security audit (threats, auth, deps, trust boundaries) |
-| **tdd** | `skills/tdd.md` | Test-driven development: Red -> Green -> Refactor |
 | **build-fix** | `skills/build-fix.md` | Auto-fix build/test failures (max 3 attempts, then escalate) |
+| **tdd** | `skills/tdd.md` | Test-driven development: Red -> Green -> Refactor |
+| | | **Investigation** |
+| **deep-dive** | `skills/deep-dive.md` | Two-stage investigation: causal tracing + Socratic questioning |
+| **trace** | `skills/trace.md` | Evidence-driven debugging with structured hypothesis testing |
+| **ask** | `skills/ask.md` | Query multiple AI models and cross-validate answers |
+| **architecture** | `skills/architecture.md` | Map and understand codebase structure quickly |
+| | | **Quality** |
+| **review** | `skills/review.md` | High-signal code review (bugs, security, logic errors only) |
+| **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
+| **security-review** | `skills/security-review.md` | Repo-wide security audit (threats, auth, deps, trust boundaries) |
+| **visual-verdict** | `skills/visual-verdict.md` | Screenshot-based UI review with structured visual feedback |
+| **perf-audit** | `skills/perf-audit.md` | Performance profiling: identify bottlenecks, measure, optimize |
+| **pre-commit-check** | `skills/pre-commit-check.md` | Quality gate: verify + review + security before commit |
+| | | **Documentation** |
+| **doc-maintainer** | `skills/doc-maintainer.md` | Auto-update documentation after code changes |
+| **wiki** | `skills/wiki.md` | Auto-maintained project knowledge base, reduces token usage |
+| **remember** | `skills/remember.md` | Persist learnings across sessions in .memory/ files |
+| **writer-memory** | `skills/writer-memory.md` | Persistent writing context: tone, style, narrative continuity |
+| | | **Operations** |
+| **release** | `skills/release.md` | Release management: changelog, version bump, git tag, publish |
+| **hooks** | `skills/hooks.md` | Pre/post hooks for agent lifecycle events (guard, transform, extend) |
+| **dirty-guard** | `skills/dirty-guard.md` | Block dangerous git ops when worktree has uncommitted changes |
+| **run-tagging** | `skills/run-tagging.md` | Unique session identity to prevent lane reuse and enable audit |
+| **parity-check** | `skills/parity-check.md` | Agent health smoke tests: verify tools, skills, environment |
+| **handoff** | `skills/handoff.md` | Structured state handoff between agent runs for continuity |
+| **status-line** | `skills/status-line.md` | Compact terminal progress indicators during long operations |
+| **hud** | `skills/hud.md` | Heads-up display showing agent progress at a glance |
+| | | **Meta** |
+| **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
+| **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
+| **doctor** | `skills/doctor.md` | Project health check and setup validation |
+| **mcp-setup** | `skills/mcp-setup.md` | Auto-detect project type and configure MCP servers |
+| **session-manager** | `skills/session-manager.md` | Manage, resume, and fork agent sessions with persistent state |
+| **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
+| | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
-| **pre-commit-check** | `skills/pre-commit-check.md` | Quality gate: verify + review + security before commit |
-| **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
 | **notify** | `skills/notify.md` | Notifications: console, system toast, Discord webhook |
 | **refactor** | `skills/refactor.md` | Detect code smells, apply improvements preserving behavior |
-| **perf-audit** | `skills/perf-audit.md` | Performance profiling: identify bottlenecks, measure, optimize |
-| **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
-| **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
 
 ## How to Use From Another Project
 

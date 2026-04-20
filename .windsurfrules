@@ -1,30 +1,78 @@
-# oh-my-universal Skills for Windsurf
+# oh-my-universal Skills for Windsurf (38 total)
 
-You have access to 20 development skills from the oh-my-universal skills library.
+You have access to 38 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
-## Skills
+## Core Workflow
 
 | Skill | File | Description |
 |-------|------|-------------|
 | plan | skills/plan.md | Structured planning with self-critique |
-| review | skills/review.md | High-signal code review |
-| ultrawork | skills/ultrawork.md | Full lifecycle: plan→impl→verify→review→commit |
+| ultrawork | skills/ultrawork.md | Full lifecycle: plan -> impl -> verify -> review -> commit |
+| autopilot | skills/autopilot.md | Autonomous 5-phase pipeline: idea to working code |
 | verify | skills/verify.md | Evidence-based verification (diff-aware) |
-| security-review | skills/security-review.md | Repo-wide security audit |
-| tdd | skills/tdd.md | Test-driven development |
-| build-fix | skills/build-fix.md | Auto-fix build errors |
-| team | skills/team.md | Multi-agent delegation |
-| repo-merge | skills/repo-merge.md | External repo integration |
-| refactor | skills/refactor.md | Code smell detection + fixes |
-| perf-audit | skills/perf-audit.md | Performance optimization |
-| multi-model-review | skills/multi-model-review.md | 4-perspective review |
-| doctor | skills/doctor.md | Project health check |
+| build-fix | skills/build-fix.md | Auto-fix build errors (3 attempts max) |
+| tdd | skills/tdd.md | Test-driven development: Red -> Green -> Refactor |
+
+## Investigation
+
+| Skill | File | Description |
+|-------|------|-------------|
+| deep-dive | skills/deep-dive.md | Causal tracing + Socratic questioning |
+| trace | skills/trace.md | Structured hypothesis-driven debugging |
+| ask | skills/ask.md | Query multiple AI models, cross-validate |
 | architecture | skills/architecture.md | Codebase structure mapping |
-| doc-maintainer | skills/doc-maintainer.md | Auto-update docs |
-| remember | skills/remember.md | Memory persistence |
-| pre-commit-check | skills/pre-commit-check.md | Quality gate |
+
+## Quality
+
+| Skill | File | Description |
+|-------|------|-------------|
+| review | skills/review.md | High-signal code review (bugs/security only) |
+| multi-model-review | skills/multi-model-review.md | 4-perspective review |
+| security-review | skills/security-review.md | Repo-wide security audit |
+| visual-verdict | skills/visual-verdict.md | Screenshot-based UI review |
+| perf-audit | skills/perf-audit.md | Performance profiling and optimization |
+| pre-commit-check | skills/pre-commit-check.md | Quality gate before commit |
+
+## Documentation
+
+| Skill | File | Description |
+|-------|------|-------------|
+| doc-maintainer | skills/doc-maintainer.md | Auto-update docs after code changes |
+| wiki | skills/wiki.md | Auto-maintained project knowledge base |
+| remember | skills/remember.md | Memory persistence across sessions |
+| writer-memory | skills/writer-memory.md | Writing context: tone, style, continuity |
+
+## Operations
+
+| Skill | File | Description |
+|-------|------|-------------|
+| release | skills/release.md | Changelog, version bump, git tag, publish |
+| hooks | skills/hooks.md | Pre/post hooks for agent lifecycle events |
+| dirty-guard | skills/dirty-guard.md | Block dangerous git ops on dirty worktree |
+| run-tagging | skills/run-tagging.md | Unique session identity for audit trails |
+| parity-check | skills/parity-check.md | Smoke test tools, skills, environment |
+| handoff | skills/handoff.md | State handoff between agent runs |
+| status-line | skills/status-line.md | Terminal progress indicators |
+| hud | skills/hud.md | Heads-up display for agent progress |
+
+## Meta
+
+| Skill | File | Description |
+|-------|------|-------------|
+| self-improve | skills/self-improve.md | Learn from failures, improve skills |
+| skillify | skills/skillify.md | Create new skills from patterns |
+| doctor | skills/doctor.md | Project health check and setup validation |
+| mcp-setup | skills/mcp-setup.md | Auto-configure MCP servers |
+| session-manager | skills/session-manager.md | Manage, resume, fork agent sessions |
 | session-protocol | skills/session-protocol.md | End-of-session cleanup |
-| skillify | skills/skillify.md | Create new skills |
+
+## Collaboration
+
+| Skill | File | Description |
+|-------|------|-------------|
+| team | skills/team.md | Multi-agent delegation with fallback |
+| repo-merge | skills/repo-merge.md | External repo integration |
 | notify | skills/notify.md | Completion notifications |
+| refactor | skills/refactor.md | Code smell detection + improvements |

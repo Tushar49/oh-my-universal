@@ -87,6 +87,27 @@ If issues are found after merge:
 3. Verify rollback restores previous behavior
 4. Investigate the issue on a separate branch
 
+## Output Format
+
+```markdown
+## Dependency Upgrade Report
+
+### Summary
+- Packages audited: {N}
+- Upgrades applied: {N} (patch: X, minor: Y, major: Z)
+- Vulnerabilities fixed: {N}
+
+### Changes
+| Package | From | To | Type | Breaking? |
+|---------|------|----|------|-----------|
+| {name}  | 1.0.0 | 1.0.1 | patch | No |
+
+### Test Results
+- Before: {pass/fail}
+- After: {pass/fail}
+- Regressions: {none or list}
+```
+
 ## Anti-Patterns
 
 - **Never upgrade everything at once** — if tests break, you can't tell which dep caused it

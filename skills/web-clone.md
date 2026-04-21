@@ -135,6 +135,30 @@ Extraction can produce large data. Apply limits:
 - **Total extraction context:** Aim for < 60KB combined
 - **Screenshots:** One baseline (Pass 1), one comparison (Pass 4). No screenshots between iterations.
 
+## Output Format
+
+```markdown
+## Web Clone: {URL}
+
+### Extracted Assets
+- Pages: {N}
+- Components: {N}
+- Styles: {N lines of CSS}
+- Images: {N}
+
+### Generated Files
+| File | Purpose |
+|------|---------|
+| index.html | Main page structure |
+| styles.css | Extracted/recreated styles |
+| components/ | Reusable components |
+
+### Fidelity Check
+- Layout match: {%}
+- Color accuracy: {%}
+- Responsive: {yes/no}
+```
+
 ## Rules
 
 - ALWAYS extract before building. Don't guess at layout or styles.

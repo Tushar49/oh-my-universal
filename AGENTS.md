@@ -4,11 +4,11 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 ## Key Points
 
-- This is a cross-project skills repo with **60 skills**, **20 lifecycle hooks**, and **5 behavior contracts**, not a standalone project
+- This is a cross-project skills repo with **66 skills**, **20 lifecycle hooks**, and **5 behavior contracts**, not a standalone project
 - Skills in `skills/` can be used from any project directory
 - Always update `docs/PROGRESS.md` after every session
 
-## Available Skills (60)
+## Available Skills (66)
 
 ### Core Workflow
 
@@ -36,6 +36,8 @@ Read `.github/copilot-instructions.md` for all project rules.
 | autoresearch | `skills/autoresearch.md` | Systematic multi-source research with cross-validation |
 | external-context | `skills/external-context.md` | Load external docs/URLs into agent context |
 | debug | `skills/debug.md` | Hands-on step-through debugging workflow |
+| deep-interview | `skills/deep-interview.md` | Socratic intent-clarification loop with ambiguity scoring |
+| scientist | `skills/scientist.md` | Data analysis with statistical rigor |
 
 ### Quality
 
@@ -51,6 +53,8 @@ Read `.github/copilot-instructions.md` for all project rules.
 | ai-slop-cleaner | `skills/ai-slop-cleaner.md` | Strip AI cliches and fluff from output |
 | ultraqa | `skills/ultraqa.md` | Comprehensive QA with iterative fix cycles |
 | deliverables | `skills/deliverables.md` | Validate all expected outputs exist and meet acceptance criteria |
+| api-design | `skills/api-design.md` | REST/GraphQL API design — endpoints, versioning, errors, pagination |
+| critic | `skills/critic.md` | Structured multi-perspective review of plans, specs, and analysis |
 
 ### Documentation
 
@@ -79,6 +83,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | worktree-sandbox | `skills/worktree-sandbox.md` | Git worktree parallel isolation |
 | git-master | `skills/git-master.md` | Git workflow management (branches, PRs, conflicts) |
 | cost-tracker | `skills/cost-tracker.md` | Track and report token/API costs per session |
+| dependency-upgrade | `skills/dependency-upgrade.md` | Safe dependency upgrades with compatibility checks and rollback |
 
 ### Meta
 
@@ -95,6 +100,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | config-sync | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 | deepinit | `skills/deepinit.md` | Deep project initialization and scaffolding |
 | rules-discovery | `skills/rules-discovery.md` | Auto-discover and surface project conventions and rules |
+| web-clone | `skills/web-clone.md` | URL-driven website cloning with visual + functional verification |
 
 ### Collaboration
 

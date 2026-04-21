@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (60 total)
+# oh-my-universal Skills (66 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -35,6 +35,8 @@ development skills. Use them proactively.
 | "research this" | autoresearch | Systematic multi-source research with cross-validation |
 | "load context" | external-context | Load external docs/URLs into agent context |
 | "debug this" | debug | Hands-on step-through debugging workflow |
+| "interview me" | deep-interview | Socratic intent-clarification with ambiguity scoring |
+| "analyze this data" | scientist | Data analysis with statistical rigor |
 
 ### Quality
 
@@ -50,6 +52,8 @@ development skills. Use them proactively.
 | "clean this up" | ai-slop-cleaner | Strip AI cliches and fluff from output |
 | "full QA" | ultraqa | Comprehensive QA with iterative fix cycles |
 | "check deliverables" | deliverables | Validate all expected outputs exist and meet acceptance criteria |
+| "design API" | api-design | REST/GraphQL API design — endpoints, versioning, errors, pagination |
+| "critique this plan" | critic | Structured multi-perspective review of plans, specs, and analysis |
 
 ### Documentation
 
@@ -78,6 +82,7 @@ development skills. Use them proactively.
 | "worktree sandbox" | worktree-sandbox | Git worktree parallel isolation |
 | "git workflow" | git-master | Git workflow management (branches, PRs, conflicts) |
 | "track costs" | cost-tracker | Track and report token/API costs per session |
+| "upgrade deps" | dependency-upgrade | Safe dependency upgrades with compatibility checks and rollback |
 
 ### Meta
 
@@ -94,6 +99,7 @@ development skills. Use them proactively.
 | "sync config" | config-sync | Sync agent rules across CLI frameworks |
 | "init project" | deepinit | Deep project initialization and scaffolding |
 | "discover rules" | rules-discovery | Auto-discover and surface project conventions and rules |
+| "clone this site" | web-clone | URL-driven website cloning with visual + functional verification |
 
 ### Collaboration
 

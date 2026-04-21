@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Cursor (60 total)
+# oh-my-universal Skills for Cursor (66 total)
 
-You have access to 60 development skills from the oh-my-universal skills library.
+You have access to 66 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -32,6 +32,8 @@ when the user invokes it or when the situation calls for it.
 | "research this" | skills/autoresearch.md | Systematic multi-source research with cross-validation |
 | "load context" | skills/external-context.md | Load external docs/URLs into agent context |
 | "debug this" | skills/debug.md | Hands-on step-through debugging workflow |
+| "interview me" | skills/deep-interview.md | Socratic intent-clarification with ambiguity scoring |
+| "analyze this data" | skills/scientist.md | Data analysis with statistical rigor |
 
 ### Quality
 
@@ -47,6 +49,8 @@ when the user invokes it or when the situation calls for it.
 | "clean this up" | skills/ai-slop-cleaner.md | Strip AI cliches and fluff from output |
 | "full QA" | skills/ultraqa.md | Comprehensive QA with iterative fix cycles |
 | "check deliverables" | skills/deliverables.md | Validate all expected outputs exist and meet acceptance criteria |
+| "design API" | skills/api-design.md | REST/GraphQL API design — endpoints, versioning, errors, pagination |
+| "critique this plan" | skills/critic.md | Structured multi-perspective review of plans, specs, and analysis |
 
 ### Documentation
 
@@ -75,6 +79,7 @@ when the user invokes it or when the situation calls for it.
 | "worktree sandbox" | skills/worktree-sandbox.md | Git worktree parallel isolation |
 | "git workflow" | skills/git-master.md | Git workflow management (branches, PRs, conflicts) |
 | "track costs" | skills/cost-tracker.md | Track and report token/API costs per session |
+| "upgrade deps" | skills/dependency-upgrade.md | Safe dependency upgrades with compatibility checks and rollback |
 
 ### Meta
 
@@ -91,6 +96,7 @@ when the user invokes it or when the situation calls for it.
 | "sync config" | skills/config-sync.md | Sync agent rules across CLI frameworks |
 | "init project" | skills/deepinit.md | Deep project initialization and scaffolding |
 | "discover rules" | skills/rules-discovery.md | Auto-discover and surface project conventions and rules |
+| "clone this site" | skills/web-clone.md | URL-driven website cloning with visual + functional verification |
 
 ### Collaboration
 

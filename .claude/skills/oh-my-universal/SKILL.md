@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "60 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "66 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | deliverables | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | cost-tracker | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | rules-discovery | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | deep-interview | scientist | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | deliverables | api-design | critic | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | cost-tracker | dependency-upgrade | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | rules-discovery | web-clone | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (60 skills)
+# oh-my-universal — Skill Router for Claude Code (66 skills)
 
 ## Routing
 
@@ -36,6 +36,8 @@ Read the skill file based on `{{skill_name}}`:
 | `autoresearch` or `research` | `skills/autoresearch.md` |
 | `external-context` or `load-context` | `skills/external-context.md` |
 | `debug` or `step-debug` | `skills/debug.md` |
+| `deep-interview` or `interview` | `skills/deep-interview.md` |
+| `scientist` or `data-analysis` | `skills/scientist.md` |
 
 ### Quality
 | Input | Skill file |
@@ -50,6 +52,8 @@ Read the skill file based on `{{skill_name}}`:
 | `ai-slop-cleaner` or `clean-slop` | `skills/ai-slop-cleaner.md` |
 | `ultraqa` or `qa` | `skills/ultraqa.md` |
 | `deliverables` or `check-deliverables` | `skills/deliverables.md` |
+| `api-design` or `api` | `skills/api-design.md` |
+| `critic` or `critique` | `skills/critic.md` |
 
 ### Documentation
 | Input | Skill file |
@@ -76,6 +80,7 @@ Read the skill file based on `{{skill_name}}`:
 | `worktree-sandbox` or `worktree` | `skills/worktree-sandbox.md` |
 | `git-master` or `git` | `skills/git-master.md` |
 | `cost-tracker` or `costs` | `skills/cost-tracker.md` |
+| `dependency-upgrade` or `upgrade-deps` | `skills/dependency-upgrade.md` |
 
 ### Meta
 | Input | Skill file |
@@ -91,6 +96,7 @@ Read the skill file based on `{{skill_name}}`:
 | `config-sync` or `sync-config` | `skills/config-sync.md` |
 | `deepinit` or `init` | `skills/deepinit.md` |
 | `rules-discovery` or `discover-rules` | `skills/rules-discovery.md` |
+| `web-clone` or `clone-site` | `skills/web-clone.md` |
 
 ### Collaboration
 | Input | Skill file |

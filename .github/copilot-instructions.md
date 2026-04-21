@@ -34,6 +34,8 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **autoresearch** | `skills/autoresearch.md` | Systematic multi-source research with cross-validation |
 | **external-context** | `skills/external-context.md` | Load external docs/URLs into agent context |
 | **debug** | `skills/debug.md` | Hands-on step-through debugging workflow |
+| **deep-interview** | `skills/deep-interview.md` | Socratic intent-clarification loop with ambiguity scoring |
+| **scientist** | `skills/scientist.md` | Data analysis and hypothesis-driven investigation with statistical rigor |
 | | | **Quality** |
 | **review** | `skills/review.md` | High-signal code review (bugs, security, logic errors only) |
 | **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
@@ -45,6 +47,8 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **ai-slop-cleaner** | `skills/ai-slop-cleaner.md` | Strip AI cliches and fluff from output |
 | **ultraqa** | `skills/ultraqa.md` | Comprehensive QA with iterative fix cycles |
 | **deliverables** | `skills/deliverables.md` | Validate all expected outputs exist and meet acceptance criteria |
+| **api-design** | `skills/api-design.md` | REST/GraphQL API design — endpoints, versioning, errors, pagination |
+| **critic** | `skills/critic.md` | Structured multi-perspective review of plans, specs, and analysis |
 | | | **Documentation** |
 | **doc-maintainer** | `skills/doc-maintainer.md` | Auto-update documentation after code changes |
 | **wiki** | `skills/wiki.md` | Auto-maintained project knowledge base, reduces token usage |
@@ -65,6 +69,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **worktree-sandbox** | `skills/worktree-sandbox.md` | Git worktree parallel isolation for safe experimentation |
 | **git-master** | `skills/git-master.md` | Git workflow management (branches, PRs, conflicts) |
 | **cost-tracker** | `skills/cost-tracker.md` | Track and report token/API costs per session |
+| **dependency-upgrade** | `skills/dependency-upgrade.md` | Safe dependency upgrades with compatibility checks and rollback |
 | | | **Meta** |
 | **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
 | **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
@@ -77,6 +82,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **config-sync** | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 | **deepinit** | `skills/deepinit.md` | Deep project initialization and scaffolding |
 | **rules-discovery** | `skills/rules-discovery.md` | Auto-discover and surface project conventions and rules |
+| **web-clone** | `skills/web-clone.md` | URL-driven website cloning with visual + functional verification |
 | | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
@@ -132,7 +138,7 @@ Every agent session MUST:
 | `docs/PROGRESS.md` | Progress tracker (update every session) |
 | `.research/` | Raw research from source repos |
 | `.research/unified-feature-matrix.md` | Master feature porting plan |
-| `skills/` | Cross-project skills (60 total - the main product) |
+| `skills/` | Cross-project skills (66 total - the main product) |
 | `hooks/` | 20 lifecycle hooks for agent events |
 | `contracts/` | 5 behavior contracts for skills and hooks |
 

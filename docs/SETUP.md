@@ -31,32 +31,45 @@ Some skills benefit from external tools. All are optional — core skills work w
 
 ### Copilot CLI
 
-**Option A: Per-session (temporary)**
+**Option A: Install skills permanently (recommended)**
+```bash
+# Copy skill folders to ~/.copilot/skills/ (personal skills, always available)
+# Windows
+xcopy /E /I oh-my-universal\.github\skills\* "%USERPROFILE%\.copilot\skills\"
+xcopy /E /I oh-my-universal\.claude\skills\* "%USERPROFILE%\.copilot\skills\"
+
+# macOS/Linux
+cp -r oh-my-universal/.github/skills/* ~/.copilot/skills/
+cp -r oh-my-universal/.claude/skills/* ~/.copilot/skills/
+```
+Skills appear in `/skills` menu permanently. Run `/skills reload` after copying.
+
+**Option B: Per-session (temporary)**
 ```bash
 copilot
 /add-dir /path/to/oh-my-universal
 ```
-Skills are available for this session only. Run this each time you start Copilot CLI.
+Loads instructions + prompts for this session. Skills in `/skills` may not appear — use `/add-dir` when you need instructions but not `/skills` integration.
 
-**Option B: Copy instructions (permanent)**
+**Option C: Copy instructions (permanent, no /skills)**
 ```bash
+# Windows
+copy oh-my-universal\.github\instructions\*.instructions.md "%USERPROFILE%\.copilot\instructions\"
+
 # macOS/Linux
 cp oh-my-universal/.github/instructions/*.instructions.md ~/.copilot/instructions/
-
-# Windows
-copy oh-my-universal\.github\instructions\*.instructions.md %USERPROFILE%\.copilot\instructions\
 ```
-Skills load automatically in every Copilot CLI session. Re-copy after updates.
+Instructions load automatically but won't appear in `/skills` menu.
 
-**Option C: Symlink (permanent, auto-updates)**
+**Option D: Symlink skills (permanent, auto-updates)**
 ```bash
-# macOS/Linux
-ln -s /path/to/oh-my-universal/.github/instructions ~/.copilot/instructions/oh-my-universal
-
 # Windows (run as Administrator)
-mklink /D "%USERPROFILE%\.copilot\instructions\oh-my-universal" "C:\path\to\oh-my-universal\.github\instructions"
+mklink /D "%USERPROFILE%\.copilot\skills\oh-my-universal" "E:\Projects\oh-my-universal\.claude\skills\oh-my-universal"
+
+# macOS/Linux
+ln -s /path/to/oh-my-universal/.claude/skills/oh-my-universal ~/.copilot/skills/oh-my-universal
 ```
-Always loads the latest version — no re-copy needed.
+Symlinks auto-update when you pull changes. Run `/skills reload` after creating.
 
 ---
 

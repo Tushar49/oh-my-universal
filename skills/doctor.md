@@ -11,7 +11,7 @@
 - When something fails unexpectedly (diagnose first)
 - After cloning or pulling major changes
 
-## Checks to Run
+## Workflow
 
 ### 1. Runtime Environment
 - [ ] Node.js version (if package.json exists)
@@ -76,4 +76,8 @@ Result: 1 issue, 1 warning
 - Don't try to auto-fix anything unless user says "doctor --fix"
 - Keep it fast - skip slow checks (full test suite) unless asked
 - Adapt checks to the project type (don't check npm in a Python project)
-- Not responsible for: codebase understanding (see architecture skill), code review (see review skill)
+
+## Not Responsible For
+
+- Codebase understanding (see architecture skill)
+- Code review (see review skill)

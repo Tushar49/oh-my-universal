@@ -4,14 +4,14 @@
 > to "think like a different reviewer" — mimicking multi-model review benefits.
 > Inspired by: everything-claude-code, levnikolaevich/claude-code-skills
 
-## When to Use
+## When to Trigger
 
 - For critical changes (auth, payments, data migration)
 - User says "thorough review", "multi-perspective review"
 - Before deploying to production
 - When a standard review didn't feel sufficient
 
-## Concept
+## Workflow
 
 Since we can't switch models mid-session in most CLIs, we simulate multi-model
 review by doing multiple review passes with DIFFERENT PERSPECTIVES:
@@ -72,4 +72,8 @@ Review looking ONLY for performance:
 - Don't repeat findings across passes (each perspective covers unique ground)
 - If a pass finds nothing, say so — don't invent problems
 - This is more thorough than `review.md` — use for critical changes only
-- Not responsible for: test coverage (see tdd), implementation (see ultrawork)
+
+## Not Responsible For
+
+- Test coverage (see tdd)
+- Implementation (see ultrawork)

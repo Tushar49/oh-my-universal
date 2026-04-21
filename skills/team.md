@@ -4,7 +4,7 @@
 > delegate to parallel subagents, merge results.
 > Inspired by: oh-my-codex ($team), oh-my-claudecode (team), oh-my-openagent (Sisyphus)
 
-## When to Use
+## When to Trigger
 
 - Task naturally decomposes into 3+ independent subtasks
 - User says "team this", "parallelize", "delegate"
@@ -95,4 +95,8 @@ For serial execution:
 - If a subtask fails, complete the others and report partial results
 - Don't delegate trivially small tasks (overhead > benefit)
 - Each subtask prompt must be self-contained (subagents don't share context)
-- Not responsible for: individual code review (see review), planning the overall approach (see plan)
+
+## Not Responsible For
+
+- Individual code review (see review)
+- Planning the overall approach (see plan)

@@ -4,7 +4,7 @@
 > Write failing test first, implement minimally, then refactor.
 > Inspired by: oh-my-codex ($tdd), claude-forge
 
-## When to Use
+## When to Trigger
 
 - User says "tdd", "test-driven", "write tests first"
 - When building a new function, class, or module from scratch
@@ -85,4 +85,8 @@ Repeat for the next requirement. Each cycle should be small (15-30 minutes max).
 - Each cycle should be one small, focused behavior
 - If the test is hard to write, the design probably needs simplifying
 - Rerun ALL tests after every change, not just the new one
-- Not responsible for: security auditing (see security-review), general code review (see review)
+
+## Not Responsible For
+
+- Security auditing (see security-review)
+- General code review (see review)

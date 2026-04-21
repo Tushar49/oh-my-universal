@@ -84,4 +84,26 @@ After implementation:
 - If the task is trivial (single file, < 10 lines), skip the plan
 - The plan is a living document - update it as you learn more
 - Share the plan with the user before executing (unless the user asked for autonomous execution)
-- Not responsible for: verification (see verify skill), documentation updates (see doc-maintainer)
+
+## Output Format
+
+```markdown
+## Plan: {task title}
+
+**Status:** READY / IN PROGRESS / COMPLETE
+**Files affected:** {count}
+**Risk level:** LOW / MEDIUM / HIGH
+
+### Changes Summary
+| # | File | Change | Status |
+|---|------|--------|--------|
+| 1 | {path} | {what} | done / pending |
+
+### Deviations from Plan
+- {any changes made during execution}
+```
+
+## Not Responsible For
+
+- Verification (see verify skill)
+- Documentation updates (see doc-maintainer)

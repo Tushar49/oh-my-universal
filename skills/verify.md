@@ -5,7 +5,7 @@
 > Supports diff-aware mode: verify only files/areas that actually changed.
 > Inspired by: oh-my-claudecode (verify), oh-my-codex ($ultraqa), claude-workflow-v2
 
-## When to Use
+## When to Trigger
 
 - After implementing a change (agent should proactively verify)
 - User says "verify", "does this work?", "test this"
@@ -31,7 +31,7 @@ Use for: incremental changes, quick checks, pre-commit.
 3. Skip unchanged files entirely
 4. Still run the full build (builds are all-or-nothing)
 
-## Verification Steps
+## Workflow
 
 ### Step 1 — Automated Checks
 Run whatever the project has:
@@ -74,6 +74,29 @@ If none exist, note "No automated checks configured" and proceed to manual.
 {1-2 sentence summary: safe to commit or needs fixes}
 ```
 
+## Output Format
+
+```markdown
+## Verification Report
+
+**Change:** {what was changed}
+**Mode:** full / diff-aware ({N} files checked)
+**Result:** PASS / FAIL / PARTIAL
+
+### Automated
+| Check | Result | Details |
+|-------|--------|---------|
+| Tests | ✓ pass / ✗ fail | {N} passed, {N} failed |
+| Build | ✓ pass / ✗ fail | {output} |
+| Lint | ✓ pass / ✗ fail | {N} warnings |
+
+### Manual
+- {file}: {observation}
+
+### Verdict
+{safe to commit or needs fixes}
+```
+
 ## Rules
 
 - Report facts, not opinions. "Tests pass" not "looks good to me"
@@ -81,4 +104,8 @@ If none exist, note "No automated checks configured" and proceed to manual.
 - If no automated checks exist, be MORE thorough with manual review
 - Don't skip verification just because the change "looks simple"
 - In diff-aware mode, still run the full build — partial builds lie
-- Not responsible for: planning (see plan skill), code review beyond the current change (see review skill)
+
+## Not Responsible For
+
+- Planning (see plan skill)
+- Code review beyond the current change (see review skill)

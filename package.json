@@ -1,7 +1,7 @@
 {
   "name": "oh-my-universal",
-  "version": "4.0.0",
-  "description": "47 skills, 19 hooks, 4 contracts, 5 missions for AI coding CLIs",
+  "version": "5.0.0",
+  "description": "57 skills, 20 hooks, 5 contracts, 5 missions for AI coding CLIs",
   "main": "index.mjs",
   "bin": {
     "omu": "bin/omu.mjs",
@@ -58,7 +58,17 @@
     "command-gen",
     "worktree-sandbox",
     "config-sync",
-    "contracts"
+    "contracts",
+    "ralph",
+    "ai-slop-cleaner",
+    "autoresearch",
+    "ultraqa",
+    "external-context",
+    "ecomode",
+    "pipeline",
+    "debug",
+    "deepinit",
+    "git-master"
   ],
   "author": "Tushar Agarwal",
   "license": "MIT",

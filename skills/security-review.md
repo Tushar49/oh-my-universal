@@ -5,7 +5,7 @@
 > Different from `review.md` which is diff-scoped correctness review.
 > Inspired by: oh-my-codex ($security-review), claude-forge
 
-## When to Use
+## When to Trigger
 
 - Agent should proactively suggest for: auth changes, API endpoints, user input handling
 - User says "security review", "audit security", "check for vulnerabilities"
@@ -21,7 +21,7 @@
 | Trigger | After every change | Before deploy, after auth changes, periodic |
 | Output | Per-line findings | Threat surface report |
 
-## Audit Dimensions
+## Workflow
 
 ### 1. Secrets & Credentials
 - Hardcoded API keys, passwords, tokens in source code
@@ -95,4 +95,8 @@
 - Findings must be specific: show the vulnerable code, not just the category
 - Don't report theoretical risks without evidence in the codebase
 - Run actual audit tools where available (npm audit, pip-audit, etc.)
-- Not responsible for: general code quality (see review skill), build verification (see verify skill)
+
+## Not Responsible For
+
+- General code quality (see review skill)
+- Build verification (see verify skill)

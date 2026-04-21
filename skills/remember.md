@@ -11,13 +11,15 @@
 - When a pattern or convention is discovered that should persist
 - When a bug fix reveals something non-obvious about the codebase
 
-## Memory Backend Priority
+## Workflow
+
+### Memory Backend Priority
 
 1. Use the platform's native memory/store tools if available (e.g., `store_memory` in Copilot CLI).
 2. Fall back to repo-local `.memory/` files.
 3. If neither available, report memory candidates to the user.
 
-## Memory Storage
+### Memory Storage
 
 Memories are stored in `.memory/` at the project root:
 
@@ -68,7 +70,7 @@ Memories are stored in `.memory/` at the project root:
 - {what's left to do}
 ```
 
-## How to Save
+### How to Save
 
 At the end of a session (or when triggered):
 1. Review what was done this session
@@ -76,7 +78,7 @@ At the end of a session (or when triggered):
 3. Append to the appropriate memory file
 4. Don't duplicate existing entries
 
-## How to Load
+### How to Load
 
 At the START of every session:
 1. Check if `.memory/` exists
@@ -91,4 +93,23 @@ At the START of every session:
 - DO save project-specific quirks that would surprise a new contributor
 - .memory/ files should be gitignored (add to .gitignore if not already present)
 - If user wants shared memory, move to `docs/` instead
-- Not responsible for: project documentation (see doc-maintainer), code review (see review skill)
+
+## Output Format
+
+```markdown
+## Memory Update
+
+**Saved to:** {backend — native tool / .memory/ files}
+**Entries added:** {count}
+
+| Type | Entry | File |
+|------|-------|------|
+| Convention | {pattern} | conventions.md |
+| Gotcha | {issue} | gotchas.md |
+| Decision | {title} | decisions.md |
+```
+
+## Not Responsible For
+
+- Project documentation (see doc-maintainer)
+- Code review (see review skill)

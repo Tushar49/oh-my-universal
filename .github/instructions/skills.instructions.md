@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (47 total)
+# oh-my-universal Skills (57 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -19,6 +19,9 @@ development skills. Use them proactively.
 | "verify this works" | verify | Evidence-based change verification |
 | "fix the build" | build-fix | Auto-fix errors (3 attempts max) |
 | "tdd: {feature}" | tdd | Test-driven: write failing test -> implement -> refactor |
+| "ralph: {task}" | ralph | Persistent verify-and-fix loop (max 10 iterations) |
+| "pipeline: {stages}" | pipeline | User-defined sequential stage runner with rollback |
+| "ecomode" | ecomode | Token-efficient execution mode |
 
 ### Investigation
 
@@ -29,6 +32,9 @@ development skills. Use them proactively.
 | "ask codex / gemini" | ask | Query multiple AI models, cross-validate |
 | "map this codebase" | architecture | Understand structure quickly |
 | "analyze requirements" | analyst | Find missing specs before coding |
+| "research this" | autoresearch | Systematic multi-source research with cross-validation |
+| "load context" | external-context | Load external docs/URLs into agent context |
+| "debug this" | debug | Hands-on step-through debugging workflow |
 
 ### Quality
 
@@ -41,6 +47,8 @@ development skills. Use them proactively.
 | "optimize / profile" | perf-audit | Find and fix performance bottlenecks |
 | "pre-commit check" | pre-commit-check | Quality gate before commit |
 | "design this UI" | designer | UI/UX specs from requirements |
+| "clean this up" | ai-slop-cleaner | Strip AI cliches and fluff from output |
+| "full QA" | ultraqa | Comprehensive QA with iterative fix cycles |
 
 ### Documentation
 
@@ -67,6 +75,7 @@ development skills. Use them proactively.
 | "workflow state" | workflow-state | State machine for agent workflow |
 | "sandbox this" | container-sandbox | Run code in isolated container |
 | "worktree sandbox" | worktree-sandbox | Git worktree parallel isolation |
+| "git workflow" | git-master | Git workflow management (branches, PRs, conflicts) |
 
 ### Meta
 
@@ -81,6 +90,7 @@ development skills. Use them proactively.
 | "run mission" | mission-runner | Execute scoped task missions from missions/ |
 | "generate command" | command-gen | Scaffold reusable commands and PRPs |
 | "sync config" | config-sync | Sync agent rules across CLI frameworks |
+| "init project" | deepinit | Deep project initialization and scaffolding |
 
 ### Collaboration
 
@@ -106,11 +116,11 @@ Read the full skill file from `skills/{name}.md` for detailed workflow.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.

@@ -1,9 +1,9 @@
-# Workflow Spec: session-protocol
+# Skill: session-protocol
 
 > End-of-session cleanup workflow. Updates docs, saves memory, prepares commit.
 > This is a WORKFLOW SPEC — agents should follow this at end of every session.
 
-## Trigger
+## When to Trigger
 
 Agent should proactively run this when:
 - User says "done", "wrap up", "that's all"
@@ -67,3 +67,26 @@ Agent should proactively run this when:
 - Never auto-commit without user approval
 - Keep it fast — the session is ending, user wants to wrap up
 - If the session was just Q&A with no code changes, skip steps 1-5
+
+## Output Format
+
+```markdown
+## Session Summary
+
+**Duration:** {approximate}
+**Changes:** {N} files modified, {N} files created
+**Key outcomes:**
+- {what was accomplished}
+- {what was learned}
+
+**Left to do:**
+- {remaining items}
+
+**Commit ready:** {yes/no} — suggested message: "{message}"
+```
+
+## Not Responsible For
+
+- Code implementation (see ultrawork, plan)
+- Code review beyond quick sanity check (see review skill)
+- Full verification (see verify skill)

@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "47 cross-project development skills + 19 lifecycle hooks + 4 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "57 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | analyst | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (47 skills)
+# oh-my-universal — Skill Router for Claude Code (57 skills)
 
 ## Routing
 
@@ -21,6 +21,9 @@ Read the skill file based on `{{skill_name}}`:
 | `verify` | `skills/verify.md` |
 | `build-fix` or `fix` | `skills/build-fix.md` |
 | `tdd` | `skills/tdd.md` |
+| `ralph` or `fix-loop` | `skills/ralph.md` |
+| `pipeline` or `stages` | `skills/pipeline.md` |
+| `ecomode` or `eco` | `skills/ecomode.md` |
 
 ### Investigation
 | Input | Skill file |
@@ -30,6 +33,9 @@ Read the skill file based on `{{skill_name}}`:
 | `ask` or `cross-validate` | `skills/ask.md` |
 | `architecture` or `arch` | `skills/architecture.md` |
 | `analyst` or `requirements` | `skills/analyst.md` |
+| `autoresearch` or `research` | `skills/autoresearch.md` |
+| `external-context` or `load-context` | `skills/external-context.md` |
+| `debug` or `step-debug` | `skills/debug.md` |
 
 ### Quality
 | Input | Skill file |
@@ -41,6 +47,8 @@ Read the skill file based on `{{skill_name}}`:
 | `perf-audit` or `perf` | `skills/perf-audit.md` |
 | `pre-commit-check` or `pre-commit` | `skills/pre-commit-check.md` |
 | `designer` or `ui-spec` | `skills/designer.md` |
+| `ai-slop-cleaner` or `clean-slop` | `skills/ai-slop-cleaner.md` |
+| `ultraqa` or `qa` | `skills/ultraqa.md` |
 
 ### Documentation
 | Input | Skill file |
@@ -65,6 +73,7 @@ Read the skill file based on `{{skill_name}}`:
 | `workflow-state` or `state` | `skills/workflow-state.md` |
 | `container-sandbox` or `sandbox` | `skills/container-sandbox.md` |
 | `worktree-sandbox` or `worktree` | `skills/worktree-sandbox.md` |
+| `git-master` or `git` | `skills/git-master.md` |
 
 ### Meta
 | Input | Skill file |
@@ -78,6 +87,7 @@ Read the skill file based on `{{skill_name}}`:
 | `mission-runner` or `mission` or `run-mission` | `skills/mission-runner.md` |
 | `command-gen` or `gen-command` | `skills/command-gen.md` |
 | `config-sync` or `sync-config` | `skills/config-sync.md` |
+| `deepinit` or `init` | `skills/deepinit.md` |
 
 ### Collaboration
 | Input | Skill file |
@@ -97,11 +107,11 @@ Read the matched skill file and execute its workflow.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.

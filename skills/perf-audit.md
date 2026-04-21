@@ -4,7 +4,7 @@
 > Identifies bottlenecks, suggests fixes, measures improvement.
 > Inspired by: claude-forge performance profiling
 
-## When to Use
+## When to Trigger
 
 - User says "optimize", "slow", "performance", "bottleneck"
 - Application response time is unacceptable
@@ -70,10 +70,32 @@ For each fix:
 2. Re-measure the same metric
 3. Report improvement: `{operation}: {Xms} -> {Yms} ({Z%} improvement)`
 
+## Output Format
+
+```markdown
+## Performance Audit: {scope}
+
+**Baseline:** {operation} — {Xms} / {memory} / {queries}
+**After optimization:** {Yms} / {memory} / {queries}
+**Improvement:** {Z%}
+
+### Findings
+| # | Issue | Impact | Effort | Fix | Result |
+|---|-------|--------|--------|-----|--------|
+| 1 | {issue} | HIGH | LOW | {fix applied} | {Xms -> Yms} |
+
+### Recommendations
+- {remaining optimizations not yet applied}
+```
+
 ## Rules
 
 - Always MEASURE before and after. "Feels faster" is not evidence.
 - Optimize the bottleneck, not the fast parts. Profile first.
 - Don't sacrifice readability for micro-optimizations
 - Premature optimization is the root of all evil — optimize hot paths only
-- Not responsible for: code quality (see review), correctness (see verify)
+
+## Not Responsible For
+
+- Code quality (see review)
+- Correctness (see verify)

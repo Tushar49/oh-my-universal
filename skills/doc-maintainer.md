@@ -11,7 +11,7 @@
 - As part of ultrawork workflow (Step 5)
 - When documentation is visibly out of sync with code
 
-## What to Check and Update
+## Workflow
 
 ### 1. README.md
 - Does it still accurately describe what the project does?
@@ -38,6 +38,18 @@
 - Are all routing tables consistent with each other?
 - Are file paths correct?
 
+## Output Format
+
+```markdown
+## Documentation Update: {scope}
+
+**Files updated:** {count}
+**Changes:**
+| File | What changed | Why |
+|------|-------------|-----|
+| {path} | {description} | {reason} |
+```
+
 ## Rules
 
 - Only update docs that are DIRECTLY affected by the changes
@@ -47,4 +59,8 @@
 - Keep doc updates in the same commit as the code change when possible
 - Use the same naming conventions as the rest of the project
 - NEVER add fluff to docs - be concise and actionable
-- Not responsible for: agent memory/session logs (see remember skill), code review (see review skill)
+
+## Not Responsible For
+
+- Agent memory/session logs (see remember skill)
+- Code review (see review skill)

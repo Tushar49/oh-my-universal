@@ -11,7 +11,7 @@
 - Before a major refactoring effort
 - When onboarding to understand a project
 
-## Analysis Steps
+## Workflow
 
 ### Step 1 — Directory Scan
 Map the top-level structure:
@@ -83,4 +83,8 @@ Identify:
 - Skip node_modules, build output, and generated files
 - If the project has existing architecture docs, read those first
 - Persist via the project's memory backend (native memory tool, or `.memory/architecture.md` as fallback)
-- Not responsible for: environment/setup validation (see doctor skill), code review (see review skill)
+
+## Not Responsible For
+
+- Environment/setup validation (see doctor skill)
+- Code review (see review skill)

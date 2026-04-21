@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Cursor (47 total)
+# oh-my-universal Skills for Cursor (57 total)
 
-You have access to 47 development skills from the oh-my-universal skills library.
+You have access to 57 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -16,6 +16,9 @@ when the user invokes it or when the situation calls for it.
 | "verify" | skills/verify.md | Evidence-based verification (diff-aware) |
 | "fix build" | skills/build-fix.md | Auto-fix errors (3 attempts max) |
 | "tdd: {feature}" | skills/tdd.md | Red -> Green -> Refactor |
+| "ralph: {task}" | skills/ralph.md | Persistent verify-and-fix loop (max 10 iterations) |
+| "pipeline: {stages}" | skills/pipeline.md | User-defined sequential stage runner with rollback |
+| "ecomode" | skills/ecomode.md | Token-efficient execution mode |
 
 ### Investigation
 
@@ -26,6 +29,9 @@ when the user invokes it or when the situation calls for it.
 | "ask codex" | skills/ask.md | Query multiple AI models, cross-validate |
 | "map codebase" | skills/architecture.md | Understand structure |
 | "analyze requirements" | skills/analyst.md | Find missing specs before coding |
+| "research this" | skills/autoresearch.md | Systematic multi-source research with cross-validation |
+| "load context" | skills/external-context.md | Load external docs/URLs into agent context |
+| "debug this" | skills/debug.md | Hands-on step-through debugging workflow |
 
 ### Quality
 
@@ -38,6 +44,8 @@ when the user invokes it or when the situation calls for it.
 | "optimize" | skills/perf-audit.md | Performance profiling |
 | "pre-commit" | skills/pre-commit-check.md | Quality gate before commit |
 | "design UI" | skills/designer.md | UI/UX specs from requirements |
+| "clean this up" | skills/ai-slop-cleaner.md | Strip AI cliches and fluff from output |
+| "full QA" | skills/ultraqa.md | Comprehensive QA with iterative fix cycles |
 
 ### Documentation
 
@@ -64,6 +72,7 @@ when the user invokes it or when the situation calls for it.
 | "workflow state" | skills/workflow-state.md | State machine for workflow transitions |
 | "sandbox this" | skills/container-sandbox.md | Isolated container sandbox execution |
 | "worktree sandbox" | skills/worktree-sandbox.md | Git worktree parallel isolation |
+| "git workflow" | skills/git-master.md | Git workflow management (branches, PRs, conflicts) |
 
 ### Meta
 
@@ -78,6 +87,7 @@ when the user invokes it or when the situation calls for it.
 | "run mission" | skills/mission-runner.md | Execute scoped task missions from missions/ |
 | "generate command" | skills/command-gen.md | Scaffold reusable commands and PRPs |
 | "sync config" | skills/config-sync.md | Sync agent rules across CLI frameworks |
+| "init project" | skills/deepinit.md | Deep project initialization and scaffolding |
 
 ### Collaboration
 
@@ -90,13 +100,13 @@ when the user invokes it or when the situation calls for it.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.
 
 ## Proactive Use

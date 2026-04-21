@@ -1,10 +1,10 @@
-# Workflow Spec: pre-commit-check
+# Skill: pre-commit-check
 
 > Quality gate before committing. Runs review + verify + security checks.
 > This is a WORKFLOW SPEC — it describes when and how to trigger skills.
 > Actual enforcement requires CLI-specific adapters (see Phase 4).
 
-## Trigger
+## When to Trigger
 
 Before committing significant changes (agent should proactively suggest this).
 
@@ -37,3 +37,33 @@ Before committing significant changes (agent should proactively suggest this).
 | Claude Code | Hook: `tool.execute.before` on git commit |
 | Codex | `.codex/hooks.json` pre-commit hook |
 | Git native | `.git/hooks/pre-commit` script |
+
+## Output Format
+
+```markdown
+## Pre-Commit Check: {branch}
+
+**Files staged:** {count}
+**Result:** CLEAN / WARNINGS / BLOCKED
+
+| Check | Result | Details |
+|-------|--------|---------|
+| Verify | ✓ pass / ✗ fail | {summary} |
+| Review | ✓ clean / ⚠ warnings | {count} findings |
+| Security | ✓ clean / 🔴 critical | {summary} |
+
+**Recommendation:** {commit freely / fix warnings later / fix before committing}
+```
+
+## Rules
+
+- The agent should RECOMMEND, not BLOCK — only the user decides whether to commit
+- Run checks in order: verify -> review -> security
+- Skip security check if changes don't touch auth, input handling, or dependencies
+- Keep it fast — use diff-aware mode for verify and review
+
+## Not Responsible For
+
+- Actual committing (user decides)
+- CI/CD pipeline checks (those run separately)
+- Code implementation (see ultrawork, plan)

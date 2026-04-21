@@ -187,3 +187,13 @@
 | 9.2 | Polish docs/SETUP.md | done | Clear per-CLI sections with exact commands |
 | 9.3 | Fix docs/PROGRESS.md | done | Correct phase numbers, add missing task tables |
 | 9.4 | Update docs/REQUIREMENTS.md | done | Accurate counts: 47 skills, 19 hooks, 4 contracts, 5 missions |
+
+## 2026-04-21 — Phase 5: Final Sweep + Public Polish
+
+- CDP browse found 13 gaps — added 10 new skills (total: 57)
+- New skills: ralph, ai-slop-cleaner, autoresearch, ultraqa, external-context, ecomode, pipeline, debug, deepinit, git-master
+- Validated all skill files (22 structural fixes applied)
+- README polished for public launch (badges, FAQ, before/after, contributing)
+- Created CONTRIBUTING.md
+- GitHub search confirmed no major repos missed
+- Merged dev to main — repo is public-ready

@@ -4,7 +4,7 @@
 > Structured process: research -> evaluate -> plan -> port -> verify.
 > Born from real experience merging santifer/career-ops into JobApplications.
 
-## When to Use
+## When to Trigger
 
 - User says "integrate {repo}", "merge features from {repo}", "port {feature} from {repo}"
 - When adopting an open-source project's patterns into your own codebase
@@ -116,4 +116,8 @@ Add to the project's docs:
 - Keep your project's existing architecture unless there's a clear reason to change.
 - Port in small batches. Verify after each batch. Don't do everything at once.
 - Always document provenance (where features came from).
-- Not responsible for: code review of ported code (see review), security audit (see security-review)
+
+## Not Responsible For
+
+- Code review of ported code (see review)
+- Security audit (see security-review)

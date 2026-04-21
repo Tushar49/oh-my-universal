@@ -4,7 +4,7 @@
 > apply fix, re-run. Max 3 attempts then escalate to user.
 > Inspired by: oh-my-codex ($build-fix), oh-my-openagent (Hephaestus)
 
-## When to Use
+## When to Trigger
 
 - Build, test, or lint command fails
 - Agent should proactively use after any code change that might break the build
@@ -88,4 +88,8 @@ Stop and ask the user for guidance. Don't keep trying endlessly.
 - After fixing, run the ORIGINAL command again (not a subset)
 - Don't change tests to match broken code (fix the code instead)
 - If fixing one thing breaks another, revert and reassess
-- Not responsible for: security issues (see security-review), code quality beyond fixing the error (see review)
+
+## Not Responsible For
+
+- Security issues (see security-review)
+- Code quality beyond fixing the error (see review)

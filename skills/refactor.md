@@ -4,7 +4,7 @@
 > Preserves behavior while improving structure, readability, and maintainability.
 > Inspired by: claude-forge refactor agent
 
-## When to Use
+## When to Trigger
 
 - User says "refactor", "clean up this code", "improve structure"
 - After a feature is working but the code is messy
@@ -65,10 +65,29 @@ Refactor one pattern at a time. After EACH change:
 | {pattern} | {old approach} | {new approach} |
 ```
 
+## Output Format
+
+```markdown
+## Refactoring Report
+
+**Files changed:** {N}
+**Patterns addressed:** {N}
+**Tests:** all passing
+
+| Change | Before | After |
+|--------|--------|-------|
+| {pattern} | {old approach} | {new approach} |
+```
+
 ## Rules
 
 - NEVER change behavior. Refactoring = same behavior, better structure.
 - Always verify tests pass after each change. No tests = higher risk.
 - Don't refactor code you don't understand yet (use `architecture` skill first).
 - Small refactors are better than big ones. Each should be independently revertible.
-- Not responsible for: adding features (see plan), fixing bugs (see build-fix), security (see security-review)
+
+## Not Responsible For
+
+- Adding features (see plan)
+- Fixing bugs (see build-fix)
+- Security (see security-review)

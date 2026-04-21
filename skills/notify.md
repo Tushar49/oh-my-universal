@@ -1,15 +1,15 @@
-# Workflow Spec: notify
+# Skill: notify
 
 > Send notifications when long tasks complete.
 > Platform-adaptive: Discord webhook, system notification, or console output.
 
-## Trigger
+## When to Trigger
 
-- After a long-running task completes (build, test suite, batch processing)
+- After a long-running task completes(build, test suite, batch processing)
 - After background agent finishes
 - User says "notify me when done"
 
-## Notification Backends (priority order)
+## Workflow
 
 ### 1. Console Output (always available)
 ```
@@ -38,7 +38,7 @@ curl -H "Content-Type: application/json" \
   {webhook_url}
 ```
 
-## Message Format
+## Output Format
 
 ```
 🔔 {project}: {task name}
@@ -53,4 +53,8 @@ Details: {1-line summary}
 - Only attempt system/Discord notifications if configured
 - Don't block on notification delivery failures
 - Keep messages SHORT — just the essentials
-- Not responsible for: task execution (see other skills), error handling (see build-fix)
+
+## Not Responsible For
+
+- Task execution (see other skills)
+- Error handling (see build-fix)

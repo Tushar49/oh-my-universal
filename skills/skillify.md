@@ -4,7 +4,7 @@
 > useful repeatedly, extract it into a reusable skill file.
 > Inspired by: oh-my-claudecode (skillify)
 
-## When to Use
+## When to Trigger
 
 - Agent notices it's doing the same workflow 3+ times
 - User says "make this a skill", "save this workflow"
@@ -87,4 +87,7 @@ Before committing a new skill:
 - Skills should be SMALL and focused. One skill = one workflow.
 - If a skill does 3+ unrelated things, split it.
 - Every skill must have a "Not responsible for" section.
-- Not responsible for: using other skills (see their respective files)
+
+## Not Responsible For
+
+- Using other skills (see their respective files)

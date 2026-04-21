@@ -10,7 +10,7 @@
 - Before committing significant changes (auto-trigger suggestion)
 - After implementing a plan (as verification step)
 
-## What to Review
+## Workflow
 
 ### Inputs
 - Staged changes: `git diff --cached`
@@ -79,4 +79,8 @@
 - Every finding must be actionable (include a fix, not just a complaint)
 - NEVER comment on style or formatting
 - Be specific: cite exact file:line, show the problematic code
-- Not responsible for: planning (see plan skill), documentation (see doc-maintainer)
+
+## Not Responsible For
+
+- Planning (see plan skill)
+- Documentation (see doc-maintainer)

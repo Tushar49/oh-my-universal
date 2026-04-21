@@ -1,23 +1,78 @@
-# oh-my-universal
+<div align="center">
 
-**47 cross-project skills**, **19 lifecycle hooks**, and **4 behavior contracts** for AI coding CLIs. Universal agent enhancement layer
-that works across ALL major AI coding CLIs. Combines the best patterns from
-oh-my-codex, oh-my-claudecode, oh-my-openagent, clawhip, and more into a single
-unified system.
+# 🔮 oh-my-universal
+
+**57 skills · 20 hooks · 5 contracts · 5 missions**
+
+The universal agent enhancement layer for AI coding CLIs.
+
+Works with: Copilot CLI · Claude Code · OpenAI Codex · Gemini CLI · Cursor · Windsurf · OpenCode
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Skills](https://img.shields.io/badge/Skills-57-green.svg)](#skills-57-total)
+[![Hooks](https://img.shields.io/badge/Hooks-20-orange.svg)](#lifecycle-hooks)
+[![CLIs](https://img.shields.io/badge/CLIs-7-purple.svg)](#compatible-clis)
+
+</div>
+
+---
 
 ## What This Does
 
-Adds superpowers to your AI coding agents - regardless of which CLI you use:
+Adds superpowers to your AI coding agents - regardless of which CLI you use.
+Combines the best patterns from oh-my-codex, oh-my-claudecode, oh-my-openagent,
+clawhip, and more into a single unified system.
+
+### Before vs After
+
+**Without oh-my-universal:** Your AI agent writes code when asked. That's it.
+
+**With oh-my-universal:** Your AI agent plans before implementing, reviews its own code,
+remembers decisions across sessions, delegates to sub-agents, auto-fixes build failures,
+guards against dirty worktrees, produces handoffs between sessions, and self-improves
+from failures. Across ANY CLI tool you use.
+
+### Feature Highlights
+
 - **Auto-planning** before implementation (plan -> critique -> execute)
 - **Code review** on every significant change
 - **Memory/context persistence** across sessions
 - **Multi-agent delegation** for complex tasks
 - **Self-maintaining docs** - agents update documentation as they work
-- **Discord notifications** when long tasks complete
-- **Cross-project skills** - use these skills from any project directory
 - **Autonomous pipelines** - idea to validated code with zero intervention
 - **Screenshot-based UI review** - visual feedback on UI changes
 - **Lifecycle hooks** - intercept agent events to guard and extend behavior
+- **Discord notifications** when long tasks complete
+- **Cross-project skills** - use these skills from any project directory
+
+---
+
+## Quick Start
+
+```bash
+# Clone the repo
+git clone https://github.com/Tushar49/oh-my-universal.git
+```
+
+Then point your CLI at it:
+
+```bash
+# Copilot CLI
+copilot
+/add-dir /path/to/oh-my-universal
+
+# Claude Code
+claude --plugin-dir /path/to/oh-my-universal
+
+# Gemini CLI / OpenAI Codex / OpenCode
+# Reads AGENTS.md automatically - see docs/SETUP.md
+```
+
+That's it. No runtime, no dependencies - just plain markdown files your agent reads as instructions.
+
+See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup.
+
+---
 
 ## Compatible CLIs
 
@@ -31,28 +86,23 @@ Adds superpowers to your AI coding agents - regardless of which CLI you use:
 | Cursor | Rules file | `.cursor/rules/skills.mdc` | ✅ Ready |
 | Windsurf | Rules file | `.windsurfrules` | ✅ Ready |
 
-See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup instructions.
+---
 
-## Quick Start
+## How It Works
 
-```bash
-# From any project directory, add this repo's skills:
-
-# Copilot CLI
-copilot
-/add-dir E:\Projects\oh-my-universal
-
-# Claude Code  
-claude --plugin-dir E:\Projects\oh-my-universal
-
-# Gemini CLI
-# (reads GEMINI.md / AGENTS.md automatically - see docs/SETUP.md)
-
-# OpenAI Codex
-# (install hooks globally - see docs/SETUP.md)
+```
+skills/    → 57 reusable workflow patterns (plan, review, trace, etc.)
+hooks/     → 20 lifecycle event handlers (auto-run at key moments)
+contracts/ → 5 behavioral invariants (always enforced)
+missions/  → 5 scoped task packages (specific goals with success criteria)
 ```
 
-## Directory Structure
+**Skills** are the core - markdown files that any AI CLI reads as instructions.
+**Hooks** make the agent proactive (auto-save memories, guard worktrees, verify deliverables).
+**Contracts** are rules that can never be violated (state precedence, terminal handoffs).
+**Missions** are copy-paste task specs for common automation goals.
+
+### Directory Structure
 
 ```
 oh-my-universal/
@@ -60,10 +110,10 @@ oh-my-universal/
 │   ├── copilot-instructions.md   # Universal agent rules
 │   ├── agents/                   # Custom agents (planner, reviewer, etc.)
 │   └── prompts/                  # Reusable workflow prompts
-├── .research/                    # Source research from all oh-my repos
-├── skills/                       # 47 cross-project skills
-├── hooks/                        # 19 lifecycle hooks
-├── contracts/                    # 4 behavior contracts
+├── skills/                       # 57 cross-project skills
+├── hooks/                        # 20 lifecycle hooks
+├── contracts/                    # 5 behavior contracts
+├── missions/                     # 5 scoped task missions
 ├── config/                       # Configuration
 ├── docs/                         # Setup guides, architecture
 ├── AGENTS.md                     # Codex/Gemini entry
@@ -72,9 +122,11 @@ oh-my-universal/
 └── README.md
 ```
 
-## Skills (47 total)
+---
 
-### Core Workflow (6 skills)
+## Skills (57 total)
+
+### Core Workflow (9 skills)
 | Skill | Description |
 |-------|-------------|
 | **plan** | Structured planning with self-critique before implementation |
@@ -83,8 +135,11 @@ oh-my-universal/
 | **verify** | Evidence-based change verification (tests + manual checks) |
 | **build-fix** | Auto-fix build failures (3 attempts max, then escalate) |
 | **tdd** | Test-driven development: Red -> Green -> Refactor |
+| **ralph** | Persistent verify-and-fix loop until complete (max 10 iterations) |
+| **pipeline** | User-defined sequential stage runner with rollback |
+| **ecomode** | Token-efficient execution mode |
 
-### Investigation (5 skills)
+### Investigation (8 skills)
 | Skill | Description |
 |-------|-------------|
 | **deep-dive** | Two-stage investigation: causal tracing + Socratic questioning |
@@ -92,8 +147,11 @@ oh-my-universal/
 | **ask** | Query multiple AI models and cross-validate answers |
 | **architecture** | Map and understand codebase structure |
 | **analyst** | Requirements gap analysis - find missing specs before coding |
+| **autoresearch** | Systematic multi-source research with cross-validation |
+| **external-context** | Load external docs/URLs into agent context |
+| **debug** | Hands-on step-through debugging workflow |
 
-### Quality (7 skills)
+### Quality (9 skills)
 | Skill | Description |
 |-------|-------------|
 | **review** | High-signal code review (bugs, security, logic only) |
@@ -103,6 +161,8 @@ oh-my-universal/
 | **perf-audit** | Performance profiling: identify bottlenecks, measure, optimize |
 | **pre-commit-check** | Quality gate: verify + review + security before commit |
 | **designer** | UI/UX specs from requirements - wireframes, components, tokens |
+| **ai-slop-cleaner** | Strip AI cliches and fluff from output |
+| **ultraqa** | Comprehensive QA with iterative fix cycles |
 
 ### Documentation (4 skills)
 | Skill | Description |
@@ -112,7 +172,7 @@ oh-my-universal/
 | **remember** | Memory persistence across sessions (native tools -> .memory/ fallback) |
 | **writer-memory** | Enhanced persistent context for writing projects (tone, style, narrative) |
 
-### Operations (12 skills)
+### Operations (13 skills)
 | Skill | Description |
 |-------|-------------|
 | **release** | Release management: changelog, version bump, git tag, publish |
@@ -127,8 +187,9 @@ oh-my-universal/
 | **workflow-state** | State machine for agent workflow transitions |
 | **container-sandbox** | Run untrusted code in isolated container sandbox |
 | **worktree-sandbox** | Git worktree parallel isolation for safe experimentation |
+| **git-master** | Git workflow management (branches, PRs, conflicts) |
 
-### Meta (9 skills)
+### Meta (10 skills)
 | Skill | Description |
 |-------|-------------|
 | **self-improve** | Analyze agent failures, improve skills to prevent recurrence |
@@ -140,6 +201,7 @@ oh-my-universal/
 | **mission-runner** | Execute scoped task missions from missions/ directory |
 | **command-gen** | Scaffold reusable commands and PRPs |
 | **config-sync** | Sync agent rules across CLI frameworks |
+| **deepinit** | Deep project initialization and scaffolding |
 
 ### Collaboration (4 skills)
 | Skill | Description |
@@ -149,9 +211,11 @@ oh-my-universal/
 | **notify** | Notifications: console, system toast, Discord webhook |
 | **refactor** | Detect code smells, apply improvements preserving behavior |
 
+---
+
 ## Lifecycle Hooks
 
-19 lifecycle hooks in `hooks/` covering the complete agent lifecycle:
+20 lifecycle hooks in `hooks/` covering the complete agent lifecycle:
 
 | Category | Hooks |
 |----------|-------|
@@ -167,9 +231,11 @@ oh-my-universal/
 
 See `hooks/README.md` for detailed documentation.
 
+---
+
 ## Contracts
 
-4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
+5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
 
 | Contract | What it enforces |
 |----------|-----------------|
@@ -179,6 +245,8 @@ See `hooks/README.md` for detailed documentation.
 | `quality-gate` | Build + test + security + docs gates before commit |
 
 See `contracts/README.md` for details.
+
+---
 
 ## Missions
 
@@ -208,6 +276,8 @@ Create your own: copy `missions/_template/` and customize.
 - Windsurf: `.windsurfrules`
 - Setup guide: `docs/SETUP.md`
 
+---
+
 ## Sources
 
 Built by combining the best patterns from:
@@ -224,3 +294,40 @@ Built by combining the best patterns from:
 | [everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 160K | Skill taxonomy, multi-perspective review |
 | [awesome-claude-code](https://github.com/xavimondev/awesome-claude-code) | - | status-line patterns (claude-pace, claude-powerline), worktree isolation |
 | [career-ops](https://github.com/santifer/career-ops) | - | repo-merge workflow (real-world tested) |
+
+---
+
+## FAQ
+
+**Q: Do I need to install anything?**
+A: No. Just point your CLI at this directory. Skills are plain markdown - no runtime, no dependencies.
+
+**Q: Does this work with my existing project?**
+A: Yes. Use `/add-dir` (Copilot) or `--plugin-dir` (Claude) to add skills to any project.
+
+**Q: Can I use only some skills?**
+A: Yes. Skills are independent. Use what you need, ignore the rest.
+
+**Q: How is this different from CLAUDE.md instructions?**
+A: CLAUDE.md is one file for one tool. oh-my-universal is 57 skills + 20 hooks + 5 contracts
+that work across 7 different AI CLIs simultaneously.
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create a skill: `cp missions/_template/ missions/my-feature/` or `cp skills/plan.md skills/my-skill.md`
+3. Follow the skill format (see any existing skill)
+4. Update the adapter files: run `config-sync` skill or manually add to all CLI adapters
+5. Submit a PR
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+---
+
+<div align="center">
+Made with 🔮 by combining the best of the AI agent ecosystem.
+
+If this saves you time, consider giving it a ⭐
+</div>

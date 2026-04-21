@@ -59,3 +59,29 @@ Suggest committing. Only commit if user approves or repo workflow permits autono
 - For trivial tasks, suggest using plan+implement only (skip verify/review/doc)
 - Always report what was done at the end
 - When user invokes ultrawork, do NOT separately invoke plan — ultrawork includes planning. Plan skill is for standalone planning only.
+
+## Output Format
+
+```markdown
+## Ultrawork Report: {task title}
+
+**Steps completed:** {N}/6
+**Result:** COMPLETE / PARTIAL / BLOCKED
+
+| Step | Status | Notes |
+|------|--------|-------|
+| Plan | ✓ done | {summary} |
+| Implement | ✓ done | {N} files changed |
+| Verify | ✓ pass / ✗ fail | {test results} |
+| Review | ✓ clean / ⚠ warnings | {findings count} |
+| Document | ✓ done / — skipped | {what was updated} |
+| Commit | ✓ committed / ⏳ ready | {message} |
+
+### Changes
+- {list of files and what changed}
+```
+
+## Not Responsible For
+
+- Individual skill execution details (see each skill's own file)
+- Deciding WHAT to build (user provides the task)

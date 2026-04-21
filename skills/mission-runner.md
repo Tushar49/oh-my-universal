@@ -108,4 +108,31 @@ Present the mission report to the user with:
 - Report honestly — don't mark PASS unless you have evidence
 - A mission is complete only when ALL success criteria pass
 - If stuck on a criterion after 3 attempts, mark it FAIL with explanation
-- Not responsible for: creating new missions (user does that), maintaining the missions directory
+
+## Output Format
+
+```markdown
+## Mission Report: {mission name}
+
+**Status:** PASS / PARTIAL / FAIL
+**Success criteria:** {N}/{total} met
+
+| # | Success Criterion | Status | Evidence |
+|---|-------------------|--------|----------|
+| 1 | {criterion text} | PASS | {what proves it} |
+| 2 | {criterion text} | FAIL | {what's missing} |
+
+### Files Changed
+- {list of files modified}
+
+### Deviations from Plan
+- {any deviations}
+
+### Follow-up Recommendations
+- {if PARTIAL or FAIL, what to do next}
+```
+
+## Not Responsible For
+
+- Creating new missions (user does that)
+- Maintaining the missions directory

@@ -150,3 +150,11 @@
 | 7.3 | Update all 8 CLI adapters | done | 39 -> 44 skills, hooks section added |
 | 7.4 | Update README, package.json | done | v3.0.0, hooks table |
 | 7.5 | Update PROGRESS.md | done | This entry |
+
+## 2026-04-21 — Phase 4: Deep Sweep + Contracts
+
+- Added 3 final skills: command-gen, worktree-sandbox, config-sync (total: 47)
+- Added 4 behavior contracts in contracts/ directory
+- Enhanced 3 existing skills: workflow-state (state precedence), handoff (terminal states), session-manager (forensics)
+- 3 deep-sweep audits confirmed 100% coverage of all source repos
+- Sources: awesome-claude-code (slash commands, worktree isolation), oh-my-codex (state model, contracts)

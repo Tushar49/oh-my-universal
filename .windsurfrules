@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Windsurf (44 total)
+# oh-my-universal Skills for Windsurf (47 total)
 
-You have access to 44 development skills from the oh-my-universal skills library.
+You have access to 47 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -61,6 +61,7 @@ when the user invokes it or when the situation calls for it.
 | cancel | skills/cancel.md | Kill-switch to abort operations safely |
 | workflow-state | skills/workflow-state.md | State machine for workflow transitions |
 | container-sandbox | skills/container-sandbox.md | Isolated container sandbox execution |
+| worktree-sandbox | skills/worktree-sandbox.md | Git worktree parallel isolation |
 
 ## Meta
 
@@ -73,6 +74,8 @@ when the user invokes it or when the situation calls for it.
 | session-manager | skills/session-manager.md | Manage, resume, fork agent sessions |
 | session-protocol | skills/session-protocol.md | End-of-session cleanup |
 | mission-runner | skills/mission-runner.md | Execute scoped task missions from missions/ directory |
+| command-gen | skills/command-gen.md | Scaffold reusable commands and PRPs |
+| config-sync | skills/config-sync.md | Sync agent rules across CLI frameworks |
 
 ## Collaboration
 
@@ -88,3 +91,8 @@ when the user invokes it or when the situation calls for it.
 The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+See `contracts/README.md` for details.

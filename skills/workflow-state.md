@@ -109,6 +109,24 @@ On session resume (new conversation with existing state file):
 - Last checkpoint: {step N of M}
 ```
 
+## State Precedence Rules
+
+When multiple state sources exist, precedence order:
+1. **Session state** (current run) — highest priority
+2. **Project state** (.state/ directory) — persisted across sessions
+3. **Global state** (~/.omu/state/) — user-level defaults
+
+### Rollback Invariants
+- If a skill fails mid-execution, state rolls back to pre-skill snapshot
+- Rollback preserves: files created, memories saved (side effects stay)
+- Rollback reverts: workflow state, active skill, step counter
+
+### Denied Transitions
+- `completed` → `planning` (must start new run)
+- `cancelled` → `executing` (must restart)
+- `blocked` → `executing` (must resolve blocker first)
+- `idle` → `reviewing` (must execute first)
+
 ## Rules
 
 - State transitions MUST follow the transition rules. No exceptions.

@@ -123,6 +123,23 @@ At the start of a new session:
    3. Partial → cherry-pick items to carry forward
 ```
 
+## Terminal States
+
+Every skill invocation MUST end in one of these terminal states:
+
+| State | Meaning | Next action |
+|-------|---------|-------------|
+| `finished` | Work completed successfully | User reviews output |
+| `blocked` | Cannot proceed — needs external input | User provides info or makes decision |
+| `failed` | Work attempted but could not complete | User decides: retry, skip, or escalate |
+| `cancelled` | User or cancel skill aborted the work | State preserved for potential resume |
+| `needs-input` | Reached a decision point | User makes a choice, work continues |
+
+### Invariants
+- A skill that exits without setting a terminal state is a BUG
+- The handoff document MUST include the terminal state
+- `blocked` and `needs-input` handoffs MUST include specific questions/decisions needed
+
 ## Rules
 
 - Handoff documents are HUMAN-READABLE markdown — a person should be able to understand the state without tools

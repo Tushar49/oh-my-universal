@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "44 cross-project development skills + 19 lifecycle hooks: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "47 cross-project development skills + 19 lifecycle hooks + 4 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | analyst | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | analyst | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (44 skills)
+# oh-my-universal — Skill Router for Claude Code (47 skills)
 
 ## Routing
 
@@ -64,6 +64,7 @@ Read the skill file based on `{{skill_name}}`:
 | `cancel` or `abort` | `skills/cancel.md` |
 | `workflow-state` or `state` | `skills/workflow-state.md` |
 | `container-sandbox` or `sandbox` | `skills/container-sandbox.md` |
+| `worktree-sandbox` or `worktree` | `skills/worktree-sandbox.md` |
 
 ### Meta
 | Input | Skill file |
@@ -75,6 +76,8 @@ Read the skill file based on `{{skill_name}}`:
 | `session-manager` or `sessions` | `skills/session-manager.md` |
 | `session-protocol` or `wrap-up` | `skills/session-protocol.md` |
 | `mission-runner` or `mission` or `run-mission` | `skills/mission-runner.md` |
+| `command-gen` or `gen-command` | `skills/command-gen.md` |
+| `config-sync` or `sync-config` | `skills/config-sync.md` |
 
 ### Collaboration
 | Input | Skill file |
@@ -97,3 +100,8 @@ Read the matched skill file and execute its workflow.
 The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+See `contracts/README.md` for details.

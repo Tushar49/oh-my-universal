@@ -1,6 +1,6 @@
 # oh-my-universal
 
-**44 cross-project skills** and **19 lifecycle hooks** for AI coding CLIs. Universal agent enhancement layer
+**47 cross-project skills**, **19 lifecycle hooks**, and **4 behavior contracts** for AI coding CLIs. Universal agent enhancement layer
 that works across ALL major AI coding CLIs. Combines the best patterns from
 oh-my-codex, oh-my-claudecode, oh-my-openagent, clawhip, and more into a single
 unified system.
@@ -61,8 +61,9 @@ oh-my-universal/
 │   ├── agents/                   # Custom agents (planner, reviewer, etc.)
 │   └── prompts/                  # Reusable workflow prompts
 ├── .research/                    # Source research from all oh-my repos
-├── skills/                       # 44 cross-project skills
+├── skills/                       # 47 cross-project skills
 ├── hooks/                        # 19 lifecycle hooks
+├── contracts/                    # 4 behavior contracts
 ├── config/                       # Configuration
 ├── docs/                         # Setup guides, architecture
 ├── AGENTS.md                     # Codex/Gemini entry
@@ -71,7 +72,7 @@ oh-my-universal/
 └── README.md
 ```
 
-## Skills (44 total)
+## Skills (47 total)
 
 ### Core Workflow (6 skills)
 | Skill | Description |
@@ -111,7 +112,7 @@ oh-my-universal/
 | **remember** | Memory persistence across sessions (native tools -> .memory/ fallback) |
 | **writer-memory** | Enhanced persistent context for writing projects (tone, style, narrative) |
 
-### Operations (11 skills)
+### Operations (12 skills)
 | Skill | Description |
 |-------|-------------|
 | **release** | Release management: changelog, version bump, git tag, publish |
@@ -125,8 +126,9 @@ oh-my-universal/
 | **cancel** | Kill-switch to safely abort running operations |
 | **workflow-state** | State machine for agent workflow transitions |
 | **container-sandbox** | Run untrusted code in isolated container sandbox |
+| **worktree-sandbox** | Git worktree parallel isolation for safe experimentation |
 
-### Meta (7 skills)
+### Meta (9 skills)
 | Skill | Description |
 |-------|-------------|
 | **self-improve** | Analyze agent failures, improve skills to prevent recurrence |
@@ -136,6 +138,8 @@ oh-my-universal/
 | **session-manager** | Manage, resume, and fork agent sessions with persistent state |
 | **session-protocol** | End-of-session: docs + memory + verify + commit prep |
 | **mission-runner** | Execute scoped task missions from missions/ directory |
+| **command-gen** | Scaffold reusable commands and PRPs |
+| **config-sync** | Sync agent rules across CLI frameworks |
 
 ### Collaboration (4 skills)
 | Skill | Description |
@@ -162,6 +166,19 @@ oh-my-universal/
 | Context | pre-compact, context-inject |
 
 See `hooks/README.md` for detailed documentation.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
+
+| Contract | What it enforces |
+|----------|-----------------|
+| `state-precedence` | Session > project > global state; rollback on failure; forbidden transitions |
+| `terminal-handoff` | Every skill must end in a terminal state (finished/blocked/failed/cancelled/needs-input) |
+| `team-mutation` | Claim-and-version protocol for parallel sub-agent work |
+| `quality-gate` | Build + test + security + docs gates before commit |
+
+See `contracts/README.md` for details.
 
 ## Missions
 
@@ -197,7 +214,7 @@ Built by combining the best patterns from:
 
 | Source | Stars | What we took |
 |--------|-------|-------------|
-| [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | - | plan, ultrawork, team, build-fix, tdd, dirty-guard, run-tagging, parity-check, handoff |
+| [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) | - | plan, ultrawork, team, build-fix, tdd, dirty-guard, run-tagging, parity-check, handoff, state model, contracts |
 | [oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) | - | remember, team, session hooks, skill routing, autopilot, deep-dive, ask, trace, visual-verdict, wiki, writer-memory, release, self-improve, hud, session-manager, mcp-setup, hooks |
 | [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) | - | architecture (Atlas), review (Momus), doc-maintainer (Librarian) |
 | [clawhip](https://github.com/Yeachan-Heo/clawhip) | - | notify (Discord), memory offload |
@@ -205,5 +222,5 @@ Built by combining the best patterns from:
 | [caveman](https://github.com/JuliusBrussee/caveman) | 38K | Compact token-light skill design |
 | [claude-forge](https://github.com/sangrokjung/claude-forge) | 659 | Security hooks, pre-commit gates, refactor patterns |
 | [everything-claude-code](https://github.com/affaan-m/everything-claude-code) | 160K | Skill taxonomy, multi-perspective review |
-| [awesome-claude-code](https://github.com/xavimondev/awesome-claude-code) | - | status-line patterns (claude-pace, claude-powerline) |
+| [awesome-claude-code](https://github.com/xavimondev/awesome-claude-code) | - | status-line patterns (claude-pace, claude-powerline), worktree isolation |
 | [career-ops](https://github.com/santifer/career-ops) | - | repo-merge workflow (real-world tested) |

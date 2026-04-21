@@ -1,7 +1,7 @@
 {
   "name": "oh-my-universal",
-  "version": "3.0.0",
-  "description": "44 skills, 19 hooks, 5 missions - universal agent enhancement layer for AI coding CLIs (Copilot, Claude, Codex, Gemini, OpenCode, Cursor, Windsurf)",
+  "version": "4.0.0",
+  "description": "47 skills, 19 hooks, 4 contracts, 5 missions for AI coding CLIs",
   "main": "index.mjs",
   "bin": {
     "omu": "bin/omu.mjs",
@@ -54,7 +54,11 @@
     "analyst",
     "designer",
     "workflow-state",
-    "container-sandbox"
+    "container-sandbox",
+    "command-gen",
+    "worktree-sandbox",
+    "config-sync",
+    "contracts"
   ],
   "author": "Tushar Agarwal",
   "license": "MIT",
@@ -65,6 +69,7 @@
   "files": [
     "skills/",
     "hooks/",
+    "contracts/",
     ".github/",
     ".claude/",
     ".cursor/",

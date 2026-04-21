@@ -2,12 +2,12 @@
 
 Read `.github/copilot-instructions.md` for all project rules.
 
-This is a cross-project skills repo with **44 skills** and **19 lifecycle hooks**. Use it from any project:
+This is a cross-project skills repo with **47 skills**, **19 lifecycle hooks**, and **4 behavior contracts**. Use it from any project:
 ```
 claude --plugin-dir E:\Projects\oh-my-universal
 ```
 
-## All 44 Skills
+## All 47 Skills
 
 ### Core Workflow
 | Skill | File | Description |
@@ -61,6 +61,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | cancel | `skills/cancel.md` | Kill-switch to abort operations safely |
 | workflow-state | `skills/workflow-state.md` | State machine for workflow transitions |
 | container-sandbox | `skills/container-sandbox.md` | Isolated container sandbox execution |
+| worktree-sandbox | `skills/worktree-sandbox.md` | Git worktree parallel isolation |
 
 ### Meta
 | Skill | File | Description |
@@ -72,6 +73,8 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | session-manager | `skills/session-manager.md` | Manage, resume, fork agent sessions |
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
 | mission-runner | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
+| command-gen | `skills/command-gen.md` | Scaffold reusable commands and PRPs |
+| config-sync | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 
 ### Collaboration
 | Skill | File | Description |
@@ -86,5 +89,10 @@ claude --plugin-dir E:\Projects\oh-my-universal
 The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for details.
+
+### Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+See `contracts/README.md` for details.
 
 Always update `docs/PROGRESS.md` after every session.

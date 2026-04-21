@@ -53,6 +53,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **cancel** | `skills/cancel.md` | Kill-switch to abort running operations safely |
 | **workflow-state** | `skills/workflow-state.md` | State machine for agent workflow transitions |
 | **container-sandbox** | `skills/container-sandbox.md` | Run untrusted code in isolated container sandbox |
+| **worktree-sandbox** | `skills/worktree-sandbox.md` | Git worktree parallel isolation for safe experimentation |
 | | | **Meta** |
 | **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
 | **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
@@ -61,6 +62,8 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **session-manager** | `skills/session-manager.md` | Manage, resume, and fork agent sessions with persistent state |
 | **session-protocol** | `skills/session-protocol.md` | End-of-session: docs + memory + verify + commit prep |
 | **mission-runner** | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
+| **command-gen** | `skills/command-gen.md` | Scaffold reusable commands and PRPs |
+| **config-sync** | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 | | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
@@ -72,6 +75,19 @@ It is NOT a standalone project - it's used FROM other project directories via
 The `hooks/` directory contains 19 lifecycle hooks covering the complete agent
 lifecycle: session, tool, skill, keyword, memory, safety, quality, subagent,
 and context events. See `hooks/README.md` for the full list.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
+
+| Contract | What it enforces |
+|----------|-----------------|
+| `state-precedence` | Session > project > global state; rollback on failure; forbidden transitions |
+| `terminal-handoff` | Every skill must end in a terminal state (finished/blocked/failed/cancelled/needs-input) |
+| `team-mutation` | Claim-and-version protocol for parallel sub-agent work |
+| `quality-gate` | Build + test + security + docs gates before commit |
+
+See `contracts/README.md` for details.
 
 ## How to Use From Another Project
 
@@ -103,8 +119,9 @@ Every agent session MUST:
 | `docs/PROGRESS.md` | Progress tracker (update every session) |
 | `.research/` | Raw research from source repos |
 | `.research/unified-feature-matrix.md` | Master feature porting plan |
-| `skills/` | Cross-project skills (44 total - the main product) |
+| `skills/` | Cross-project skills (47 total - the main product) |
 | `hooks/` | 19 lifecycle hooks for agent events |
+| `contracts/` | 4 behavior contracts for skills and hooks |
 
 ## Quality Standards
 

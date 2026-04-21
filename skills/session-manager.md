@@ -109,6 +109,25 @@ Forked session: ses_abc123 -> ses_ghi789
   Fork starts with same context, clean slate for changes.
 ```
 
+## Session Forensics
+
+Search, replay, and analyze past sessions:
+
+### Search
+- Query past sessions by: date range, skill used, files modified, keywords
+- Search across `.sessions/` and `.memory/` for matching context
+- Example: "find sessions where we worked on auth module"
+
+### Replay
+- Load a past session's state to understand decisions made
+- Show: plan used, files modified, test results, memories created
+- Does NOT re-execute — just shows what happened
+
+### History
+- Maintain session index at `.sessions/index.md`
+- Each entry: session-id, date, duration, skills used, files touched, outcome
+- Auto-prune: remove sessions older than 90 days (configurable)
+
 ## Rules
 
 - Session IDs are auto-generated - never ask the user to pick an ID

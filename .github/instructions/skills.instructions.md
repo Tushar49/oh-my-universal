@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (44 total)
+# oh-my-universal Skills (47 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -66,6 +66,7 @@ development skills. Use them proactively.
 | "cancel" / "abort" | cancel | Kill-switch to abort running operations |
 | "workflow state" | workflow-state | State machine for agent workflow |
 | "sandbox this" | container-sandbox | Run code in isolated container |
+| "worktree sandbox" | worktree-sandbox | Git worktree parallel isolation |
 
 ### Meta
 
@@ -78,6 +79,8 @@ development skills. Use them proactively.
 | "resume session" | session-manager | Manage, resume, fork agent sessions |
 | "wrap up" | session-protocol | End-of-session cleanup |
 | "run mission" | mission-runner | Execute scoped task missions from missions/ |
+| "generate command" | command-gen | Scaffold reusable commands and PRPs |
+| "sync config" | config-sync | Sync agent rules across CLI frameworks |
 
 ### Collaboration
 
@@ -106,3 +109,8 @@ Read the full skill file from `skills/{name}.md` for detailed workflow.
 The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+See `contracts/README.md` for details.

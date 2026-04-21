@@ -4,11 +4,11 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 ## Key Points
 
-- This is a cross-project skills repo with **44 skills** and **19 lifecycle hooks**, not a standalone project
+- This is a cross-project skills repo with **47 skills**, **19 lifecycle hooks**, and **4 behavior contracts**, not a standalone project
 - Skills in `skills/` can be used from any project directory
 - Always update `docs/PROGRESS.md` after every session
 
-## Available Skills (44)
+## Available Skills (47)
 
 ### Core Workflow
 
@@ -67,6 +67,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | cancel | `skills/cancel.md` | Kill-switch to abort operations safely |
 | workflow-state | `skills/workflow-state.md` | State machine for workflow transitions |
 | container-sandbox | `skills/container-sandbox.md` | Isolated container sandbox execution |
+| worktree-sandbox | `skills/worktree-sandbox.md` | Git worktree parallel isolation |
 
 ### Meta
 
@@ -79,6 +80,8 @@ Read `.github/copilot-instructions.md` for all project rules.
 | session-manager | `skills/session-manager.md` | Manage, resume, fork agent sessions |
 | session-protocol | `skills/session-protocol.md` | End-of-session cleanup workflow |
 | mission-runner | `skills/mission-runner.md` | Execute scoped task missions from missions/ directory |
+| command-gen | `skills/command-gen.md` | Scaffold reusable commands and PRPs |
+| config-sync | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 
 ### Collaboration
 
@@ -94,3 +97,8 @@ Read `.github/copilot-instructions.md` for all project rules.
 The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
+
+## Contracts
+
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+See `contracts/README.md` for details.

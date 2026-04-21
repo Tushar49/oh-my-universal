@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Cursor (39 total)
+# oh-my-universal Skills for Cursor (44 total)
 
-You have access to 39 development skills from the oh-my-universal skills library.
+You have access to 44 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -25,6 +25,7 @@ when the user invokes it or when the situation calls for it.
 | "trace this" | skills/trace.md | Structured hypothesis-driven debugging |
 | "ask codex" | skills/ask.md | Query multiple AI models, cross-validate |
 | "map codebase" | skills/architecture.md | Understand structure |
+| "analyze requirements" | skills/analyst.md | Find missing specs before coding |
 
 ### Quality
 
@@ -36,6 +37,7 @@ when the user invokes it or when the situation calls for it.
 | "visual check" | skills/visual-verdict.md | Screenshot-based UI review |
 | "optimize" | skills/perf-audit.md | Performance profiling |
 | "pre-commit" | skills/pre-commit-check.md | Quality gate before commit |
+| "design UI" | skills/designer.md | UI/UX specs from requirements |
 
 ### Documentation
 
@@ -58,6 +60,9 @@ when the user invokes it or when the situation calls for it.
 | "hand off" | skills/handoff.md | State handoff between agent runs |
 | "show progress" | skills/status-line.md | Terminal progress indicators |
 | "show status" | skills/hud.md | Heads-up display for agent progress |
+| "cancel" / "abort" | skills/cancel.md | Kill-switch to abort operations |
+| "workflow state" | skills/workflow-state.md | State machine for workflow transitions |
+| "sandbox this" | skills/container-sandbox.md | Isolated container sandbox execution |
 
 ### Meta
 
@@ -79,6 +84,12 @@ when the user invokes it or when the situation calls for it.
 | "merge {repo}" | skills/repo-merge.md | External repo feature integration |
 | "notify" | skills/notify.md | Send completion notification |
 | "refactor" | skills/refactor.md | Improve structure, preserve behavior |
+
+## Lifecycle Hooks
+
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+skill, keyword, memory, safety, quality, subagent, and context events.
+See `hooks/README.md` for the full list.
 
 ## Proactive Use
 

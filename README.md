@@ -1,6 +1,6 @@
 # oh-my-universal
 
-**39 cross-project skills** for AI coding CLIs. Universal agent enhancement layer
+**44 cross-project skills** and **19 lifecycle hooks** for AI coding CLIs. Universal agent enhancement layer
 that works across ALL major AI coding CLIs. Combines the best patterns from
 oh-my-codex, oh-my-claudecode, oh-my-openagent, clawhip, and more into a single
 unified system.
@@ -61,7 +61,8 @@ oh-my-universal/
 │   ├── agents/                   # Custom agents (planner, reviewer, etc.)
 │   └── prompts/                  # Reusable workflow prompts
 ├── .research/                    # Source research from all oh-my repos
-├── skills/                       # 38 cross-project skills
+├── skills/                       # 44 cross-project skills
+├── hooks/                        # 19 lifecycle hooks
 ├── config/                       # Configuration
 ├── docs/                         # Setup guides, architecture
 ├── AGENTS.md                     # Codex/Gemini entry
@@ -70,7 +71,7 @@ oh-my-universal/
 └── README.md
 ```
 
-## Skills (39 total)
+## Skills (44 total)
 
 ### Core Workflow (6 skills)
 | Skill | Description |
@@ -82,15 +83,16 @@ oh-my-universal/
 | **build-fix** | Auto-fix build failures (3 attempts max, then escalate) |
 | **tdd** | Test-driven development: Red -> Green -> Refactor |
 
-### Investigation (4 skills)
+### Investigation (5 skills)
 | Skill | Description |
 |-------|-------------|
 | **deep-dive** | Two-stage investigation: causal tracing + Socratic questioning |
 | **trace** | Evidence-driven debugging with structured hypothesis testing |
 | **ask** | Query multiple AI models and cross-validate answers |
 | **architecture** | Map and understand codebase structure |
+| **analyst** | Requirements gap analysis - find missing specs before coding |
 
-### Quality (6 skills)
+### Quality (7 skills)
 | Skill | Description |
 |-------|-------------|
 | **review** | High-signal code review (bugs, security, logic only) |
@@ -99,6 +101,7 @@ oh-my-universal/
 | **visual-verdict** | Screenshot-based UI review with structured visual feedback |
 | **perf-audit** | Performance profiling: identify bottlenecks, measure, optimize |
 | **pre-commit-check** | Quality gate: verify + review + security before commit |
+| **designer** | UI/UX specs from requirements - wireframes, components, tokens |
 
 ### Documentation (4 skills)
 | Skill | Description |
@@ -108,7 +111,7 @@ oh-my-universal/
 | **remember** | Memory persistence across sessions (native tools -> .memory/ fallback) |
 | **writer-memory** | Enhanced persistent context for writing projects (tone, style, narrative) |
 
-### Operations (8 skills)
+### Operations (11 skills)
 | Skill | Description |
 |-------|-------------|
 | **release** | Release management: changelog, version bump, git tag, publish |
@@ -119,6 +122,9 @@ oh-my-universal/
 | **handoff** | Structured state handoff between agent runs |
 | **status-line** | Compact terminal progress indicators during long operations |
 | **hud** | Heads-up display - compact status showing agent progress |
+| **cancel** | Kill-switch to safely abort running operations |
+| **workflow-state** | State machine for agent workflow transitions |
+| **container-sandbox** | Run untrusted code in isolated container sandbox |
 
 ### Meta (7 skills)
 | Skill | Description |
@@ -131,12 +137,31 @@ oh-my-universal/
 | **session-protocol** | End-of-session: docs + memory + verify + commit prep |
 | **mission-runner** | Execute scoped task missions from missions/ directory |
 
-### Collaboration(3 skills)
+### Collaboration (4 skills)
 | Skill | Description |
 |-------|-------------|
 | **team** | Multi-agent delegation with serial fallback |
 | **repo-merge** | Merge features from external repos (research -> matrix -> port) |
 | **notify** | Notifications: console, system toast, Discord webhook |
+| **refactor** | Detect code smells, apply improvements preserving behavior |
+
+## Lifecycle Hooks
+
+19 lifecycle hooks in `hooks/` covering the complete agent lifecycle:
+
+| Category | Hooks |
+|----------|-------|
+| Session | session-start, session-end |
+| Tool | pre-tool, post-tool, tool-failure |
+| Skill | skill-start, skill-end |
+| Keyword | keyword-detector |
+| Memory | memory-save, memory-load |
+| Safety | permission-check, dirty-guard-hook, context-guard |
+| Quality | verify-deliverables, code-simplifier-hook |
+| Subagent | subagent-start, subagent-end |
+| Context | pre-compact, context-inject |
+
+See `hooks/README.md` for detailed documentation.
 
 ## Missions
 

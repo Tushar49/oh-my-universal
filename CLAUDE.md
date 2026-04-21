@@ -2,12 +2,12 @@
 
 Read `.github/copilot-instructions.md` for all project rules.
 
-This is a cross-project skills repo with **39 skills**. Use it from any project:
+This is a cross-project skills repo with **44 skills** and **19 lifecycle hooks**. Use it from any project:
 ```
 claude --plugin-dir E:\Projects\oh-my-universal
 ```
 
-## All 39 Skills
+## All 44 Skills
 
 ### Core Workflow
 | Skill | File | Description |
@@ -26,6 +26,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | trace | `skills/trace.md` | Structured hypothesis-driven debugging |
 | ask | `skills/ask.md` | Query multiple AI models, cross-validate |
 | architecture | `skills/architecture.md` | Map and understand codebase structure |
+| analyst | `skills/analyst.md` | Requirements gap analysis |
 
 ### Quality
 | Skill | File | Description |
@@ -36,6 +37,7 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | visual-verdict | `skills/visual-verdict.md` | Screenshot-based UI review |
 | perf-audit | `skills/perf-audit.md` | Performance profiling and optimization |
 | pre-commit-check | `skills/pre-commit-check.md` | Quality gate before commit |
+| designer | `skills/designer.md` | UI/UX specs from requirements |
 
 ### Documentation
 | Skill | File | Description |
@@ -56,6 +58,9 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | handoff | `skills/handoff.md` | State handoff between agent runs |
 | status-line | `skills/status-line.md` | Terminal progress indicators |
 | hud | `skills/hud.md` | Heads-up display for agent progress |
+| cancel | `skills/cancel.md` | Kill-switch to abort operations safely |
+| workflow-state | `skills/workflow-state.md` | State machine for workflow transitions |
+| container-sandbox | `skills/container-sandbox.md` | Isolated container sandbox execution |
 
 ### Meta
 | Skill | File | Description |
@@ -75,5 +80,11 @@ claude --plugin-dir E:\Projects\oh-my-universal
 | repo-merge | `skills/repo-merge.md` | Merge features from external repos |
 | notify | `skills/notify.md` | Notifications: console, system, Discord |
 | refactor | `skills/refactor.md` | Code smell detection + improvements |
+
+### Lifecycle Hooks
+
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+skill, keyword, memory, safety, quality, subagent, and context events.
+See `hooks/README.md` for details.
 
 Always update `docs/PROGRESS.md` after every session.

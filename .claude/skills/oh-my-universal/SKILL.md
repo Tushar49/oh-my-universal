@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "39 cross-project development skills: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "44 cross-project development skills + 19 lifecycle hooks: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | deep-dive | trace | ask | architecture | analyst | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (39 skills)
+# oh-my-universal — Skill Router for Claude Code (44 skills)
 
 ## Routing
 
@@ -29,6 +29,7 @@ Read the skill file based on `{{skill_name}}`:
 | `trace` or `debug` | `skills/trace.md` |
 | `ask` or `cross-validate` | `skills/ask.md` |
 | `architecture` or `arch` | `skills/architecture.md` |
+| `analyst` or `requirements` | `skills/analyst.md` |
 
 ### Quality
 | Input | Skill file |
@@ -39,6 +40,7 @@ Read the skill file based on `{{skill_name}}`:
 | `visual-verdict` or `visual` | `skills/visual-verdict.md` |
 | `perf-audit` or `perf` | `skills/perf-audit.md` |
 | `pre-commit-check` or `pre-commit` | `skills/pre-commit-check.md` |
+| `designer` or `ui-spec` | `skills/designer.md` |
 
 ### Documentation
 | Input | Skill file |
@@ -59,6 +61,9 @@ Read the skill file based on `{{skill_name}}`:
 | `handoff` | `skills/handoff.md` |
 | `status-line` or `progress` | `skills/status-line.md` |
 | `hud` or `status` | `skills/hud.md` |
+| `cancel` or `abort` | `skills/cancel.md` |
+| `workflow-state` or `state` | `skills/workflow-state.md` |
+| `container-sandbox` or `sandbox` | `skills/container-sandbox.md` |
 
 ### Meta
 | Input | Skill file |
@@ -86,3 +91,9 @@ Read the skill file based on `{{skill_name}}`:
 | (JD or task text) | Default to `ultrawork` |
 
 Read the matched skill file and execute its workflow.
+
+## Lifecycle Hooks
+
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+skill, keyword, memory, safety, quality, subagent, and context events.
+See `hooks/README.md` for the full list.

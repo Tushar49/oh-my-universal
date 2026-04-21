@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (39 total)
+# oh-my-universal Skills (44 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -28,6 +28,7 @@ development skills. Use them proactively.
 | "trace this" | trace | Structured hypothesis-driven debugging |
 | "ask codex / gemini" | ask | Query multiple AI models, cross-validate |
 | "map this codebase" | architecture | Understand structure quickly |
+| "analyze requirements" | analyst | Find missing specs before coding |
 
 ### Quality
 
@@ -39,6 +40,7 @@ development skills. Use them proactively.
 | "visual check" | visual-verdict | Screenshot-based UI review |
 | "optimize / profile" | perf-audit | Find and fix performance bottlenecks |
 | "pre-commit check" | pre-commit-check | Quality gate before commit |
+| "design this UI" | designer | UI/UX specs from requirements |
 
 ### Documentation
 
@@ -61,6 +63,9 @@ development skills. Use them proactively.
 | "hand off" | handoff | State handoff between agent runs |
 | "show progress" | status-line | Terminal progress indicators |
 | "show status" | hud | Heads-up display for agent progress |
+| "cancel" / "abort" | cancel | Kill-switch to abort running operations |
+| "workflow state" | workflow-state | State machine for agent workflow |
+| "sandbox this" | container-sandbox | Run code in isolated container |
 
 ### Meta
 
@@ -95,3 +100,9 @@ Proactively use these skills in these situations:
 - **Session start**: follow `skills/run-tagging.md`
 
 Read the full skill file from `skills/{name}.md` for detailed workflow.
+
+## Lifecycle Hooks
+
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
+skill, keyword, memory, safety, quality, subagent, and context events.
+See `hooks/README.md` for the full list.

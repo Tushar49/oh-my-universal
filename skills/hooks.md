@@ -137,7 +137,25 @@ Event fires
   → Operation proceeds
 ```
 
-## Built-in Hooks
+## Built-in Hook Library
+
+See `hooks/` directory for 20 pre-defined hooks covering the complete agent lifecycle.
+Each hook file defines the event trigger, behavior, and side effects.
+
+| Category | Hooks | Count |
+|----------|-------|-------|
+| Session | session-start, session-end | 2 |
+| Tool | pre-tool, post-tool, tool-failure | 3 |
+| Skill | skill-start, skill-end | 2 |
+| Keyword | keyword-detector | 1 |
+| Memory | memory-save, memory-load | 2 |
+| Safety | permission-check, dirty-guard-hook, context-guard | 3 |
+| Quality | verify-deliverables, code-simplifier-hook | 2 |
+| Subagent | subagent-start, subagent-end | 2 |
+| Context | pre-compact, context-inject | 2 |
+| **Total** | | **20** |
+
+## Built-in Hooks (Summary)
 
 These hooks should be configured by default in projects using oh-my-universal:
 

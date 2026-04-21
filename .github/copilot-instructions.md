@@ -27,6 +27,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **trace** | `skills/trace.md` | Evidence-driven debugging with structured hypothesis testing |
 | **ask** | `skills/ask.md` | Query multiple AI models and cross-validate answers |
 | **architecture** | `skills/architecture.md` | Map and understand codebase structure quickly |
+| **analyst** | `skills/analyst.md` | Requirements gap analysis - find missing specs before coding |
 | | | **Quality** |
 | **review** | `skills/review.md` | High-signal code review (bugs, security, logic errors only) |
 | **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
@@ -34,6 +35,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **visual-verdict** | `skills/visual-verdict.md` | Screenshot-based UI review with structured visual feedback |
 | **perf-audit** | `skills/perf-audit.md` | Performance profiling: identify bottlenecks, measure, optimize |
 | **pre-commit-check** | `skills/pre-commit-check.md` | Quality gate: verify + review + security before commit |
+| **designer** | `skills/designer.md` | UI/UX specs from requirements - wireframes, components, tokens |
 | | | **Documentation** |
 | **doc-maintainer** | `skills/doc-maintainer.md` | Auto-update documentation after code changes |
 | **wiki** | `skills/wiki.md` | Auto-maintained project knowledge base, reduces token usage |
@@ -48,6 +50,9 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **handoff** | `skills/handoff.md` | Structured state handoff between agent runs for continuity |
 | **status-line** | `skills/status-line.md` | Compact terminal progress indicators during long operations |
 | **hud** | `skills/hud.md` | Heads-up display showing agent progress at a glance |
+| **cancel** | `skills/cancel.md` | Kill-switch to abort running operations safely |
+| **workflow-state** | `skills/workflow-state.md` | State machine for agent workflow transitions |
+| **container-sandbox** | `skills/container-sandbox.md` | Run untrusted code in isolated container sandbox |
 | | | **Meta** |
 | **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
 | **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
@@ -61,6 +66,12 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
 | **notify** | `skills/notify.md` | Notifications: console, system toast, Discord webhook |
 | **refactor** | `skills/refactor.md` | Detect code smells, apply improvements preserving behavior |
+
+## Lifecycle Hooks
+
+The `hooks/` directory contains 19 lifecycle hooks covering the complete agent
+lifecycle: session, tool, skill, keyword, memory, safety, quality, subagent,
+and context events. See `hooks/README.md` for the full list.
 
 ## How to Use From Another Project
 
@@ -92,7 +103,8 @@ Every agent session MUST:
 | `docs/PROGRESS.md` | Progress tracker (update every session) |
 | `.research/` | Raw research from source repos |
 | `.research/unified-feature-matrix.md` | Master feature porting plan |
-| `skills/` | Cross-project skills (the main product) |
+| `skills/` | Cross-project skills (44 total - the main product) |
+| `hooks/` | 19 lifecycle hooks for agent events |
 
 ## Quality Standards
 

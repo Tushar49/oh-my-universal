@@ -77,6 +77,10 @@ claude --plugin-dir /path/to/oh-my-universal
 
 That's it. No runtime, no dependencies - just plain markdown files your agent reads as instructions.
 
+After `/add-dir`, skills appear in Copilot CLI as:
+- **`/skills`** - 7 grouped skill categories (plan-and-build, investigate, quality, docs-and-memory, operations, meta, collaborate)
+- **Individual prompts** - top 15 skills (plan, review, ultrawork, trace, tdd, etc.) available directly
+
 See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup.
 
 ---

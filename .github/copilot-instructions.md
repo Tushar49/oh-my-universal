@@ -44,6 +44,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **designer** | `skills/designer.md` | UI/UX specs from requirements - wireframes, components, tokens |
 | **ai-slop-cleaner** | `skills/ai-slop-cleaner.md` | Strip AI cliches and fluff from output |
 | **ultraqa** | `skills/ultraqa.md` | Comprehensive QA with iterative fix cycles |
+| **deliverables** | `skills/deliverables.md` | Validate all expected outputs exist and meet acceptance criteria |
 | | | **Documentation** |
 | **doc-maintainer** | `skills/doc-maintainer.md` | Auto-update documentation after code changes |
 | **wiki** | `skills/wiki.md` | Auto-maintained project knowledge base, reduces token usage |
@@ -63,6 +64,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **container-sandbox** | `skills/container-sandbox.md` | Run untrusted code in isolated container sandbox |
 | **worktree-sandbox** | `skills/worktree-sandbox.md` | Git worktree parallel isolation for safe experimentation |
 | **git-master** | `skills/git-master.md` | Git workflow management (branches, PRs, conflicts) |
+| **cost-tracker** | `skills/cost-tracker.md` | Track and report token/API costs per session |
 | | | **Meta** |
 | **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
 | **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
@@ -74,6 +76,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **command-gen** | `skills/command-gen.md` | Scaffold reusable commands and PRPs |
 | **config-sync** | `skills/config-sync.md` | Sync agent rules across CLI frameworks |
 | **deepinit** | `skills/deepinit.md` | Deep project initialization and scaffolding |
+| **rules-discovery** | `skills/rules-discovery.md` | Auto-discover and surface project conventions and rules |
 | | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
@@ -129,7 +132,7 @@ Every agent session MUST:
 | `docs/PROGRESS.md` | Progress tracker (update every session) |
 | `.research/` | Raw research from source repos |
 | `.research/unified-feature-matrix.md` | Master feature porting plan |
-| `skills/` | Cross-project skills (57 total - the main product) |
+| `skills/` | Cross-project skills (60 total - the main product) |
 | `hooks/` | 20 lifecycle hooks for agent events |
 | `contracts/` | 5 behavior contracts for skills and hooks |
 

@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "57 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "60 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | deliverables | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | cost-tracker | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | rules-discovery | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (57 skills)
+# oh-my-universal — Skill Router for Claude Code (60 skills)
 
 ## Routing
 
@@ -49,6 +49,7 @@ Read the skill file based on `{{skill_name}}`:
 | `designer` or `ui-spec` | `skills/designer.md` |
 | `ai-slop-cleaner` or `clean-slop` | `skills/ai-slop-cleaner.md` |
 | `ultraqa` or `qa` | `skills/ultraqa.md` |
+| `deliverables` or `check-deliverables` | `skills/deliverables.md` |
 
 ### Documentation
 | Input | Skill file |
@@ -74,6 +75,7 @@ Read the skill file based on `{{skill_name}}`:
 | `container-sandbox` or `sandbox` | `skills/container-sandbox.md` |
 | `worktree-sandbox` or `worktree` | `skills/worktree-sandbox.md` |
 | `git-master` or `git` | `skills/git-master.md` |
+| `cost-tracker` or `costs` | `skills/cost-tracker.md` |
 
 ### Meta
 | Input | Skill file |
@@ -88,6 +90,7 @@ Read the skill file based on `{{skill_name}}`:
 | `command-gen` or `gen-command` | `skills/command-gen.md` |
 | `config-sync` or `sync-config` | `skills/config-sync.md` |
 | `deepinit` or `init` | `skills/deepinit.md` |
+| `rules-discovery` or `discover-rules` | `skills/rules-discovery.md` |
 
 ### Collaboration
 | Input | Skill file |

@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Windsurf (57 total)
+# oh-my-universal Skills for Windsurf (60 total)
 
-You have access to 57 development skills from the oh-my-universal skills library.
+You have access to 60 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -44,6 +44,7 @@ when the user invokes it or when the situation calls for it.
 | designer | skills/designer.md | UI/UX specs from requirements |
 | ai-slop-cleaner | skills/ai-slop-cleaner.md | Strip AI cliches and fluff from output |
 | ultraqa | skills/ultraqa.md | Comprehensive QA with iterative fix cycles |
+| deliverables | skills/deliverables.md | Validate all expected outputs exist and meet acceptance criteria |
 
 ## Documentation
 
@@ -71,6 +72,7 @@ when the user invokes it or when the situation calls for it.
 | container-sandbox | skills/container-sandbox.md | Isolated container sandbox execution |
 | worktree-sandbox | skills/worktree-sandbox.md | Git worktree parallel isolation |
 | git-master | skills/git-master.md | Git workflow management (branches, PRs, conflicts) |
+| cost-tracker | skills/cost-tracker.md | Track and report token/API costs per session |
 
 ## Meta
 
@@ -86,6 +88,7 @@ when the user invokes it or when the situation calls for it.
 | command-gen | skills/command-gen.md | Scaffold reusable commands and PRPs |
 | config-sync | skills/config-sync.md | Sync agent rules across CLI frameworks |
 | deepinit | skills/deepinit.md | Deep project initialization and scaffolding |
+| rules-discovery | skills/rules-discovery.md | Auto-discover and surface project conventions and rules |
 
 ## Collaboration
 

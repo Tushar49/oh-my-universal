@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (57 total)
+# oh-my-universal Skills (60 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -49,6 +49,7 @@ development skills. Use them proactively.
 | "design this UI" | designer | UI/UX specs from requirements |
 | "clean this up" | ai-slop-cleaner | Strip AI cliches and fluff from output |
 | "full QA" | ultraqa | Comprehensive QA with iterative fix cycles |
+| "check deliverables" | deliverables | Validate all expected outputs exist and meet acceptance criteria |
 
 ### Documentation
 
@@ -76,6 +77,7 @@ development skills. Use them proactively.
 | "sandbox this" | container-sandbox | Run code in isolated container |
 | "worktree sandbox" | worktree-sandbox | Git worktree parallel isolation |
 | "git workflow" | git-master | Git workflow management (branches, PRs, conflicts) |
+| "track costs" | cost-tracker | Track and report token/API costs per session |
 
 ### Meta
 
@@ -91,6 +93,7 @@ development skills. Use them proactively.
 | "generate command" | command-gen | Scaffold reusable commands and PRPs |
 | "sync config" | config-sync | Sync agent rules across CLI frameworks |
 | "init project" | deepinit | Deep project initialization and scaffolding |
+| "discover rules" | rules-discovery | Auto-discover and surface project conventions and rules |
 
 ### Collaboration
 

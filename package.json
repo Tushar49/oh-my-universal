@@ -1,7 +1,7 @@
 {
   "name": "oh-my-universal",
-  "version": "5.0.0",
-  "description": "57 skills, 20 hooks, 5 contracts, 5 missions for AI coding CLIs",
+  "version": "6.0.0",
+  "description": "60 skills, 19 hooks, 4 contracts, 5 missions for AI coding CLIs",
   "main": "index.mjs",
   "bin": {
     "omu": "bin/omu.mjs",
@@ -68,7 +68,10 @@
     "pipeline",
     "debug",
     "deepinit",
-    "git-master"
+    "git-master",
+    "cost-tracker",
+    "rules-discovery",
+    "deliverables"
   ],
   "author": "Tushar Agarwal",
   "license": "MIT",

@@ -284,6 +284,15 @@ post-test:
 - Never add hooks that require network access to guard operations (offline-first)
 - Hook files in `.hooks/` are project-specific. User-global hooks go in `~/.config/oh-my-universal/hooks/`
 
+## Hook Templates
+
+Create hook templates in `templates/hooks/` for reusable hook patterns:
+- `stop-continuation.md` — Auto-stop when task is complete (prevent over-engineering)
+- `code-simplifier.md` — Delegate simplification after implementation
+- `delegation-enforcer.md` — Enforce delegation rules in team mode
+
+Templates can be copied to project `.hooks/` directories and customized.
+
 ## Not Responsible For
 
 - Implementing CLI-specific hook wiring (that's Phase 4 adapter work)

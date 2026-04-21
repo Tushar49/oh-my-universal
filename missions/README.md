@@ -74,6 +74,26 @@ Sandbox constraints are hard boundaries the agent MUST NOT cross:
 The optional `evaluator` frontmatter in sandbox.md specifies a command
 the agent runs to validate the mission programmatically.
 
+## Sandboxes
+
+Every mission has an optional `sandbox.md` that defines the **evaluation contract** — how the
+mission outcome is tested and what scope the agent is allowed to touch.
+
+Sandboxes use YAML frontmatter to specify an evaluator command, output format, and keep policy.
+The markdown body lists allowed changes and avoid constraints.
+
+```yaml
+---
+evaluator:
+  command: npm test -- --grep "auth"
+  format: json
+  keep_policy: pass_only
+---
+```
+
+See [docs/SANDBOX_SPEC.md](../docs/SANDBOX_SPEC.md) for the full specification including
+field reference, keep policies, and evaluation output format.
+
 ## How Agents Execute Missions
 
 Agents use the `mission-runner` skill:

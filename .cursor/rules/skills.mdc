@@ -1,6 +1,6 @@
-# oh-my-universal Skills for Cursor (57 total)
+# oh-my-universal Skills for Cursor (60 total)
 
-You have access to 57 development skills from the oh-my-universal skills library.
+You have access to 60 development skills from the oh-my-universal skills library.
 Each skill is a structured workflow in `skills/{name}.md`. Read the skill file
 when the user invokes it or when the situation calls for it.
 
@@ -46,6 +46,7 @@ when the user invokes it or when the situation calls for it.
 | "design UI" | skills/designer.md | UI/UX specs from requirements |
 | "clean this up" | skills/ai-slop-cleaner.md | Strip AI cliches and fluff from output |
 | "full QA" | skills/ultraqa.md | Comprehensive QA with iterative fix cycles |
+| "check deliverables" | skills/deliverables.md | Validate all expected outputs exist and meet acceptance criteria |
 
 ### Documentation
 
@@ -73,6 +74,7 @@ when the user invokes it or when the situation calls for it.
 | "sandbox this" | skills/container-sandbox.md | Isolated container sandbox execution |
 | "worktree sandbox" | skills/worktree-sandbox.md | Git worktree parallel isolation |
 | "git workflow" | skills/git-master.md | Git workflow management (branches, PRs, conflicts) |
+| "track costs" | skills/cost-tracker.md | Track and report token/API costs per session |
 
 ### Meta
 
@@ -88,6 +90,7 @@ when the user invokes it or when the situation calls for it.
 | "generate command" | skills/command-gen.md | Scaffold reusable commands and PRPs |
 | "sync config" | skills/config-sync.md | Sync agent rules across CLI frameworks |
 | "init project" | skills/deepinit.md | Deep project initialization and scaffolding |
+| "discover rules" | skills/rules-discovery.md | Auto-discover and surface project conventions and rules |
 
 ### Collaboration
 

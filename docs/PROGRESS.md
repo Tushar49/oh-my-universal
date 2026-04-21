@@ -108,6 +108,9 @@
 | 2026-04-19 | Phase 5: Built 4 advanced skills (refactor, perf-audit, multi-model-review, skillify). Total: 20 skills. | Copilot CLI |
 | 2026-04-19 | Phase 5 complete: diff-aware verify, Cursor/Windsurf adapters, npm package + CLI (omu), LICENSE. Pushed to GitHub. | Copilot CLI |
 | 2026-04-21 | Phase 6: Full feature parity - added 18 new skills (total: 38), updated all 7 CLI adapters, created GEMINI.md | Copilot CLI |
+| 2026-04-21 | Phase 7: Added 5 final skills + 19 lifecycle hooks. Total: 44 skills, 19 hooks | Copilot CLI |
+| 2026-04-21 | Phase 8: Deep sweep - added 3 skills, 4 contracts, enhanced 3 existing skills. Total: 47 skills | Copilot CLI |
+| 2026-04-21 | Phase 9: Documentation polish - CONTRIBUTING.md, SETUP.md, PROGRESS.md, REQUIREMENTS.md | Copilot CLI |
 
 ---
 
@@ -134,7 +137,7 @@
 | 6.8 | Update package.json | done | Version bump, new keywords |
 | 6.9 | Update docs (PROGRESS, REQUIREMENTS, SETUP) | done | All docs current |
 
-## 2026-04-21 — Phase 3: Full Parity + Hooks Infrastructure
+## 2026-04-21 — Phase 7: Full Parity + Hooks Infrastructure
 
 - Added 5 final skills: cancel, analyst, designer, workflow-state, container-sandbox (total: 44)
 - Added 19 lifecycle hooks in hooks/ directory covering complete agent lifecycle
@@ -151,10 +154,36 @@
 | 7.4 | Update README, package.json | done | v3.0.0, hooks table |
 | 7.5 | Update PROGRESS.md | done | This entry |
 
-## 2026-04-21 — Phase 4: Deep Sweep + Contracts
+## 2026-04-21 — Phase 8: Deep Sweep + Contracts
 
 - Added 3 final skills: command-gen, worktree-sandbox, config-sync (total: 47)
 - Added 4 behavior contracts in contracts/ directory
 - Enhanced 3 existing skills: workflow-state (state precedence), handoff (terminal states), session-manager (forensics)
 - 3 deep-sweep audits confirmed 100% coverage of all source repos
 - Sources: awesome-claude-code (slash commands, worktree isolation), oh-my-codex (state model, contracts)
+
+### Phase 8 Task Table
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 8.1 | Create 3 final skills | done | command-gen, worktree-sandbox, config-sync |
+| 8.2 | Create 4 behavior contracts | done | contracts/ directory with README |
+| 8.3 | Enhance 3 existing skills | done | workflow-state, handoff, session-manager |
+| 8.4 | Deep-sweep audits (3 rounds) | done | 100% source repo coverage confirmed |
+| 8.5 | Update all CLI adapters | done | 44 -> 47 skills, contracts section |
+
+## 2026-04-21 — Phase 9: Documentation Polish
+
+- Created CONTRIBUTING.md for public contributors
+- Polished docs/SETUP.md with self-sufficient per-CLI sections (all 7 CLIs)
+- Fixed PROGRESS.md phase numbering (Phase 3/4 -> Phase 7/8)
+- Updated REQUIREMENTS.md skill count (38 -> 47), added hooks/contracts/missions counts
+
+### Phase 9 Task Table
+
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 9.1 | Create CONTRIBUTING.md | done | Skills, hooks, missions, contracts contribution guide |
+| 9.2 | Polish docs/SETUP.md | done | Clear per-CLI sections with exact commands |
+| 9.3 | Fix docs/PROGRESS.md | done | Correct phase numbers, add missing task tables |
+| 9.4 | Update docs/REQUIREMENTS.md | done | Accurate counts: 47 skills, 19 hooks, 4 contracts, 5 missions |

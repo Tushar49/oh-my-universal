@@ -26,14 +26,40 @@ across ALL AI coding CLIs (Copilot, Claude, Codex, Gemini, OpenCode, Cursor, Win
 
 ## Skill Count
 
-**38 skills** across 7 categories:
+**47 skills** across 7 categories:
 - Core Workflow (6): plan, ultrawork, autopilot, verify, build-fix, tdd
-- Investigation (4): deep-dive, trace, ask, architecture
-- Quality (6): review, multi-model-review, security-review, visual-verdict, perf-audit, pre-commit-check
+- Investigation (5): deep-dive, trace, ask, architecture, analyst
+- Quality (7): review, multi-model-review, security-review, visual-verdict, perf-audit, pre-commit-check, designer
 - Documentation (4): doc-maintainer, wiki, remember, writer-memory
-- Operations (8): release, hooks, dirty-guard, run-tagging, parity-check, handoff, status-line, hud
-- Meta (6): self-improve, skillify, doctor, mcp-setup, session-manager, session-protocol
-- Collaboration (3): team, repo-merge, notify
+- Operations (12): release, hooks, dirty-guard, run-tagging, parity-check, handoff, status-line, hud, cancel, workflow-state, container-sandbox, worktree-sandbox
+- Meta (9): self-improve, skillify, doctor, mcp-setup, session-manager, session-protocol, mission-runner, command-gen, config-sync
+- Collaboration (4): team, repo-merge, notify, refactor
+
+## Hook Count
+
+**19 lifecycle hooks** across 9 categories:
+- Session (2): session-start, session-end
+- Tool (3): pre-tool, post-tool, tool-failure
+- Skill (2): skill-start, skill-end
+- Keyword (1): keyword-detector
+- Memory (2): memory-save, memory-load
+- Safety (3): permission-check, dirty-guard-hook, context-guard
+- Quality (2): verify-deliverables, code-simplifier-hook
+- Subagent (2): subagent-start, subagent-end
+- Context (2): pre-compact, context-inject
+
+## Contract Count
+
+**4 behavior contracts:**
+- state-precedence: Session > project > global state; rollback on failure
+- terminal-handoff: Every skill must end in a terminal state
+- team-mutation: Claim-and-version protocol for parallel sub-agent work
+- quality-gate: Build + test + security + docs gates before commit
+
+## Mission Count
+
+**5 example missions** (plus template):
+- security-hardening, test-coverage-boost, performance-baseline, docs-from-scratch, dependency-cleanup
 
 ## How User Wants to Use It
 

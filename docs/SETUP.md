@@ -181,7 +181,7 @@ This verifies all skills, hooks, contracts, and CLI adapters are consistent.
 
 ## Using Skills
 
-Once connected, use natural language. All 47 skills are available:
+Once connected, use natural language. All 69 skills are available:
 
 | Say this | What happens |
 |----------|-------------|

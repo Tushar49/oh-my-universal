@@ -133,6 +133,43 @@ After sync:
 - Config sync is idempotent — running it twice with no changes should produce no diff.
 - Add a sync marker comment at the bottom of synced sections: `<!-- synced by config-sync {date} -->` (in formats that support comments).
 
+## Auto-Generate AGENTS.md
+
+When a project has skills but no `AGENTS.md`:
+
+### Step 1 — Scan Skills
+
+Read all files in `skills/` directory. For each `.md` file, extract:
+- Skill name (from `# Skill: {name}` header)
+- Description (from the `>` blockquote line)
+- Trigger conditions (from `## When to Trigger` section)
+
+### Step 2 — Generate AGENTS.md
+
+Produce an `AGENTS.md` file with proper XML `<available_skills>` format:
+
+```markdown
+# AGENTS.md
+
+<available_skills>
+<skill>
+  <name>{skill-name}</name>
+  <description>{one-line description}</description>
+  <triggers>{comma-separated trigger phrases}</triggers>
+</skill>
+<!-- repeat for each skill -->
+</available_skills>
+```
+
+### Step 3 — Validate
+
+- Ensure every skill file has a corresponding entry
+- Ensure no duplicate skill names
+- Verify the XML is well-formed
+- Compatible with openskills loader format
+
+Trigger: "generate agents.md", "create skill index", or auto during config-sync when AGENTS.md is missing.
+
 ## Not Responsible For
 
 - CLI-specific adapter setup or installation (use mcp-setup or doctor)

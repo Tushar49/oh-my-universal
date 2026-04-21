@@ -76,6 +76,26 @@ Recommended: Option 1 or 2 to preserve your work.
 - If ALL dirty files are in `.gitignore`-eligible paths (build output, node_modules), downgrade to WARN
 - This skill is a behavioral instruction — agents should internalize it, not wait for explicit invocation
 
+## Safe Mode
+
+When enabled, dirty-guard extends to ALL destructive operations, not just git:
+
+- **File deletions:** require confirmation before `rm`, `del`, `Remove-Item` on non-build directories
+- **Package installs:** show what will change first (`npm install --dry-run`, `pip install --dry-run`)
+- **Database operations:** require explicit approval for DROP, TRUNCATE, DELETE without WHERE
+- **System commands:** `rm -rf`, `del /s`, `format` — always block without `--force` flag
+
+Enable: "enable safe mode" | Disable: "disable safe mode"
+
+When safe mode is active, prefix output with:
+```
+🔒 SAFE MODE: {operation} requires confirmation
+   Impact: {what will be affected}
+   Proceed? (yes/no/--force)
+```
+
+Safe mode state persists in `.memory/settings.md` under a `safe-mode: on/off` key.
+
 ## Not Responsible For
 
 - Preventing bad commits (see pre-commit-check skill)

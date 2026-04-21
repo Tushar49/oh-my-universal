@@ -1,12 +1,12 @@
 ---
 name: oh-my-universal
-description: "66 cross-project development skills + 20 lifecycle hooks + 5 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
+description: "69 cross-project development skills + 19 lifecycle hooks + 4 behavior contracts: plan, review, ultrawork, autopilot, TDD, team, security, deep-dive, trace, release, and more."
 user_invocable: true
 args: skill_name
-argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | deep-interview | scientist | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | deliverables | api-design | critic | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | status-line | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | cost-tracker | dependency-upgrade | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | rules-discovery | web-clone | team | repo-merge | notify | refactor]"
+argument-hint: "[plan | ultrawork | autopilot | verify | build-fix | tdd | ralph | pipeline | ecomode | deep-dive | trace | ask | architecture | analyst | autoresearch | external-context | debug | deep-interview | scientist | ultrathink | review | multi-model-review | security-review | visual-verdict | perf-audit | pre-commit-check | designer | ai-slop-cleaner | ultraqa | deliverables | api-design | critic | doc-maintainer | wiki | remember | writer-memory | release | hooks | dirty-guard | run-tagging | parity-check | handoff | hud | cancel | workflow-state | container-sandbox | worktree-sandbox | git-master | cost-tracker | dependency-upgrade | compact-guard | permission-tuner | self-improve | skillify | doctor | mcp-setup | session-manager | session-protocol | mission-runner | command-gen | config-sync | deepinit | rules-discovery | web-clone | output-styles | team | repo-merge | notify | refactor]"
 ---
 
-# oh-my-universal — Skill Router for Claude Code (66 skills)
+# oh-my-universal — Skill Router for Claude Code (69 skills)
 
 ## Routing
 
@@ -38,6 +38,7 @@ Read the skill file based on `{{skill_name}}`:
 | `debug` or `step-debug` | `skills/debug.md` |
 | `deep-interview` or `interview` | `skills/deep-interview.md` |
 | `scientist` or `data-analysis` | `skills/scientist.md` |
+| `ultrathink` or `think-deep` | `skills/ultrathink.md` |
 
 ### Quality
 | Input | Skill file |
@@ -72,7 +73,6 @@ Read the skill file based on `{{skill_name}}`:
 | `run-tagging` or `tag-run` | `skills/run-tagging.md` |
 | `parity-check` or `parity` | `skills/parity-check.md` |
 | `handoff` | `skills/handoff.md` |
-| `status-line` or `progress` | `skills/status-line.md` |
 | `hud` or `status` | `skills/hud.md` |
 | `cancel` or `abort` | `skills/cancel.md` |
 | `workflow-state` or `state` | `skills/workflow-state.md` |
@@ -81,6 +81,8 @@ Read the skill file based on `{{skill_name}}`:
 | `git-master` or `git` | `skills/git-master.md` |
 | `cost-tracker` or `costs` | `skills/cost-tracker.md` |
 | `dependency-upgrade` or `upgrade-deps` | `skills/dependency-upgrade.md` |
+| `compact-guard` or `compaction` | `skills/compact-guard.md` |
+| `permission-tuner` or `permissions` | `skills/permission-tuner.md` |
 
 ### Meta
 | Input | Skill file |
@@ -97,6 +99,7 @@ Read the skill file based on `{{skill_name}}`:
 | `deepinit` or `init` | `skills/deepinit.md` |
 | `rules-discovery` or `discover-rules` | `skills/rules-discovery.md` |
 | `web-clone` or `clone-site` | `skills/web-clone.md` |
+| `output-styles` or `output-mode` | `skills/output-styles.md` |
 
 ### Collaboration
 | Input | Skill file |
@@ -116,11 +119,11 @@ Read the matched skill file and execute its workflow.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.

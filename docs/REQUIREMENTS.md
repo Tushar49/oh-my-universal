@@ -26,13 +26,13 @@ across ALL AI coding CLIs (Copilot, Claude, Codex, Gemini, OpenCode, Cursor, Win
 
 ## Skill Count
 
-**47 skills** across 7 categories:
-- Core Workflow (6): plan, ultrawork, autopilot, verify, build-fix, tdd
-- Investigation (5): deep-dive, trace, ask, architecture, analyst
-- Quality (7): review, multi-model-review, security-review, visual-verdict, perf-audit, pre-commit-check, designer
+**69 skills** across 7 categories:
+- Core Workflow (9): plan, ultrawork, autopilot, verify, build-fix, tdd, ralph, pipeline, ecomode
+- Investigation (11): deep-dive, trace, ask, architecture, analyst, autoresearch, external-context, debug, deep-interview, scientist, ultrathink
+- Quality (12): review, multi-model-review, security-review, visual-verdict, perf-audit, pre-commit-check, designer, ai-slop-cleaner, ultraqa, deliverables, api-design, critic
 - Documentation (4): doc-maintainer, wiki, remember, writer-memory
-- Operations (12): release, hooks, dirty-guard, run-tagging, parity-check, handoff, status-line, hud, cancel, workflow-state, container-sandbox, worktree-sandbox
-- Meta (9): self-improve, skillify, doctor, mcp-setup, session-manager, session-protocol, mission-runner, command-gen, config-sync
+- Operations (16): release, hooks, dirty-guard, run-tagging, parity-check, handoff, hud, cancel, workflow-state, container-sandbox, worktree-sandbox, git-master, cost-tracker, dependency-upgrade, compact-guard, permission-tuner
+- Meta (13): self-improve, skillify, doctor, mcp-setup, session-manager, session-protocol, mission-runner, command-gen, config-sync, deepinit, rules-discovery, web-clone, output-styles
 - Collaboration (4): team, repo-merge, notify, refactor
 
 ## Hook Count

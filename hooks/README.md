@@ -35,7 +35,7 @@ Hooks are advisory in markdown-only CLIs — the agent follows them as instructi
 | **Quality** | verify-deliverables, code-simplifier-hook | Ensure completeness and simplicity |
 | **Subagent** | subagent-start, subagent-end | Monitor delegated work |
 | **Context** | pre-compact, context-inject | Manage context window lifecycle |
-| **Total** | **20 hooks** | |
+| **Total** | **19 hooks** | |
 
 ## Hook File Format
 

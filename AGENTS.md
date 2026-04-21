@@ -4,11 +4,11 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 ## Key Points
 
-- This is a cross-project skills repo with **66 skills**, **20 lifecycle hooks**, and **5 behavior contracts**, not a standalone project
+- This is a cross-project skills repo with **69 skills**, **19 lifecycle hooks**, and **4 behavior contracts**, not a standalone project
 - Skills in `skills/` can be used from any project directory
 - Always update `docs/PROGRESS.md` after every session
 
-## Available Skills (66)
+## Available Skills (69)
 
 ### Core Workflow
 
@@ -38,6 +38,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | debug | `skills/debug.md` | Hands-on step-through debugging workflow |
 | deep-interview | `skills/deep-interview.md` | Socratic intent-clarification loop with ambiguity scoring |
 | scientist | `skills/scientist.md` | Data analysis with statistical rigor |
+| ultrathink | `skills/ultrathink.md` | Deep reasoning for complex decisions |
 
 ### Quality
 
@@ -75,7 +76,6 @@ Read `.github/copilot-instructions.md` for all project rules.
 | run-tagging | `skills/run-tagging.md` | Unique session identity for audit trails |
 | parity-check | `skills/parity-check.md` | Smoke test tools, skills, environment |
 | handoff | `skills/handoff.md` | State handoff between agent runs |
-| status-line | `skills/status-line.md` | Terminal progress indicators |
 | hud | `skills/hud.md` | Heads-up display for agent progress |
 | cancel | `skills/cancel.md` | Kill-switch to abort operations safely |
 | workflow-state | `skills/workflow-state.md` | State machine for workflow transitions |
@@ -84,6 +84,8 @@ Read `.github/copilot-instructions.md` for all project rules.
 | git-master | `skills/git-master.md` | Git workflow management (branches, PRs, conflicts) |
 | cost-tracker | `skills/cost-tracker.md` | Track and report token/API costs per session |
 | dependency-upgrade | `skills/dependency-upgrade.md` | Safe dependency upgrades with compatibility checks and rollback |
+| compact-guard | `skills/compact-guard.md` | State preservation through context compaction |
+| permission-tuner | `skills/permission-tuner.md` | Denial pattern analysis and permission optimization |
 
 ### Meta
 
@@ -101,6 +103,7 @@ Read `.github/copilot-instructions.md` for all project rules.
 | deepinit | `skills/deepinit.md` | Deep project initialization and scaffolding |
 | rules-discovery | `skills/rules-discovery.md` | Auto-discover and surface project conventions and rules |
 | web-clone | `skills/web-clone.md` | URL-driven website cloning with visual + functional verification |
+| output-styles | `skills/output-styles.md` | Configurable output modes (verbose, compact, structured) |
 
 ### Collaboration
 
@@ -113,11 +116,11 @@ Read `.github/copilot-instructions.md` for all project rules.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.

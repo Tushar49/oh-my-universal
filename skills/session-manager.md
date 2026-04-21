@@ -139,6 +139,52 @@ Search, replay, and analyze past sessions:
 - Keep state files compact - summaries, not full transcripts
 - Forked sessions are independent after creation - changes don't propagate back
 
+## Session Insights
+
+Analyze patterns across past sessions to surface actionable analytics.
+
+### Metrics Tracked
+
+- **Most-used skills** — which skills are activated most often across sessions
+- **Common failure patterns** — what operations fail repeatedly (from `.memory/failures.md`)
+- **Time-per-task trends** — are tasks getting faster with practice? (based on session duration)
+- **Correction frequency** — how often the user corrects the agent mid-task
+
+### How to Generate
+
+Trigger: "show insights", "session analytics", "how am I doing"
+
+1. Scan `.sessions/` for all session state files
+2. Cross-reference with `.memory/failures.md` for failure patterns
+3. Aggregate skill usage from session state `Skills Used` fields
+4. Calculate trends over the last 10, 30, and 90 days
+
+### Output
+
+```markdown
+## Session Insights — {date range}
+
+**Sessions analyzed:** {N}
+
+### Skill Usage (top 5)
+| Skill | Uses | Trend |
+|-------|------|-------|
+| plan | 42 | stable |
+| trace | 18 | ↑ increasing |
+| ultrawork | 15 | stable |
+
+### Failure Patterns
+| Pattern | Count | Last Seen | Status |
+|---------|-------|-----------|--------|
+| npm build timeout | 8 | 2d ago | recurring |
+| test flake in auth | 3 | 1w ago | resolved |
+
+### Efficiency
+- Avg task duration: {N}m (was {N}m 30d ago)
+- Correction rate: {N}% (target: <10%)
+- First-attempt success: {N}%
+```
+
 ## Not Responsible For
 
 - Git worktree management (too CLI-specific and environment-dependent)

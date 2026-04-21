@@ -29,6 +29,23 @@ Fires when a tool call fails — non-zero exit code, exception, timeout, or unex
 - Fix suggestion shown to user
 - Pattern warning if recurring failure detected
 
+## Rate Limit Handling
+
+When a tool call fails with 429/rate-limit error:
+
+1. **Log** the rate limit with timestamp and retry-after header value
+2. **Wait** for the specified retry-after duration (or 60s default if no header)
+3. **Auto-resume** the operation that was rate-limited
+4. If rate-limited **3+ times** in a session, switch to ecomode to reduce API calls
+5. Log cumulative rate-limit events to `.memory/failures.md` with a `[rate-limit]` tag
+
+```
+⏳ tool-failure: rate-limit on "api call"
+   Retry-after: 45s
+   Occurrence: 2/3 (ecomode triggers at 3)
+   Action: waiting 45s then auto-retry
+```
+
 ## Example
 
 ```

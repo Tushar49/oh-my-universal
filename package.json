@@ -1,7 +1,7 @@
 {
   "name": "oh-my-universal",
-  "version": "7.0.0",
-  "description": "66 skills, 19 hooks, 4 contracts, 5 missions for AI coding CLIs",
+  "version": "8.0.0",
+  "description": "69 skills, 19 hooks, 4 contracts, 5 missions for AI coding CLIs",
   "main": "index.mjs",
   "bin": {
     "omu": "bin/omu.mjs",
@@ -43,7 +43,7 @@
     "parity-check",
     "handoff",
     "hooks",
-    "status-line",
+
     "security-review",
     "perf-audit",
     "multi-model-review",

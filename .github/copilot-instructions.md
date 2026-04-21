@@ -36,6 +36,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **debug** | `skills/debug.md` | Hands-on step-through debugging workflow |
 | **deep-interview** | `skills/deep-interview.md` | Socratic intent-clarification loop with ambiguity scoring |
 | **scientist** | `skills/scientist.md` | Data analysis and hypothesis-driven investigation with statistical rigor |
+| **ultrathink** | `skills/ultrathink.md` | Deep reasoning for complex decisions with structured deliberation |
 | | | **Quality** |
 | **review** | `skills/review.md` | High-signal code review (bugs, security, logic errors only) |
 | **multi-model-review** | `skills/multi-model-review.md` | 4-perspective review: bug hunter, security, maintainer, perf |
@@ -61,7 +62,6 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **run-tagging** | `skills/run-tagging.md` | Unique session identity to prevent lane reuse and enable audit |
 | **parity-check** | `skills/parity-check.md` | Agent health smoke tests: verify tools, skills, environment |
 | **handoff** | `skills/handoff.md` | Structured state handoff between agent runs for continuity |
-| **status-line** | `skills/status-line.md` | Compact terminal progress indicators during long operations |
 | **hud** | `skills/hud.md` | Heads-up display showing agent progress at a glance |
 | **cancel** | `skills/cancel.md` | Kill-switch to abort running operations safely |
 | **workflow-state** | `skills/workflow-state.md` | State machine for agent workflow transitions |
@@ -70,6 +70,8 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **git-master** | `skills/git-master.md` | Git workflow management (branches, PRs, conflicts) |
 | **cost-tracker** | `skills/cost-tracker.md` | Track and report token/API costs per session |
 | **dependency-upgrade** | `skills/dependency-upgrade.md` | Safe dependency upgrades with compatibility checks and rollback |
+| **compact-guard** | `skills/compact-guard.md` | State preservation through context compaction |
+| **permission-tuner** | `skills/permission-tuner.md` | Denial pattern analysis and permission optimization |
 | | | **Meta** |
 | **self-improve** | `skills/self-improve.md` | Analyze agent failures and improve skills to prevent recurrence |
 | **skillify** | `skills/skillify.md` | Create new skills from observed repeatable patterns |
@@ -83,6 +85,7 @@ It is NOT a standalone project - it's used FROM other project directories via
 | **deepinit** | `skills/deepinit.md` | Deep project initialization and scaffolding |
 | **rules-discovery** | `skills/rules-discovery.md` | Auto-discover and surface project conventions and rules |
 | **web-clone** | `skills/web-clone.md` | URL-driven website cloning with visual + functional verification |
+| **output-styles** | `skills/output-styles.md` | Configurable output modes (verbose, compact, structured, etc.) |
 | | | **Collaboration** |
 | **team** | `skills/team.md` | Multi-agent delegation with serial fallback |
 | **repo-merge** | `skills/repo-merge.md` | Merge features from external repos (research -> matrix -> port) |
@@ -91,13 +94,13 @@ It is NOT a standalone project - it's used FROM other project directories via
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 20 lifecycle hooks covering the complete agent
+The `hooks/` directory contains 19 lifecycle hooks covering the complete agent
 lifecycle: session, tool, skill, keyword, memory, safety, quality, subagent,
 and context events. See `hooks/README.md` for the full list.
 
 ## Contracts
 
-5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
 
 | Contract | What it enforces |
 |----------|-----------------|
@@ -138,9 +141,9 @@ Every agent session MUST:
 | `docs/PROGRESS.md` | Progress tracker (update every session) |
 | `.research/` | Raw research from source repos |
 | `.research/unified-feature-matrix.md` | Master feature porting plan |
-| `skills/` | Cross-project skills (66 total - the main product) |
-| `hooks/` | 20 lifecycle hooks for agent events |
-| `contracts/` | 5 behavior contracts for skills and hooks |
+| `skills/` | Cross-project skills (69 total - the main product) |
+| `hooks/` | 19 lifecycle hooks for agent events |
+| `contracts/` | 4 behavior contracts for skills and hooks |
 
 ## Quality Standards
 

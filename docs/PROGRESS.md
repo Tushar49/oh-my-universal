@@ -4,6 +4,17 @@
 
 ---
 
+## Current State (2026-04-21)
+
+- **69 skills** in `skills/`
+- **19 hooks** in `hooks/`
+- **4 contracts** in `contracts/`
+- **5 missions** in `missions/`
+- **8 CLI adapters** (7 CLIs supported)
+- **Version:** 8.0.0
+
+---
+
 ## Status Legend
 
 | Status | Meaning |
@@ -216,3 +227,23 @@
 - 6 REJECTED (overlaps): consensus-plan→plan, devops→pipeline+release, error-handling→review+debug, learner→skillify, note→remember, research→autoresearch
 - Final count: 66 skills, 19 hooks, 4 contracts, 5 missions
 - All structural issues fixed per critic feedback
+
+## 2026-04-21 — Phase 8: Definitive Matrix Audit
+
+- CDP browsed ALL 8 source repos, extracted 100+ features
+- Built cross-reference matrix: 31 gaps identified
+- Triaged: 4 new skills (ultrathink, compact-guard, permission-tuner, output-styles)
+- Enhanced 5 existing skills (tool-failure, dirty-guard, session-manager, config-sync, deepinit)
+- 22 gaps classified as SKIP (runtime-specific, framework-specific, or already covered)
+- Rubber-duck critic validated full repo quality
+- Final count before critic: 70 skills, 19 hooks, 4 contracts, 5 missions
+
+## 2026-04-21 — Phase 9: Critic Findings Fix
+
+- Merged status-line into hud (70 -> 69 skills)
+- Moved hook reference to docs/HOOKS_REFERENCE.md (hooks.md 301 -> ~70 lines)
+- Fixed stale counts everywhere: skills=69, hooks=19, missions=5, contracts=4
+- Added Cursor/Windsurf Quick Start examples to README
+- Added Current State summary to PROGRESS.md
+- Fixed adapter hook counts (20 -> 19)
+- Removed status-line from all 8 CLI adapters

@@ -2,14 +2,14 @@
 
 # 🔮 oh-my-universal
 
-**66 skills · 19 hooks · 5 contracts · 6 missions**
+**69 skills · 19 hooks · 4 contracts · 5 missions**
 
 The universal agent enhancement layer for AI coding CLIs.
 
 Works with: Copilot CLI · Claude Code · OpenAI Codex · Gemini CLI · Cursor · Windsurf · OpenCode
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-66-green.svg)](#skills-66-total)
+[![Skills](https://img.shields.io/badge/Skills-69-green.svg)](#skills-69-total)
 [![Hooks](https://img.shields.io/badge/Hooks-19-orange.svg)](#lifecycle-hooks)
 [![CLIs](https://img.shields.io/badge/CLIs-7-purple.svg)](#compatible-clis)
 
@@ -25,12 +25,13 @@ clawhip, and more into a single unified system.
 
 ### Before vs After
 
-**Without oh-my-universal:** Your AI agent writes code when asked. That's it.
+**Without oh-my-universal:** Your AI agent writes code when asked. No planning, no review, no memory. Every session starts from scratch.
 
 **With oh-my-universal:** Your AI agent plans before implementing, reviews its own code,
 remembers decisions across sessions, delegates to sub-agents, auto-fixes build failures,
-guards against dirty worktrees, produces handoffs between sessions, and self-improves
-from failures. Across ANY CLI tool you use.
+guards against dirty worktrees, produces handoffs between sessions, reasons deeply through
+complex decisions, preserves state through compaction, and self-improves from failures.
+Across ANY CLI tool you use.
 
 ### Feature Highlights
 
@@ -64,6 +65,12 @@ copilot
 # Claude Code
 claude --plugin-dir /path/to/oh-my-universal
 
+# Cursor
+# Copy .cursor/rules/skills.mdc to your project's .cursor/rules/
+
+# Windsurf
+# Copy .windsurfrules to your project root
+
 # Gemini CLI / OpenAI Codex / OpenCode
 # Reads AGENTS.md automatically - see docs/SETUP.md
 ```
@@ -91,10 +98,10 @@ See [docs/SETUP.md](docs/SETUP.md) for detailed per-CLI setup.
 ## How It Works
 
 ```
-skills/    → 66 reusable workflow patterns (plan, review, trace, etc.)
+skills/    → 69 reusable workflow patterns (plan, review, trace, etc.)
 hooks/     → 19 lifecycle event handlers (auto-run at key moments)
-contracts/ → 5 behavioral invariants (always enforced)
-missions/  → 6 scoped task packages (specific goals with success criteria)
+contracts/ → 4 behavioral invariants (always enforced)
+missions/  → 5 scoped task packages (specific goals with success criteria)
 ```
 
 **Skills** are the core - markdown files that any AI CLI reads as instructions.
@@ -110,10 +117,10 @@ oh-my-universal/
 │   ├── copilot-instructions.md   # Universal agent rules
 │   ├── agents/                   # Custom agents (planner, reviewer, etc.)
 │   └── prompts/                  # Reusable workflow prompts
-├── skills/                       # 66 cross-project skills
+├── skills/                       # 69 cross-project skills
 ├── hooks/                        # 19 lifecycle hooks
-├── contracts/                    # 5 behavior contracts
-├── missions/                     # 6 scoped task missions
+├── contracts/                    # 4 behavior contracts
+├── missions/                     # 5 scoped task missions
 ├── config/                       # Configuration
 ├── docs/                         # Setup guides, architecture
 ├── AGENTS.md                     # Codex/Gemini entry
@@ -124,7 +131,7 @@ oh-my-universal/
 
 ---
 
-## Skills (66 total)
+## Skills (69 total)
 
 ### Core Workflow (9 skills)
 | Skill | Description |
@@ -139,7 +146,7 @@ oh-my-universal/
 | **pipeline** | User-defined sequential stage runner with rollback |
 | **ecomode** | Token-efficient execution mode |
 
-### Investigation (10 skills)
+### Investigation (11 skills)
 | Skill | Description |
 |-------|-------------|
 | **deep-dive** | Two-stage investigation: causal tracing + Socratic questioning |
@@ -152,6 +159,7 @@ oh-my-universal/
 | **debug** | Hands-on step-through debugging workflow |
 | **deep-interview** | Socratic intent-clarification loop with ambiguity scoring |
 | **scientist** | Data analysis and hypothesis-driven investigation with statistical rigor |
+| **ultrathink** | Deep reasoning for complex decisions with structured deliberation |
 
 ### Quality (12 skills)
 | Skill | Description |
@@ -177,7 +185,7 @@ oh-my-universal/
 | **remember** | Memory persistence across sessions (native tools -> .memory/ fallback) |
 | **writer-memory** | Enhanced persistent context for writing projects (tone, style, narrative) |
 
-### Operations (15 skills)
+### Operations (16 skills)
 | Skill | Description |
 |-------|-------------|
 | **release** | Release management: changelog, version bump, git tag, publish |
@@ -186,7 +194,6 @@ oh-my-universal/
 | **run-tagging** | Unique identity per agent session for audit trails |
 | **parity-check** | Agent health and contract smoke tests |
 | **handoff** | Structured state handoff between agent runs |
-| **status-line** | Compact terminal progress indicators during long operations |
 | **hud** | Heads-up display - compact status showing agent progress |
 | **cancel** | Kill-switch to safely abort running operations |
 | **workflow-state** | State machine for agent workflow transitions |
@@ -195,8 +202,10 @@ oh-my-universal/
 | **git-master** | Git workflow management (branches, PRs, conflicts) |
 | **cost-tracker** | Track and report token/API costs per session |
 | **dependency-upgrade** | Safe dependency upgrades with compatibility checks and rollback |
+| **compact-guard** | State preservation through context compaction |
+| **permission-tuner** | Denial pattern analysis and permission optimization |
 
-### Meta (12 skills)
+### Meta (13 skills)
 | Skill | Description |
 |-------|-------------|
 | **self-improve** | Analyze agent failures, improve skills to prevent recurrence |
@@ -211,6 +220,7 @@ oh-my-universal/
 | **deepinit** | Deep project initialization and scaffolding |
 | **rules-discovery** | Auto-discover and surface project conventions and rules |
 | **web-clone** | URL-driven website cloning with visual + functional verification |
+| **output-styles** | Configurable output modes (verbose, compact, structured, etc.) |
 
 ### Collaboration (4 skills)
 | Skill | Description |
@@ -244,7 +254,7 @@ See `hooks/README.md` for detailed documentation.
 
 ## Contracts
 
-5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect:
 
 | Contract | What it enforces |
 |----------|-----------------|
@@ -264,7 +274,7 @@ While skills define HOW to work, missions define WHAT to do.
 
 See `missions/README.md` for full documentation. See `docs/SANDBOX_SPEC.md` for the sandbox evaluation system.
 
-### Example Missions
+### 5 Example Missions
 
 | Mission | What it does |
 |---------|-------------|
@@ -318,7 +328,7 @@ A: Yes. Use `/add-dir` (Copilot) or `--plugin-dir` (Claude) to add skills to any
 A: Yes. Skills are independent. Use what you need, ignore the rest.
 
 **Q: How is this different from CLAUDE.md instructions?**
-A: CLAUDE.md is one file for one tool. oh-my-universal is 66 skills + 19 hooks + 5 contracts
+A: CLAUDE.md is one file for one tool. oh-my-universal is 69 skills + 19 hooks + 4 contracts
 that work across 7 different AI CLIs simultaneously.
 
 ---

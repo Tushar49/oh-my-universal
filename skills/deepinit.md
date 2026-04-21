@@ -124,6 +124,40 @@ Create agent instruction files so AI tools work well with the project:
 - If the user has existing files, preserve them. Don't overwrite without asking.
 - Generated code should actually run. Verify with the toolchain, don't assume.
 
+## Onboarding Guide Generation
+
+After scaffolding a project, generate a `GETTING_STARTED.md`:
+
+### Section 1 — Prerequisites
+- Language and runtime version requirements
+- Required tools (build tools, databases, cloud CLIs)
+- Accounts needed (npm registry, cloud provider, API keys)
+
+### Section 2 — Setup Steps
+- Clone the repository
+- Install dependencies (exact commands)
+- Configure environment variables (with `.env.example` template)
+- Run initial setup scripts (migrations, seed data)
+
+### Section 3 — First Task Walkthrough
+- Hello world equivalent for this project type
+- Step-by-step guide to making a small change (add a route, component, or function)
+- How to verify the change works (run test, check browser, hit API)
+
+### Section 4 — Architecture Overview
+- Where things live (directory structure with purpose annotations)
+- How components connect (data flow, request lifecycle)
+- Key abstractions and patterns used in the codebase
+
+### Section 5 — Common Tasks Reference
+- **Build:** `{build command}`
+- **Test:** `{test command}`
+- **Lint:** `{lint command}`
+- **Deploy:** `{deploy command or "see CI/CD docs"}`
+- **Debug:** `{debug setup and tips}`
+
+The guide is auto-generated from the scaffold choices and placed at the project root.
+
 ## Not Responsible For
 
 - Diagnosing issues in existing projects (use doctor)

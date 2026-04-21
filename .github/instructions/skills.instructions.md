@@ -2,7 +2,7 @@
 applyTo: "**"
 ---
 
-# oh-my-universal Skills (66 total)
+# oh-my-universal Skills (69 total)
 
 When working on ANY file in this project, you have access to these cross-project
 development skills. Use them proactively.
@@ -37,6 +37,7 @@ development skills. Use them proactively.
 | "debug this" | debug | Hands-on step-through debugging workflow |
 | "interview me" | deep-interview | Socratic intent-clarification with ambiguity scoring |
 | "analyze this data" | scientist | Data analysis with statistical rigor |
+| "think deeply" | ultrathink | Deep reasoning for complex decisions |
 
 ### Quality
 
@@ -74,7 +75,6 @@ development skills. Use them proactively.
 | "tag this run" | run-tagging | Unique session identity for audit trails |
 | "parity check" | parity-check | Smoke test tools, skills, environment |
 | "hand off" | handoff | State handoff between agent runs |
-| "show progress" | status-line | Terminal progress indicators |
 | "show status" | hud | Heads-up display for agent progress |
 | "cancel" / "abort" | cancel | Kill-switch to abort running operations |
 | "workflow state" | workflow-state | State machine for agent workflow |
@@ -83,6 +83,8 @@ development skills. Use them proactively.
 | "git workflow" | git-master | Git workflow management (branches, PRs, conflicts) |
 | "track costs" | cost-tracker | Track and report token/API costs per session |
 | "upgrade deps" | dependency-upgrade | Safe dependency upgrades with compatibility checks and rollback |
+| "guard compaction" | compact-guard | State preservation through context compaction |
+| "tune permissions" | permission-tuner | Denial pattern analysis and permission optimization |
 
 ### Meta
 
@@ -100,6 +102,7 @@ development skills. Use them proactively.
 | "init project" | deepinit | Deep project initialization and scaffolding |
 | "discover rules" | rules-discovery | Auto-discover and surface project conventions and rules |
 | "clone this site" | web-clone | URL-driven website cloning with visual + functional verification |
+| "output style" | output-styles | Configurable output modes (verbose, compact, structured) |
 
 ### Collaboration
 
@@ -125,11 +128,11 @@ Read the full skill file from `skills/{name}.md` for detailed workflow.
 
 ## Lifecycle Hooks
 
-The `hooks/` directory contains 20 lifecycle hooks covering session, tool,
+The `hooks/` directory contains 19 lifecycle hooks covering session, tool,
 skill, keyword, memory, safety, quality, subagent, and context events.
 See `hooks/README.md` for the full list.
 
 ## Contracts
 
-5 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
+4 formal behavior contracts in `contracts/` that all skills and hooks MUST respect.
 See `contracts/README.md` for details.

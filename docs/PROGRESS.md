@@ -4,14 +4,15 @@
 
 ---
 
-## Current State (2026-04-21)
+## Current State (2026-05-02)
 
 - **69 skills** in `skills/`
 - **19 hooks** in `hooks/`
 - **4 contracts** in `contracts/`
 - **5 missions** in `missions/`
 - **8 CLI adapters** (7 CLIs supported)
-- **Version:** 8.0.0
+- **Cross-platform installer** in `setup/` (PowerShell, bash, Python)
+- **Version:** 8.1.0
 
 ---
 
@@ -247,3 +248,67 @@
 - Added Current State summary to PROGRESS.md
 - Fixed adapter hook counts (20 -> 19)
 - Removed status-line from all 8 CLI adapters
+
+## 2026-05-02 — Phase 10: Cross-platform installer (`setup/`) hardening
+
+- Inherited a partially working `setup/` folder (setup.ps1 / setup.sh / setup.py).
+  Confirmed bugs:
+  - `setup.ps1` failed to parse on **Windows PowerShell 5.1**: em dashes
+    (U+2014) and box-drawing chars (U+2500/2554/etc.) in the file caused
+    PS5 to interpret them as cp1252 garbage, which derailed the parser many
+    lines later (errors surfaced at line 294's regex literal).
+  - `setup.py` had a nested f-string with same quote chars
+    (`f"... f'... {', '.join(targets)}'..."`) — `SyntaxError` on Python <3.12.
+  - `setup.py` used `Path | None` (PEP 604) which fails pre-3.10.
+  - Detection only checked `~/.copilot/skills/plan/SKILL.md`; if `plan` was
+    missing it falsely reported "not installed" while wrappers for the other
+    68 skills were present.
+  - Per-project CLIs (Gemini, Codex, OpenCode, Windsurf) only printed
+    guidance text — no actual install/uninstall capability.
+- Fixes:
+  - Added a UTF-8 BOM to `setup.ps1` (forces PS5 to decode as UTF-8).
+  - Hoisted regex patterns into variables (`$skillsRefPattern`) so the PS5
+    parser can't misread `[a-z-]` as a type literal in attribute position.
+  - Replaced nested f-string with a hoisted `joined = ', '.join(targets)`.
+  - Replaced `Path | None` with `Optional[Path]`; added an explicit Python
+    3.9+ guard at the top (`sys.version_info` check).
+  - Added `sys.stdout.reconfigure(encoding="utf-8")` so the box-drawing UI
+    works on Windows consoles that default to cp1252.
+  - Replaced `plan`-only check with `count_omu_skills()` that scans every
+    `SKILL.md` for our marker. Status now shows `Yes (N)` with the count.
+  - Added `-Project <path>` (PowerShell) / `--project <path>` (bash & python)
+    flag for **per-project install/uninstall** of Gemini, Codex, OpenCode,
+    Windsurf. The marker block (`# >>> oh-my-universal START >>>` …
+    `# <<< oh-my-universal END <<<`) is appended to the project's
+    `AGENTS.md` / `GEMINI.md` / `.windsurfrules` and removed cleanly on
+    uninstall — **all other content in the file is preserved exactly**.
+  - Removed dead helper `Test-IsOmuItem`; rewrote `Add-OmuMarkedSection` and
+    `Remove-OmuMarkedSection` to use index-based string splicing instead of
+    fragile regex `Replace` (which mangled `$` chars).
+- Added `setup/README.md` with full usage, safety guarantees, troubleshooting.
+- Added smoke tests:
+  - `setup/test.ps1` — 15 checks; delegates to `test.py` for cross-runtime.
+  - `setup/test.sh` — 19 checks; runs against bash + python.
+  - `setup/test.py` — 21 checks; cross-platform, calls all three installers.
+- All three test runners pass green:
+  - `python test.py` -> PASS 21 / FAIL 0
+  - `powershell -File test.ps1` -> PASS 15 / FAIL 0 (+ delegated 21 / 0)
+  - `bash test.sh` -> PASS 19 / FAIL 0
+- Updated `README.md` Quick Start to recommend the bundled installer.
+- Updated `docs/SETUP.md` to point at `setup/` as the easiest path while
+  preserving the existing per-CLI manual instructions.
+
+### Phase 10 Task Table
+
+| #    | Task                                                              | Status | Notes |
+|------|-------------------------------------------------------------------|--------|-------|
+| 10.1 | Fix PS5 parse error (BOM + regex variable extraction)             | done   | Confirmed via `powershell.exe -File setup.ps1 -Action status` |
+| 10.2 | Fix Python nested f-string + typing for 3.9 compat                | done   | Now parses on Python 3.11; documented 3.9+ minimum |
+| 10.3 | Robust Copilot detection (count any skill, not just `plan`)       | done   | Status now shows `Yes (N)` with wrapper count |
+| 10.4 | Add `--project` / `-Project` flag for per-project CLIs            | done   | Gemini, Codex, OpenCode, Windsurf — all use marker section |
+| 10.5 | Marker-section helpers preserve user content                      | done   | Smoke-tested round-trip: install + uninstall = identity |
+| 10.6 | Remove dead code (`Test-IsOmuItem`)                               | done   | Replaced unused helpers with the new marker-section primitives |
+| 10.7 | Add `setup/README.md` (usage + safety + troubleshooting)          | done   |  |
+| 10.8 | Add cross-platform smoke tests                                    | done   | test.ps1 / test.sh / test.py — all green |
+| 10.9 | Update root `README.md` and `docs/SETUP.md`                       | done   | Bundled installer is now the recommended path |
+

@@ -1,0 +1,21 @@
+# Default: let git decide
+* text=auto
+
+# Shell scripts MUST be LF — CRLF breaks the shebang and `\r` in scripts on Linux/macOS.
+*.sh   text eol=lf
+*.bash text eol=lf
+
+# PowerShell scripts: keep CRLF on Windows.
+*.ps1 text eol=crlf
+
+# Python is fine either way; let core.autocrlf decide.
+*.py  text
+
+# Markdown: don't normalize newlines (avoid noisy diffs).
+*.md  text
+
+# Binary files: never touch.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

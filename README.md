@@ -53,9 +53,30 @@ Across ANY CLI tool you use.
 ```bash
 # Clone the repo
 git clone https://github.com/Tushar49/oh-my-universal.git
+cd oh-my-universal
 ```
 
-Then point your CLI at it:
+### Easiest install — use the bundled installer
+
+```powershell
+# Windows (PowerShell, run as admin for symlink rights)
+.\setup\setup.ps1
+```
+
+```bash
+# macOS / Linux / WSL
+./setup/setup.sh
+
+# Cross-platform with Python 3.9+
+python setup/setup.py
+```
+
+The interactive menu detects every supported CLI and installs/uninstalls
+oh-my-universal with surgical safety — your existing `AGENTS.md`,
+`.windsurfrules`, instructions, etc. are **never** modified outside our
+clearly-marked block. See [setup/README.md](setup/README.md) for full docs.
+
+### Or wire it up by hand
 
 ```bash
 # Copilot CLI

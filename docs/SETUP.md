@@ -1,5 +1,62 @@
 # Setup Guide
 
+> **The fastest path is the bundled installer in `setup/`.** It detects every
+> supported CLI, lets you pick which to install, and uninstalls cleanly without
+> touching your other files. See [`setup/README.md`](../setup/README.md).
+>
+> If you prefer to wire it up by hand, the per-CLI options below are all still
+> valid.
+
+## Bundled installer (recommended)
+
+```powershell
+# Windows (PowerShell — admin recommended for symlinks)
+.\setup\setup.ps1                           # Interactive menu
+.\setup\setup.ps1 -Action status            # See what's installed
+.\setup\setup.ps1 -Action install -Target copilot
+.\setup\setup.ps1 -Action uninstall -Target all
+```
+
+```bash
+# macOS / Linux / WSL
+./setup/setup.sh                            # Interactive
+./setup/setup.sh status
+./setup/setup.sh install copilot
+./setup/setup.sh uninstall all
+```
+
+```bash
+# Cross-platform Python (3.9+)
+python setup/setup.py                       # Interactive
+python setup/setup.py status
+python setup/setup.py install copilot
+python setup/setup.py uninstall all
+```
+
+For the per-project CLIs (Gemini, Codex, OpenCode, Windsurf), pass `--project
+<path>` (PowerShell: `-Project <path>`):
+
+```bash
+./setup/setup.sh install codex --project ~/code/my-app
+./setup/setup.sh uninstall codex --project ~/code/my-app
+```
+
+The per-project install adds a marker-bracketed block to `AGENTS.md` /
+`GEMINI.md` / `.windsurfrules`. Uninstall removes **only** that block — the
+rest of the file is preserved byte-for-byte. The same safety applies to global
+installs: a `SKILL.md` is removed only if it carries our `oh-my-universal`
+marker; modified VS Code prompts are kept.
+
+Smoke tests live alongside the installers:
+
+```bash
+./setup/test.sh         # POSIX
+.\setup\test.ps1        # Windows
+python setup/test.py    # Cross-platform
+```
+
+---
+
 ## Prerequisites
 
 - An AI coding CLI (any one of the 7 supported CLIs listed below)

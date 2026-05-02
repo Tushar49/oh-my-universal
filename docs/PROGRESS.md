@@ -312,3 +312,145 @@
 | 10.8 | Add cross-platform smoke tests                                    | done   | test.ps1 / test.sh / test.py — all green |
 | 10.9 | Update root `README.md` and `docs/SETUP.md`                       | done   | Bundled installer is now the recommended path |
 
+## 2026-05-02 — Phase 11: Group-router path resolution fix
+
+User reported skills failing to load post-install with errors like:
+```
+Read ~\.copilot\skills\oh-my-universal\skills\ultrawork.md
+Path does not exist
+```
+
+Root cause: 8 "group router" `SKILL.md` files (`collaborate`,
+`docs-and-memory`, `investigate`, `meta`, `oh-my-universal`, `operations`,
+`plan-and-build`, `quality`) reference sub-skills via **relative** paths
+(`skills/team.md`, `skills/ultrawork.md`, etc.). When installed as a
+junction/symlink, those relative refs resolve under the install location,
+but no co-located `skills/` subfolder exists there — every reference is
+broken. The user's reported install had **all 8 group routers broken**.
+
+Fix:
+- New `Test-IsGroupRouter` / `is_group_router` detector — checks for
+  relative `skills/<name>.md` patterns in `SKILL.md` content.
+- New `Get-PatchedRouterContent` / `get_patched_router_content` helper —
+  rewrites every relative ref to the absolute path under `<repo>/skills/`
+  and injects an `<!-- # [oh-my-universal] (installed copy with absolute
+  paths to ...) -->` marker so uninstall can identify these copies.
+- New `Install-GroupDir` / `install_group_dir` dispatcher — for each group
+  dir: if it's a router → copy + patch (real dir); else → junction/symlink.
+  Idempotent: re-runs detect already-patched routers and skip them.
+- Replaces existing junction with a real dir when a group is detected as a
+  router (handles the user's already-broken install on re-install).
+- Uninstall logic upgraded:
+  - `is_junction_or_symlink()` helper covers Windows junctions on Python
+    3.9–3.11 (where `Path.is_symlink()` returns False for junctions);
+    uses `FILE_ATTRIBUTE_REPARSE_POINT` (0x400) bit + `os.readlink`
+    fallback.
+  - Patched-router copies are removed only when the directory contains
+    nothing but our `SKILL.md` (no user-added files).
+- Bash `setup.sh` gets the same logic via `awk`-based content rewriting.
+- `setup/test.py` extended with `test_router_patching()` — installs into
+  a temp `HOME`, verifies every router has zero relative refs and every
+  absolute ref resolves to a real file, then uninstalls and verifies
+  nothing oh-my-universal is left behind.
+
+After fix, re-installed the user's broken Copilot setup:
+```
+oh-my-universal:  broken-refs: 0  abs-refs: 69   ✓
+collaborate:      broken-refs: 0  abs-refs: 4    ✓
+docs-and-memory:  broken-refs: 0  abs-refs: 4    ✓
+investigate:      broken-refs: 0  abs-refs: 11   ✓
+meta:             broken-refs: 0  abs-refs: 12   ✓
+operations:       broken-refs: 0  abs-refs: 17   ✓
+plan-and-build:   broken-refs: 0  abs-refs: 9    ✓
+quality:          broken-refs: 0  abs-refs: 12   ✓
+```
+Same for Claude.
+
+Test runners now cover the bug:
+- `python test.py` → PASS 23 / FAIL 0 (added router-patching test)
+- `powershell -File test.ps1` → PASS 15 / FAIL 0 (+ delegated 23/0)
+- `bash test.sh` → PASS 19 / FAIL 0
+
+## 2026-05-02 — Phase 12: Source-corruption guard + rogue junction repair
+
+**Problem reported:** User's Copilot CLI session showed `oh-my-universal` skill
+loading but every sub-skill read failed:
+```
+Read ~\.copilot\skills\oh-my-universal\skills\ultrawork.md
+Path does not exist
+```
+
+**Two distinct bugs surfaced during diagnosis:**
+
+### Bug A: Group routers used relative `skills/<name>.md` refs (Phase 11)
+8 group routers had relative path references that didn't resolve at the
+install location. Fixed in Phase 11 by patching content to absolute paths.
+
+### Bug B: Source repo was being silently corrupted on every install
+Root cause: `~/.copilot/skills` was a **junction pointing back into the repo**:
+```
+C:\Users\LuC!F3R\.copilot\skills  →  E:\Projects\oh-my-universal\.github\skills
+```
+This came from a prior agent's install attempt. Every subsequent `setup.ps1
+install copilot` then "wrote into the user profile" — but actually wrote
+INSIDE the source repo via the junction. Result: 69 stale `SKILL.md`
+wrappers with absolute paths to the local machine appeared in
+`<repo>/.github/skills/<name>/`, and the 8 group routers got patched in
+place — all polluting the repo.
+
+**Fixes:**
+- `Test-IsInsideRepo` (PS) / `is_inside_repo` (Python) / `is_inside_repo`
+  (bash): walks the install path looking for any junction/symlink that
+  resolves into `$OmuRoot`. If found, **refuse the install** with a clear
+  remediation message:
+  ```
+  REFUSING to install: ~/.copilot/skills resolves inside source repo ...
+  Likely cause: ~/.copilot/skills (or a parent) is a junction pointing
+  into the repo.
+  Fix: cmd /c rmdir "..." — then re-run install.
+  ```
+- Same guard applied at every write entry point: `Install-Copilot`,
+  `Install-GroupDir`, the Python and bash equivalents.
+- Hardened `Get-Hardlink` to silently fall back to copy when source and
+  target are on different drives (cross-drive hardlinks fail by design).
+- `_bash_path` in `test.py` made defensive against WSL's "Catastrophic
+  failure" responses (filters null bytes, validates path shape).
+- `.gitignore` updated to exclude `.github/skills/*/SKILL.md` for any
+  future per-skill wrapper that leaks into the repo (the 8 legitimate
+  group routers are explicitly re-included).
+- Junction-aware uninstall: `is_junction_or_symlink()` catches Windows
+  junctions on Python 3.9–3.11 (where `Path.is_symlink()` returns False
+  for them).
+
+**Repaired user state:**
+- Removed the rogue junction at `~/.copilot/skills`.
+- Recreated as a real folder.
+- Re-ran install; 77 dirs installed cleanly, source untouched.
+- Verified router resolution: `oh-my-universal/SKILL.md` now contains
+  69 absolute path refs to `E:\Projects\oh-my-universal\skills\<name>.md`,
+  every one of which exists.
+
+**Test coverage added:**
+- `test_router_patching()` in `test.py` installs into a fake `HOME`,
+  verifies routers have zero relative refs and every absolute ref
+  resolves, then uninstalls and verifies no oh-my-universal artifacts
+  are left behind.
+
+**Final test results:** all 3 runners green
+- `python test.py` → 23 PASS / 0 FAIL
+- `powershell -File test.ps1` → 15 PASS / 0 FAIL (+ delegated 23/0)
+- `bash test.sh` → 19 PASS / 0 FAIL
+
+### Phase 12 Task Table
+
+| #    | Task                                                                | Status |
+|------|---------------------------------------------------------------------|--------|
+| 12.1 | Diagnose: ~/.copilot/skills was a junction into repo                | done   |
+| 12.2 | Add `Test-IsInsideRepo` / `is_inside_repo` walking parent chain     | done   |
+| 12.3 | Wire safety guard into Install-Copilot + Install-GroupDir (PS/py/sh) | done  |
+| 12.4 | Repair user's machine: remove junction, restore source, re-install  | done   |
+| 12.5 | Add `.gitignore` rule for stale per-skill wrappers in `.github/skills/` | done |
+| 12.6 | Silence cross-drive hardlink fallback noise                         | done   |
+| 12.7 | Harden `_bash_path` against WSL "Catastrophic failure" output       | done   |
+| 12.8 | Verify all 3 test runners pass after fixes                          | done   |
+

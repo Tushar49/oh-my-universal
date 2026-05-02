@@ -8,6 +8,7 @@ preserves user content exactly. Returns exit code 0 on success.
 import ast
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -77,16 +78,23 @@ except SyntaxError as e:
     failed(f"setup.py syntax error: {e}")
 
 def _bash_path(p: Path) -> str:
-    """Convert path for bash; on Windows, route through wslpath."""
+    """Convert path for bash; on Windows, route through wslpath. Defensive against WSL errors."""
     if platform.system() != "Windows":
         return str(p)
     try:
-        out = subprocess.run(
+        result = subprocess.run(
             ["bash", "-c", f"wslpath -a '{p}'"],
-            capture_output=True, text=True, timeout=5
-        ).stdout.strip()
-        return out or str(p)
-    except Exception:
+            capture_output=True, text=True, timeout=10
+        )
+        if result.returncode != 0:
+            return str(p)
+        out = result.stdout.replace("\x00", "").strip()
+        # WSL sometimes emits "Catastrophic failure" or similar diagnostics on stdout.
+        # A valid WSL path starts with /mnt/ or /.
+        if out and (out.startswith("/mnt/") or out.startswith("/")):
+            return out
+        return str(p)
+    except (OSError, subprocess.TimeoutExpired, ValueError):
         return str(p)
 
 
@@ -255,6 +263,86 @@ test_per_project_py("opencode", "AGENTS.md")
 # And against setup.sh if bash exists
 test_per_project_sh("codex", "AGENTS.md")
 test_per_project_sh("gemini", "GEMINI.md")
+
+
+# ── Test 7: group-router patching (the bug from session 2) ───────────────────
+def test_router_patching():
+    """After install, every group router SKILL.md must point to absolute paths
+    that actually exist — not relative `skills/<name>.md` refs that don't
+    resolve."""
+    # Run install into a fake HOME so we don't disturb the user's real install.
+    fake_home = Path(tempfile.mkdtemp(prefix="omu-fakehome-"))
+    try:
+        env_with_home = env.copy()
+        if platform.system() == "Windows":
+            env_with_home["USERPROFILE"] = str(fake_home)
+        else:
+            env_with_home["HOME"] = str(fake_home)
+
+        res = subprocess.run(
+            [sys.executable, str(PY), "install", "copilot"],
+            capture_output=True, text=True, env=env_with_home, timeout=60
+        )
+        if res.returncode != 0:
+            failed(f"install copilot into fake HOME failed: {res.stderr.strip()[:200]}")
+            return
+
+        skills_dir = fake_home / ".copilot" / "skills"
+        # Find every group-router SKILL.md (they have a `<!-- # [oh-my-universal] (installed copy` marker).
+        bad_routers = []
+        bad_refs = []
+        for d in skills_dir.iterdir():
+            if not d.is_dir():
+                continue
+            sf = d / "SKILL.md"
+            if not sf.is_file():
+                continue
+            content = sf.read_text(encoding="utf-8", errors="ignore")
+            if "(installed copy with absolute paths" not in content:
+                continue
+            # This is a router. Verify it has NO relative `skills/<name>.md` refs.
+            if re.search(r"\bskills/[a-z-]+\.md\b", content):
+                bad_routers.append(d.name)
+                continue
+            # And every absolute ref must point at a real file.
+            for m in re.finditer(r"`([A-Z]:[\\/][^`]+\.md)`", content):
+                if not Path(m.group(1)).is_file():
+                    bad_refs.append(f"{d.name} -> {m.group(1)}")
+
+        if bad_routers:
+            failed(f"router still has relative refs: {bad_routers}")
+            return
+        if bad_refs:
+            failed(f"router refs don't resolve: {bad_refs[:3]}")
+            return
+        passed("group routers patched to absolute paths and all refs resolve")
+
+        # Now uninstall and verify routers are removed cleanly.
+        res = subprocess.run(
+            [sys.executable, str(PY), "uninstall", "copilot"],
+            capture_output=True, text=True, env=env_with_home, timeout=60
+        )
+        if res.returncode != 0:
+            failed(f"uninstall copilot failed: {res.stderr.strip()[:200]}")
+            return
+        leftover = []
+        if skills_dir.exists():
+            for d in skills_dir.iterdir():
+                if d.is_dir() and (d / "SKILL.md").is_file():
+                    c = (d / "SKILL.md").read_text(encoding="utf-8", errors="ignore")
+                    if "oh-my-universal" in c or MARKER in c:
+                        leftover.append(d.name)
+        if leftover:
+            failed(f"uninstall left oh-my-universal artifacts behind: {leftover}")
+        else:
+            passed("uninstall removed all routers and wrappers cleanly")
+    finally:
+        shutil.rmtree(fake_home, ignore_errors=True)
+
+
+# Need MARKER from setup.py for the above check.
+MARKER = "# [oh-my-universal]"
+test_router_patching()
 
 # ── Summary ──────────────────────────────────────────────────────────────────
 print()

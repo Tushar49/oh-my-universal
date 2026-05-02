@@ -150,6 +150,34 @@ def has_command(name: str) -> bool:
     return shutil.which(name) is not None
 
 
+def is_junction_or_symlink(path: Path) -> bool:
+    """Detect Windows junctions (which Path.is_symlink() misses on Python <3.12) AND symlinks."""
+    if path.is_symlink():
+        return True
+    if not IS_WINDOWS:
+        return False
+    # Windows junction probe: stat with FILE_ATTRIBUTE_REPARSE_POINT (0x400).
+    try:
+        attrs = os.stat(path, follow_symlinks=False).st_file_attributes
+        return bool(attrs & 0x400)  # FILE_ATTRIBUTE_REPARSE_POINT
+    except (AttributeError, OSError):
+        pass
+    # Fallback: try os.readlink — succeeds for junctions on Python 3.8+.
+    try:
+        os.readlink(path)
+        return True
+    except OSError:
+        return False
+
+
+def get_junction_target(path: Path) -> str:
+    """Get the target of a junction or symlink as a string."""
+    try:
+        return str(os.readlink(path))
+    except OSError:
+        return ""
+
+
 def make_symlink(target: Path, source: Path, is_dir: bool = False):
     """Create symlink/junction. On Windows without admin, uses junction for dirs."""
     try:
@@ -320,11 +348,58 @@ def detect_clis():
 
 # ── Install ──────────────────────────────────────────────────────────────────
 
+def is_inside_repo(path: Path) -> bool:
+    """Check whether path resolves (after following any junctions/symlinks) to a
+    location inside OMU_ROOT. Catches the case where a parent like ~/.copilot/skills
+    is a junction pointing back into the repo."""
+    try:
+        resolved_root = OMU_ROOT.resolve()
+    except OSError:
+        resolved_root = OMU_ROOT
+
+    # Direct resolve: follows symlinks AND junctions on Windows (Python 3.6+).
+    try:
+        resolved = path.resolve()
+        if resolved == resolved_root or resolved_root in resolved.parents:
+            return True
+    except OSError:
+        pass
+
+    # Walk up: if any existing ancestor is a symlink/junction into the repo, refuse.
+    candidate = path
+    while candidate != candidate.parent:
+        if candidate.exists():
+            try:
+                target_str = str(candidate.resolve())
+                root_str = str(resolved_root)
+                if IS_WINDOWS:
+                    target_str, root_str = target_str.lower(), root_str.lower()
+                if target_str == root_str or target_str.startswith(root_str + os.sep):
+                    return True
+            except OSError:
+                pass
+            break
+        candidate = candidate.parent
+    return False
+
+
 def install_copilot():
     print(f"\n  {_c('1', 'Installing into Copilot...')}")
     copilot_dir = HOME / ".copilot"
     skills_target = copilot_dir / "skills"
     instr_target = copilot_dir / "instructions"
+
+    # Safety: never install inside the source repo. Catches direct paths AND
+    # paths that resolve into the repo via a parent junction/symlink.
+    if is_inside_repo(skills_target):
+        err(f"REFUSING to install: {skills_target} resolves inside source repo {OMU_ROOT}")
+        err("Likely cause: ~/.copilot/skills (or a parent) is a junction pointing into the repo.")
+        if IS_WINDOWS:
+            err(f'Fix: cmd /c rmdir "{skills_target}" — then re-run install.')
+        else:
+            err(f'Fix: rm "{skills_target}" — then re-run install.')
+        return
+
     skills_target.mkdir(parents=True, exist_ok=True)
     instr_target.mkdir(parents=True, exist_ok=True)
 
@@ -364,21 +439,23 @@ Use read_file to load the instructions from that absolute path, then follow them
         created += 1
     ok(f"Skills: {created} created, {skipped} already present")
 
-    # 2. Symlink/junction skill groups
-    gjc = gjs = 0
+    # 2. Symlink/junction skill groups (or copy+patch routers)
+    gjc = gjs = gjp = 0
     if GH_SKILLS_DIR.is_dir():
         for group_dir in sorted(GH_SKILLS_DIR.iterdir()):
             if not group_dir.is_dir():
                 continue
             target = skills_target / group_dir.name
-            if target.exists():
-                gjs += 1
-                continue
-            if make_symlink(target, group_dir, is_dir=True):
+            result = install_group_dir(group_dir, target)
+            if result == "junctioned":
                 gjc += 1
+            elif result == "patched":
+                gjp += 1
+            elif result == "kept":
+                gjs += 1
             else:
                 warn(f"Failed to link group: {group_dir.name}")
-    ok(f"Skill groups: {gjc} linked, {gjs} already present")
+    ok(f"Skill groups: {gjc} linked, {gjp} routers patched, {gjs} already present")
 
     # 3. Instructions file
     instr_src = GH_INSTRUCT_DIR / "skills.instructions.md"
@@ -427,19 +504,21 @@ def install_claude():
     claude_skills.mkdir(parents=True, exist_ok=True)
 
     if CLAUDE_SKILLS_DIR.is_dir():
-        c = 0
+        gjc = gjs = gjp = 0
         for group_dir in sorted(CLAUDE_SKILLS_DIR.iterdir()):
             if not group_dir.is_dir():
                 continue
             target = claude_skills / group_dir.name
-            if target.exists():
-                skip(f"Claude group {group_dir.name} already installed")
-                continue
-            if make_symlink(target, group_dir, is_dir=True):
-                c += 1
+            result = install_group_dir(group_dir, target)
+            if result == "junctioned":
+                gjc += 1
+            elif result == "patched":
+                gjp += 1
+            elif result == "kept":
+                gjs += 1
             else:
                 warn(f"Failed to link: {group_dir.name}")
-        ok(f"Claude skill groups: {c} linked")
+        ok(f"Claude skill groups: {gjc} linked, {gjp} routers patched, {gjs} already present")
 
     ok("Claude Code installation complete")
     info(f'Tip: alias claude=\'claude --plugin-dir "{OMU_ROOT}"\'')
@@ -457,6 +536,76 @@ def get_omu_project_body() -> str:
 #
 # To invoke: 'plan this refactoring', 'review my changes', 'ultrawork: <task>',
 # 'fix the build', 'deep-dive into <bug>', etc."""
+
+
+_SKILLS_REF_RE = re.compile(r"skills/([a-z-]+)\.md")
+
+
+def is_group_router(skill_file: Path) -> bool:
+    """A 'group router' SKILL.md uses relative refs like `skills/team.md`.
+    When installed via symlink/junction, those relative refs can't resolve because
+    the source dir has no co-located `skills/` subfolder. We must patch the
+    content to use absolute paths."""
+    if not skill_file.is_file():
+        return False
+    try:
+        content = skill_file.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return False
+    return bool(_SKILLS_REF_RE.search(content))
+
+
+def get_patched_router_content(source_path: Path) -> str:
+    """Read a router SKILL.md and rewrite relative skills/<name>.md refs to absolute paths.
+    Adds a marker so uninstall can identify our installed copies unambiguously."""
+    content = source_path.read_text(encoding="utf-8")
+    patched = _SKILLS_REF_RE.sub(lambda m: str(SKILLS_DIR / f"{m.group(1)}.md"), content)
+    marker = f"<!-- {MARKER} (installed copy with absolute paths to {SKILLS_DIR}) -->"
+    fm = re.match(r"(?s)^(---\r?\n.*?\r?\n---\r?\n)", patched)
+    if fm:
+        patched = patched[: fm.end()] + marker + "\n" + patched[fm.end():]
+    else:
+        patched = f"{marker}\n{patched}"
+    return patched
+
+
+def install_group_dir(group_dir: Path, target: Path) -> str:
+    """Install a single group skill directory.
+    Returns: 'patched' / 'junctioned' (symlink) / 'kept' / 'failed'."""
+
+    if is_inside_repo(target):
+        err(f"REFUSING to install inside source repo: {target}")
+        return "failed"
+
+    source_skill = group_dir / "SKILL.md"
+
+    if is_group_router(source_skill):
+        # Replace any existing junction/symlink with a real dir we can patch into.
+        if target.exists() and (target.is_symlink() or (IS_WINDOWS and not (target / "SKILL.md").is_file())):
+            try:
+                if target.is_symlink():
+                    target.unlink()
+                else:
+                    remove_junction(target)
+            except OSError:
+                pass
+        target.mkdir(parents=True, exist_ok=True)
+        target_skill = target / "SKILL.md"
+
+        # Idempotent: skip if already patched and pointing to current repo.
+        if target_skill.is_file():
+            existing = target_skill.read_text(encoding="utf-8", errors="ignore")
+            if str(SKILLS_DIR) in existing and not _SKILLS_REF_RE.search(existing):
+                return "kept"
+        target_skill.write_text(get_patched_router_content(source_skill), encoding="utf-8")
+        return "patched"
+
+    # Non-router: junction/symlink (faster, single source of truth).
+    if target.exists():
+        return "kept"
+    if make_symlink(target, group_dir, is_dir=True):
+        return "junctioned"
+    return "failed"
 
 
 def add_omu_marked_section(path: Path, body: str):
@@ -649,8 +798,8 @@ def uninstall_copilot():
             kept += 1
     ok(f"Skills removed: {removed} (kept {kept} non-omu skills)")
 
-    # 2. Remove symlinked/junctioned skill groups
-    gjr = 0
+    # 2. Remove skill groups: junctions/symlinks pointing to our repo, OR patched-router copies.
+    gjr = gpr = 0
     if GH_SKILLS_DIR.is_dir():
         for group_dir in sorted(GH_SKILLS_DIR.iterdir()):
             if not group_dir.is_dir():
@@ -658,22 +807,27 @@ def uninstall_copilot():
             target = skills_target / group_dir.name
             if not target.exists():
                 continue
-            if target.is_symlink():
-                link_target = str(os.readlink(target))
+            if is_junction_or_symlink(target):
+                link_target = get_junction_target(target)
                 if "oh-my-universal" in link_target:
-                    target.unlink()
+                    if IS_WINDOWS and not target.is_symlink():
+                        remove_junction(target)
+                    else:
+                        target.unlink()
                     gjr += 1
-            elif IS_WINDOWS:
-                # Check for junction
-                import subprocess
-                result = subprocess.run(
-                    ["cmd", "/c", "dir", "/AL", str(skills_target)],
-                    capture_output=True, text=True
-                )
-                if group_dir.name in result.stdout and "oh-my-universal" in result.stdout:
-                    remove_junction(target)
-                    gjr += 1
-    ok(f"Skill groups removed: {gjr}")
+                continue
+            # Real dir: patched-router copy?
+            sf = target / "SKILL.md"
+            if sf.is_file():
+                content = sf.read_text(encoding="utf-8", errors="ignore")
+                if MARKER in content or "oh-my-universal" in content:
+                    contents = list(target.iterdir())
+                    if len(contents) == 1 and contents[0].name == "SKILL.md":
+                        shutil.rmtree(target)
+                        gpr += 1
+                    else:
+                        warn(f"Group {group_dir.name}: contains user-added files — kept")
+    ok(f"Skill groups removed: {gjr} junctions/symlinks, {gpr} patched-router copies")
 
     # 3. Remove instructions file
     instr_file = instr_target / "oh-my-universal-skills.instructions.md"
@@ -716,27 +870,33 @@ def uninstall_copilot():
 def uninstall_claude():
     print(f"\n  {_c('1', 'Uninstalling from Claude Code...')}")
     claude_skills = HOME / ".claude" / "skills"
-    removed = 0
+    jr = pr = 0
 
     if claude_skills.is_dir():
         for d in sorted(claude_skills.iterdir()):
             if not d.is_dir():
                 continue
-            if d.is_symlink():
-                link_target = str(os.readlink(d))
+            if is_junction_or_symlink(d):
+                link_target = get_junction_target(d)
                 if "oh-my-universal" in link_target:
-                    d.unlink()
-                    removed += 1
-            elif IS_WINDOWS:
-                import subprocess
-                result = subprocess.run(
-                    ["cmd", "/c", "dir", "/AL", str(claude_skills)],
-                    capture_output=True, text=True
-                )
-                if d.name in result.stdout and "oh-my-universal" in result.stdout:
-                    remove_junction(d)
-                    removed += 1
-    ok(f"Claude skill links removed: {removed}")
+                    if IS_WINDOWS and not d.is_symlink():
+                        remove_junction(d)
+                    else:
+                        d.unlink()
+                    jr += 1
+                continue
+            # Real dir: patched-router copy?
+            sf = d / "SKILL.md"
+            if sf.is_file():
+                content = sf.read_text(encoding="utf-8", errors="ignore")
+                if MARKER in content:
+                    contents = list(d.iterdir())
+                    if len(contents) == 1 and contents[0].name == "SKILL.md":
+                        shutil.rmtree(d)
+                        pr += 1
+                    else:
+                        warn(f"Claude group {d.name}: contains user-added files — kept")
+    ok(f"Claude skill groups removed: {jr} junctions/symlinks, {pr} patched-router copies")
     ok("Claude uninstall complete")
 
 

@@ -110,7 +110,7 @@ function New-Junction {
 
 function New-Hardlink {
     param([string]$Target, [string]$Source)
-    cmd /c "mklink /H `"$Target`" `"$Source`"" 2>&1 | Out-Null
+    cmd /c "mklink /H `"$Target`" `"$Source`" 2>nul" 2>&1 | Out-Null
     return $LASTEXITCODE -eq 0
 }
 
@@ -186,6 +186,83 @@ function Get-OmuProjectBody {
 # To invoke: 'plan this refactoring', 'review my changes', 'ultrawork: <task>',
 # 'fix the build', 'deep-dive into <bug>', etc.
 "@
+}
+
+function Test-IsGroupRouter {
+    # A "group router" SKILL.md uses relative refs like `skills/team.md` to other skill files.
+    # When installed via junction, those relative refs can't resolve because the source dir
+    # has no co-located `skills/` subfolder. We must patch the content to use absolute paths.
+    param([string]$SkillFile)
+    if (-not (Test-Path $SkillFile)) { return $false }
+    $content = Get-Content $SkillFile -Raw -ErrorAction SilentlyContinue
+    if (-not $content) { return $false }
+    return $content -match 'skills/[a-z-]+\.md'
+}
+
+function Get-PatchedRouterContent {
+    # Read a router SKILL.md and rewrite relative `skills/<name>.md` refs to absolute paths.
+    # Adds a marker so uninstall can identify our installed copies unambiguously.
+    param([string]$SourcePath)
+    $content = Get-Content $SourcePath -Raw
+    $skillsRefPattern = 'skills/([a-z-]+)\.md'
+    $patched = $content -replace $skillsRefPattern, "$SkillsDir\`$1.md"
+    $marker = "<!-- $Marker (installed copy with absolute paths to $SkillsDir) -->"
+    if ($patched -match '(?s)^(---\r?\n.*?\r?\n---\r?\n)') {
+        $patched = $patched -replace '(?s)^(---\r?\n.*?\r?\n---\r?\n)', "`${1}$marker`n"
+    } else {
+        $patched = "$marker`n$patched"
+    }
+    return $patched
+}
+
+function Install-GroupDir {
+    # Install a group skill directory.
+    # If it's a router (relative `skills/` refs) → copy + patch (so refs resolve).
+    # Otherwise → junction (preserves source link, faster).
+    # Idempotent: existing broken router installs (relative refs / no marker) get repaired.
+    param([System.IO.DirectoryInfo]$Group, [string]$Target)
+
+    if (Test-IsInsideRepo $Target) {
+        Write-Err "REFUSING to install inside source repo: $Target"
+        return 'failed'
+    }
+
+    $sourceSkill = Join-Path $Group.FullName 'SKILL.md'
+    $isRouter = Test-IsGroupRouter $sourceSkill
+
+    if ($isRouter) {
+        # Need a real dir with patched SKILL.md inside.
+        if (Test-Path $Target) {
+            $existingItem = Get-Item $Target -Force -ErrorAction SilentlyContinue
+            if ($existingItem.LinkType -eq 'Junction') {
+                # Replace junction with real dir
+                cmd /c "rmdir `"$Target`"" 2>&1 | Out-Null
+            }
+        }
+        if (-not (Test-Path $Target)) {
+            New-Item -ItemType Directory -Path $Target -Force | Out-Null
+        }
+        $targetSkill = Join-Path $Target 'SKILL.md'
+        $needWrite = $true
+        if (Test-Path $targetSkill) {
+            $existing = Get-Content $targetSkill -Raw -ErrorAction SilentlyContinue
+            # Already patched and points to current repo? skip.
+            if ($existing -and $existing -match [regex]::Escape($SkillsDir) -and $existing -notmatch '\bskills/[a-z-]+\.md\b') {
+                $needWrite = $false
+            }
+        }
+        if ($needWrite) {
+            $patched = Get-PatchedRouterContent $sourceSkill
+            Set-Content -Path $targetSkill -Value $patched -Encoding UTF8
+            return 'patched'
+        }
+        return 'kept'
+    } else {
+        if (Test-Path $Target) { return 'kept' }
+        if (New-Junction $Target $Group.FullName) { return 'junctioned' }
+        Write-Warn "Failed to junction group: $($Group.Name)"
+        return 'failed'
+    }
 }
 
 # ── CLI Targets ────────────────────────────────────────────────────────────────
@@ -308,11 +385,52 @@ function Detect-CLIs {
 
 # ── Install Functions ─────────────────────────────────────────────────────────
 
+function Test-IsInsideRepo {
+    # Check whether $Path resolves (after following any junctions/symlinks anywhere
+    # in the path) to a location inside $OmuRoot. Catches the case where a parent
+    # like ~/.copilot/skills is a junction pointing back into the repo.
+    param([string]$Path)
+    $resolvedRoot = [System.IO.Path]::GetFullPath($OmuRoot).TrimEnd('\') + '\'
+
+    # Direct comparison via GetFullPath (handles relative bits but doesn't follow links).
+    $direct = [System.IO.Path]::GetFullPath($Path).TrimEnd('\') + '\'
+    if ($direct.StartsWith($resolvedRoot, [StringComparison]::OrdinalIgnoreCase)) {
+        return $true
+    }
+
+    # Walk up the tree checking each existing parent for a junction/symlink that
+    # points into the repo. Stops at the first existing ancestor.
+    $candidate = $Path
+    while ($candidate -and (Split-Path $candidate -Parent)) {
+        if (Test-Path $candidate) {
+            $item = Get-Item $candidate -Force -ErrorAction SilentlyContinue
+            if ($item -and $item.LinkType -in @('Junction','SymbolicLink')) {
+                $linkTarget = [System.IO.Path]::GetFullPath($item.Target).TrimEnd('\') + '\'
+                if ($linkTarget.StartsWith($resolvedRoot, [StringComparison]::OrdinalIgnoreCase)) {
+                    return $true
+                }
+            }
+            break
+        }
+        $candidate = Split-Path $candidate -Parent
+    }
+    return $false
+}
+
 function Install-Copilot {
     Write-Host "`n  Installing into Copilot..." -ForegroundColor White
     $copilotDir = Join-Path $env:USERPROFILE '.copilot'
     $skillsTarget = Join-Path $copilotDir 'skills'
     $instrTarget = Join-Path $copilotDir 'instructions'
+
+    # Safety: never install inside the source repo. Catches both direct writes
+    # (USERPROFILE = repo) AND indirect writes via a junction.
+    if (Test-IsInsideRepo $skillsTarget) {
+        Write-Err "REFUSING to install: $skillsTarget resolves inside source repo $OmuRoot"
+        Write-Err "Likely cause: ~/.copilot/skills (or a parent) is a junction pointing into the repo."
+        Write-Err "Fix: cmd /c rmdir `"$skillsTarget`" — then re-run install."
+        return
+    }
 
     # Ensure directories exist
     @($skillsTarget, $instrTarget) | ForEach-Object {
@@ -356,15 +474,18 @@ Use read_file to load the instructions from that absolute path, then follow them
     }
     Write-OK "Skills: $created created, $skipped already present"
 
-    # 2. Junction skill groups (8 groups)
-    $gjc = 0; $gjs = 0
+    # 2. Junction skill groups (or copy+patch routers) — 8 group routers + 69 single-skill folders
+    $gjc = 0; $gjs = 0; $gjp = 0
     foreach ($group in (Get-ChildItem $GhSkillsDir -Directory -ErrorAction SilentlyContinue)) {
         $target = Join-Path $skillsTarget $group.Name
-        if (Test-Path $target) { $gjs++; continue }
-        if (New-Junction $target $group.FullName) { $gjc++ }
-        else { Write-Warn "Failed to junction group: $($group.Name)" }
+        $result = Install-GroupDir -Group $group -Target $target
+        switch ($result) {
+            'junctioned' { $gjc++ }
+            'patched'    { $gjp++ }
+            'kept'       { $gjs++ }
+        }
     }
-    Write-OK "Skill groups: $gjc junctioned, $gjs already present"
+    Write-OK "Skill groups: $gjc junctioned, $gjp routers patched, $gjs already present"
 
     # 3. Copy instructions file (with markers so we can remove it later)
     $instrSrc = Join-Path $GhInstructDir 'skills.instructions.md'
@@ -417,31 +538,18 @@ function Install-Claude {
         New-Item -ItemType Directory -Path $claudeSkills -Force | Out-Null
     }
 
-    # Junction the oh-my-universal skill group
-    $target = Join-Path $claudeSkills 'oh-my-universal'
-    $source = Join-Path $ClaudeSkillsDir 'oh-my-universal'
-    if (Test-Path $target) {
-        Write-Skip "Claude skill group already installed"
-    } elseif (Test-Path $source) {
-        if (New-Junction $target $source) {
-            Write-OK "Claude skill group junctioned"
-        } else {
-            # Fall back to copying
-            Copy-Item $source $target -Recurse
-            Write-OK "Claude skill group copied"
-        }
-    }
-
-    # Also junction the other skill groups
-    $gjc = 0
+    # Install all skill groups from .claude/skills/ — patch routers, junction the rest.
+    $gjc = 0; $gjs = 0; $gjp = 0
     foreach ($group in (Get-ChildItem $ClaudeSkillsDir -Directory -ErrorAction SilentlyContinue)) {
-        if ($group.Name -eq 'oh-my-universal') { continue }
-        $gt = Join-Path $claudeSkills $group.Name
-        if (-not (Test-Path $gt)) {
-            if (New-Junction $gt $group.FullName) { $gjc++ }
+        $target = Join-Path $claudeSkills $group.Name
+        $result = Install-GroupDir -Group $group -Target $target
+        switch ($result) {
+            'junctioned' { $gjc++ }
+            'patched'    { $gjp++ }
+            'kept'       { $gjs++ }
         }
     }
-    if ($gjc -gt 0) { Write-OK "Claude sub-groups: $gjc junctioned" }
+    Write-OK "Claude skill groups: $gjc junctioned, $gjp routers patched, $gjs already present"
 
     Write-OK "Claude Code installation complete"
     Write-Info "Tip: Add to shell profile: function claude { & claude.exe --plugin-dir '$OmuRoot' @args }"
@@ -572,22 +680,37 @@ function Uninstall-Copilot {
     }
     Write-OK "Skills removed: $removed (kept $kept non-omu skills)"
 
-    # 2. Remove junctioned skill groups (only if they're junctions to our repo)
-    $gjr = 0
+    # 2. Remove skill groups: junctions pointing to our repo, OR patched-router copies (real dirs).
+    $gjr = 0; $gpr = 0
     foreach ($group in (Get-ChildItem $GhSkillsDir -Directory -ErrorAction SilentlyContinue)) {
         $target = Join-Path $skillsTarget $group.Name
         if (-not (Test-Path $target)) { continue }
         $item = Get-Item $target -Force
         if ($item.LinkType -eq 'Junction') {
-            # Verify it points to our repo before removing
             $targetPath = $item.Target
             if ($targetPath -like "*oh-my-universal*") {
                 cmd /c "rmdir `"$target`"" 2>&1 | Out-Null
                 $gjr++
             }
+            continue
+        }
+        # Real dir: only remove if it's a patched router copy (has our marker).
+        $sf = Join-Path $target 'SKILL.md'
+        if (Test-Path $sf) {
+            $c = Get-Content $sf -Raw -ErrorAction SilentlyContinue
+            if ($c -and ($c -match [regex]::Escape($Marker) -or $c -match 'oh-my-universal')) {
+                # Extra safety: only delete if directory contains ONLY the SKILL.md (no user-added files).
+                $contents = Get-ChildItem $target -Force -ErrorAction SilentlyContinue
+                if ($contents.Count -eq 1 -and $contents[0].Name -eq 'SKILL.md') {
+                    Remove-Item $target -Recurse -Force
+                    $gpr++
+                } else {
+                    Write-Warn "Group $($group.Name): contains user-added files — kept"
+                }
+            }
         }
     }
-    Write-OK "Skill groups removed: $gjr junctions"
+    Write-OK "Skill groups removed: $gjr junctions, $gpr patched-router copies"
 
     # 3. Remove instructions file (only our file, not user's own)
     $instrFile = Join-Path $instrTarget 'oh-my-universal-skills.instructions.md'
@@ -630,15 +753,31 @@ function Uninstall-Claude {
     Write-Host "`n  Uninstalling from Claude Code..." -ForegroundColor White
     $claudeSkills = Join-Path $env:USERPROFILE '.claude\skills'
 
-    $removed = 0
+    $jr = 0; $pr = 0
     foreach ($dir in (Get-ChildItem $claudeSkills -Directory -ErrorAction SilentlyContinue)) {
         $item = Get-Item $dir.FullName -Force
         if ($item.LinkType -eq 'Junction' -and $item.Target -like "*oh-my-universal*") {
             cmd /c "rmdir `"$($dir.FullName)`"" 2>&1 | Out-Null
-            $removed++
+            $jr++
+            continue
+        }
+        # Real dir: check for patched-router marker
+        if ($item.LinkType) { continue }
+        $sf = Join-Path $dir.FullName 'SKILL.md'
+        if (Test-Path $sf) {
+            $c = Get-Content $sf -Raw -ErrorAction SilentlyContinue
+            if ($c -and ($c -match [regex]::Escape($Marker))) {
+                $contents = Get-ChildItem $dir.FullName -Force -ErrorAction SilentlyContinue
+                if ($contents.Count -eq 1 -and $contents[0].Name -eq 'SKILL.md') {
+                    Remove-Item $dir.FullName -Recurse -Force
+                    $pr++
+                } else {
+                    Write-Warn "Claude group $($dir.Name): contains user-added files — kept"
+                }
+            }
         }
     }
-    Write-OK "Claude skill junctions removed: $removed"
+    Write-OK "Claude skill groups removed: $jr junctions, $pr patched-router copies"
     Write-OK "Claude uninstall complete"
 }
 

@@ -2,3 +2,18 @@ node_modules/
 .memory/
 .temp/
 *.log
+
+# Install artifacts: per-skill SKILL.md wrappers under .github/skills/<name>/
+# are CREATED by setup/setup.ps1 when installing into the SAME repo as cwd.
+# They contain absolute paths to the local machine and must never be committed.
+# Group routers (collaborate, docs-and-memory, investigate, meta, oh-my-universal,
+# operations, plan-and-build, quality) are tracked source — do NOT ignore them.
+.github/skills/*/SKILL.md
+!.github/skills/collaborate/SKILL.md
+!.github/skills/docs-and-memory/SKILL.md
+!.github/skills/investigate/SKILL.md
+!.github/skills/meta/SKILL.md
+!.github/skills/oh-my-universal/SKILL.md
+!.github/skills/operations/SKILL.md
+!.github/skills/plan-and-build/SKILL.md
+!.github/skills/quality/SKILL.md

@@ -228,6 +228,83 @@ uninstall_per_project() {
     fi
 }
 
+# ── Group-router patching ────────────────────────────────────────────────────
+# A "group router" SKILL.md uses relative refs like `skills/team.md` to other skill
+# files. When installed via symlink/junction, those relative refs can't resolve
+# because the source dir has no co-located `skills/` subfolder. We patch the
+# content to use absolute paths.
+
+is_group_router() {
+    local skill_file="$1"
+    [ -f "$skill_file" ] || return 1
+    grep -qE 'skills/[a-z-]+\.md' "$skill_file" 2>/dev/null
+}
+
+write_patched_router() {
+    local source_skill="$1" target_skill="$2"
+    local marker="<!-- $MARKER (installed copy with absolute paths to $SKILLS_DIR) -->"
+    # 1) sed-replace relative skills/<name>.md with absolute path
+    # 2) inject marker after frontmatter if present, else at top
+    awk -v skills_dir="$SKILLS_DIR" -v marker="$marker" '
+        BEGIN { in_fm = 0; fm_seen = 0; injected = 0 }
+        NR == 1 && $0 == "---" { in_fm = 1; print; next }
+        in_fm && $0 == "---" { in_fm = 0; fm_seen = 1; print; print marker; injected = 1; next }
+        in_fm { print; next }
+        {
+            line = $0
+            while (match(line, /skills\/[a-z-]+\.md/)) {
+                name_part = substr(line, RSTART + 7, RLENGTH - 10)
+                replacement = skills_dir "/" name_part ".md"
+                line = substr(line, 1, RSTART - 1) replacement substr(line, RSTART + RLENGTH)
+            }
+            print line
+        }
+        END { if (!injected) print marker }
+    ' "$source_skill" > "$target_skill"
+}
+
+install_group_dir() {
+    # Install one group dir. Echoes one of: patched|junctioned|kept|failed
+    local source_dir="$1" target="$2"
+
+    if is_inside_repo "$target"; then
+        err "REFUSING to install inside source repo: $target"
+        echo "failed"
+        return
+    fi
+
+    local source_skill="$source_dir/SKILL.md"
+
+    if is_group_router "$source_skill"; then
+        # Need a real dir — replace any existing symlink first.
+        if [ -L "$target" ]; then
+            rm "$target"
+        fi
+        mkdir -p "$target"
+        local target_skill="$target/SKILL.md"
+        # Idempotent: skip if already patched and pointing at current repo.
+        if [ -f "$target_skill" ] \
+            && grep -qF "$SKILLS_DIR" "$target_skill" \
+            && ! grep -qE 'skills/[a-z-]+\.md' "$target_skill"; then
+            echo "kept"
+            return
+        fi
+        write_patched_router "$source_skill" "$target_skill"
+        echo "patched"
+        return
+    fi
+
+    if [ -e "$target" ]; then
+        echo "kept"
+        return
+    fi
+    if ln -s "$source_dir" "$target" 2>/dev/null; then
+        echo "junctioned"
+    else
+        echo "failed"
+    fi
+}
+
 # ── Detection ────────────────────────────────────────────────────────────────
 
 declare -A CLI_AVAILABLE CLI_OMU_INSTALLED CLI_OMU_COUNT CLI_NAMES CLI_INSTALL_TYPE CLI_OMU_SUPPORTED
@@ -338,11 +415,56 @@ detect_clis() {
 
 # ── Install Functions ────────────────────────────────────────────────────────
 
+is_inside_repo() {
+    # Check whether $1 resolves (after following any junctions/symlinks anywhere
+    # in the path) to a location inside $OMU_ROOT. Catches the case where a
+    # parent like ~/.copilot/skills is a symlink pointing back into the repo.
+    local path="$1"
+    local resolved_root resolved
+    resolved_root="$(cd "$OMU_ROOT" && pwd)"
+
+    # If the path itself exists, follow links via cd+pwd.
+    if [ -e "$path" ]; then
+        resolved="$(cd "$path" 2>/dev/null && pwd)"
+        if [ -n "$resolved" ]; then
+            case "$resolved" in
+                "$resolved_root"|"$resolved_root"/*) return 0 ;;
+            esac
+        fi
+    fi
+
+    # Walk up to the first existing ancestor and follow its links.
+    local candidate="$path"
+    while [ "$candidate" != "/" ] && [ -n "$candidate" ]; do
+        local parent
+        parent="$(dirname "$candidate")"
+        if [ -e "$parent" ]; then
+            local resolved_parent
+            resolved_parent="$(cd "$parent" 2>/dev/null && pwd)"
+            case "$resolved_parent" in
+                "$resolved_root"|"$resolved_root"/*) return 0 ;;
+            esac
+            return 1
+        fi
+        candidate="$parent"
+    done
+    return 1
+}
+
 install_copilot() {
     echo -e "\n  ${BOLD}Installing into Copilot...${NC}"
     local copilot_dir="$HOME_DIR/.copilot"
     local skills_target="$copilot_dir/skills"
     local instr_target="$copilot_dir/instructions"
+
+    # Safety: never install inside the source repo. Catches direct paths AND
+    # paths that resolve into the repo via a parent symlink.
+    if is_inside_repo "$skills_target"; then
+        err "REFUSING to install: $skills_target resolves inside source repo $OMU_ROOT"
+        err "Likely cause: ~/.copilot/skills (or a parent) is a symlink pointing into the repo."
+        err "Fix: rm \"$skills_target\" — then re-run install."
+        return 1
+    fi
 
     mkdir -p "$skills_target" "$instr_target"
 
@@ -386,22 +508,25 @@ SKILLEOF
     done
     ok "Skills: $created created, $skipped already present"
 
-    # 2. Symlink skill groups
-    local gjc=0 gjs=0
+    # 2. Symlink/install skill groups (patch routers, symlink the rest)
+    local gjc=0 gjs=0 gjp=0
     if [ -d "$GH_SKILLS_DIR" ]; then
         for group_dir in "$GH_SKILLS_DIR"/*/; do
             [ -d "$group_dir" ] || continue
             local group_name
             group_name="$(basename "$group_dir")"
             local target="$skills_target/$group_name"
-            if [ -e "$target" ]; then
-                ((gjs++)) || true
-                continue
-            fi
-            ln -s "$group_dir" "$target" 2>/dev/null && ((gjc++)) || warn "Failed to symlink group: $group_name"
+            local result
+            result=$(install_group_dir "${group_dir%/}" "$target")
+            case "$result" in
+                junctioned) gjc=$((gjc + 1)) ;;
+                patched)    gjp=$((gjp + 1)) ;;
+                kept)       gjs=$((gjs + 1)) ;;
+                *)          warn "Failed to link group: $group_name" ;;
+            esac
         done
     fi
-    ok "Skill groups: $gjc symlinked, $gjs already present"
+    ok "Skill groups: $gjc symlinked, $gjp routers patched, $gjs already present"
 
     # 3. Install instructions file
     local instr_src="$GH_INSTRUCT_DIR/skills.instructions.md"
@@ -447,21 +572,23 @@ install_claude() {
     local claude_skills="$HOME_DIR/.claude/skills"
     mkdir -p "$claude_skills"
 
-    # Symlink skill groups from .claude/skills/
     if [ -d "$CLAUDE_SKILLS_DIR" ]; then
-        local c=0
+        local gjc=0 gjs=0 gjp=0
         for group_dir in "$CLAUDE_SKILLS_DIR"/*/; do
             [ -d "$group_dir" ] || continue
             local name
             name="$(basename "$group_dir")"
             local target="$claude_skills/$name"
-            if [ -e "$target" ]; then
-                skip "Claude group $name already installed"
-                continue
-            fi
-            ln -s "$group_dir" "$target" 2>/dev/null && ((c++)) || warn "Failed to symlink: $name"
+            local result
+            result=$(install_group_dir "${group_dir%/}" "$target")
+            case "$result" in
+                junctioned) gjc=$((gjc + 1)) ;;
+                patched)    gjp=$((gjp + 1)) ;;
+                kept)       gjs=$((gjs + 1)) ;;
+                *)          warn "Failed to link: $name" ;;
+            esac
         done
-        ok "Claude skill groups: $c symlinked"
+        ok "Claude skill groups: $gjc symlinked, $gjp routers patched, $gjs already present"
     fi
 
     ok "Claude Code installation complete"
@@ -571,25 +698,40 @@ uninstall_copilot() {
     done
     ok "Skills removed: $removed (kept $kept non-omu skills)"
 
-    # 2. Remove symlinked skill groups
-    local gjr=0
+    # 2. Remove skill groups: symlinks pointing to our repo, OR patched-router copies (real dirs).
+    local gjr=0 gpr=0
     if [ -d "$GH_SKILLS_DIR" ]; then
         for group_dir in "$GH_SKILLS_DIR"/*/; do
             [ -d "$group_dir" ] || continue
             local name
             name="$(basename "$group_dir")"
             local target="$skills_target/$name"
+            [ -e "$target" ] || continue
             if [ -L "$target" ]; then
                 local link_target
                 link_target="$(readlink "$target")"
                 if echo "$link_target" | grep -q 'oh-my-universal'; then
                     rm "$target"
-                    ((gjr++)) || true
+                    gjr=$((gjr + 1))
+                fi
+                continue
+            fi
+            # Real dir: patched-router copy?
+            local sf="$target/SKILL.md"
+            if [ -f "$sf" ] && grep -qF "$MARKER" "$sf" 2>/dev/null; then
+                # Only delete if dir contains ONLY SKILL.md (no user-added files).
+                local file_count
+                file_count=$(find "$target" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')
+                if [ "$file_count" = "1" ]; then
+                    rm -rf "$target"
+                    gpr=$((gpr + 1))
+                else
+                    warn "Group $name: contains user-added files — kept"
                 fi
             fi
         done
     fi
-    ok "Skill groups removed: $gjr symlinks"
+    ok "Skill groups removed: $gjr symlinks, $gpr patched-router copies"
 
     # 3. Remove instructions file
     local instr_file="$instr_target/oh-my-universal-skills.instructions.md"
@@ -650,22 +792,35 @@ uninstall_copilot() {
 uninstall_claude() {
     echo -e "\n  ${BOLD}Uninstalling from Claude Code...${NC}"
     local claude_skills="$HOME_DIR/.claude/skills"
-    local removed=0
+    local jr=0 pr=0
 
     if [ -d "$claude_skills" ]; then
         for d in "$claude_skills"/*/; do
             [ -d "$d" ] || continue
-            if [ -L "${d%/}" ]; then
+            local trimmed="${d%/}"
+            if [ -L "$trimmed" ]; then
                 local lt
-                lt="$(readlink "${d%/}")"
+                lt="$(readlink "$trimmed")"
                 if echo "$lt" | grep -q 'oh-my-universal'; then
-                    rm "${d%/}"
-                    ((removed++)) || true
+                    rm "$trimmed"
+                    jr=$((jr + 1))
+                fi
+                continue
+            fi
+            local sf="$trimmed/SKILL.md"
+            if [ -f "$sf" ] && grep -qF "$MARKER" "$sf" 2>/dev/null; then
+                local file_count
+                file_count=$(find "$trimmed" -mindepth 1 -maxdepth 1 | wc -l | tr -d ' ')
+                if [ "$file_count" = "1" ]; then
+                    rm -rf "$trimmed"
+                    pr=$((pr + 1))
+                else
+                    warn "Claude group $(basename "$trimmed"): contains user-added files — kept"
                 fi
             fi
         done
     fi
-    ok "Claude skill symlinks removed: $removed"
+    ok "Claude skill groups removed: $jr symlinks, $pr patched-router copies"
     ok "Claude uninstall complete"
 }
 

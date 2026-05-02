@@ -133,6 +133,24 @@ if [ -n "$PY" ]; then
     test_per_project "$PY_FILE" gemini GEMINI.md "PYTHONIOENCODING=utf-8 $PY"
 fi
 
+# ── Delegate to test.py for cross-runtime checks (router patching,
+#    junction-into-repo refusal, idempotence, malformed marker, etc.)
+#    These cover bugs that have actually shipped — Linux/macOS users would
+#    miss them entirely if test.sh ran in isolation.
+if [ -n "$PY" ]; then
+    echo
+    printf "  %s--- delegating to test.py for cross-runtime checks ---%s\n" "$DIM" "$NC"
+    py_output=$(PYTHONIOENCODING=utf-8 "$PY" "$PY_FILE" 2>&1)
+    py_exit=$?
+    if [ "$py_exit" -eq 0 ]; then
+        pass "test.py reports all green"
+    else
+        fail "test.py reported failures (exit=$py_exit)"
+        echo "  --- last 20 lines of test.py output ---"
+        echo "$py_output" | tail -20 | sed 's/^/    /'
+    fi
+fi
+
 # Summary
 echo
 printf "  %s--- Summary ---%s\n" "$CYAN" "$NC"

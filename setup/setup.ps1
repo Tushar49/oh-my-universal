@@ -66,6 +66,14 @@ $ClaudeSkillsDir = Join-Path $OmuRoot '.claude\skills'
 $CursorRulesDir  = Join-Path $OmuRoot '.cursor\rules'
 $WindsurfRules   = Join-Path $OmuRoot '.windsurfrules'
 
+# Sanity: refuse to operate if the repo path has shell-meaningful control characters.
+# Our marker injections include this path verbatim — newlines / carriage returns
+# in the path could forge a fake marker boundary in user files.
+if ($OmuRoot -match "[`r`n`0]") {
+    Write-Error "Repo path contains control characters (newline/CR/null) — refusing to run. Path: $OmuRoot"
+    exit 1
+}
+
 # Marker used to identify our content in shared files
 $Marker = '# [oh-my-universal]'
 $MarkerStart = '# >>> oh-my-universal START >>>'
@@ -117,6 +125,8 @@ function New-Hardlink {
 function Add-OmuMarkedSection {
     # Append (or update) the oh-my-universal section in a shared file.
     # Preserves any user content above and below the markers.
+    # Refuses to touch malformed files (start marker without end) — silent
+    # data loss is worse than a clear error message.
     param([string]$Path, [string]$Body)
     $existing = ''
     if (Test-Path $Path) { $existing = Get-Content $Path -Raw }
@@ -126,16 +136,16 @@ function Add-OmuMarkedSection {
         $startIdx = $existing.IndexOf($MarkerStart)
         $endIdx = $existing.IndexOf($MarkerEnd, $startIdx)
         if ($endIdx -lt 0) {
-            # Malformed — no end marker; append a fresh end and replace.
-            $newContent = $existing.Substring(0, $startIdx).TrimEnd() + "`n`n" + $section + "`n"
-        } else {
-            $endOfBlock = $endIdx + $MarkerEnd.Length
-            $before = $existing.Substring(0, $startIdx).TrimEnd()
-            $after = $existing.Substring($endOfBlock).TrimStart("`r","`n")
-            $newContent = if ($before) { "$before`n`n$section" } else { $section }
-            if ($after) { $newContent = "$newContent`n`n$after" }
-            $newContent = $newContent.TrimEnd() + "`n"
+            Write-Err "Malformed marker in ${Path}: '$MarkerStart' without matching '$MarkerEnd'."
+            Write-Err "Refusing to modify — fix the file manually (close the marker block) and re-run."
+            return
         }
+        $endOfBlock = $endIdx + $MarkerEnd.Length
+        $before = $existing.Substring(0, $startIdx).TrimEnd()
+        $after = $existing.Substring($endOfBlock).TrimStart("`r","`n")
+        $newContent = if ($before) { "$before`n`n$section" } else { $section }
+        if ($after) { $newContent = "$newContent`n`n$after" }
+        $newContent = $newContent.TrimEnd() + "`n"
     } elseif ($existing.Trim()) {
         $newContent = $existing.TrimEnd() + "`n`n" + $section + "`n"
     } else {
@@ -149,13 +159,18 @@ function Add-OmuMarkedSection {
 function Remove-OmuMarkedSection {
     # Remove only the oh-my-universal section, leaving everything else intact.
     # Returns $true if a section was removed, $false otherwise.
+    # Refuses to touch malformed files (start marker without end).
     param([string]$Path)
     if (-not (Test-Path $Path)) { return $false }
     $content = Get-Content $Path -Raw
     $startIdx = $content.IndexOf($MarkerStart)
     if ($startIdx -lt 0) { return $false }
     $endIdx = $content.IndexOf($MarkerEnd, $startIdx)
-    if ($endIdx -lt 0) { return $false }
+    if ($endIdx -lt 0) {
+        Write-Err "Malformed marker in ${Path}: '$MarkerStart' without matching '$MarkerEnd'."
+        Write-Err "Refusing to modify — fix the file manually and re-run uninstall."
+        return $false
+    }
     $endOfBlock = $endIdx + $MarkerEnd.Length
     $before = $content.Substring(0, $startIdx).TrimEnd()
     $after = $content.Substring($endOfBlock).TrimStart("`r","`n")

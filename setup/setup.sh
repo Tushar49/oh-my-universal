@@ -17,6 +17,19 @@
 
 set -euo pipefail
 
+# bash 4+ required (we use associative arrays via `declare -A`).
+# macOS ships bash 3.2 by default — point users at Homebrew if so.
+if [ -z "${BASH_VERSINFO[0]:-}" ] || [ "${BASH_VERSINFO[0]}" -lt 4 ]; then
+    echo "ERROR: oh-my-universal setup requires bash 4 or newer." >&2
+    echo "  Detected: bash ${BASH_VERSION:-unknown}" >&2
+    if [ "$(uname -s 2>/dev/null)" = "Darwin" ]; then
+        echo "  macOS: brew install bash; then run via /usr/local/bin/bash or /opt/homebrew/bin/bash" >&2
+    else
+        echo "  Install bash >= 4.0 from your package manager." >&2
+    fi
+    exit 1
+fi
+
 # ── Constants ────────────────────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OMU_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -33,6 +46,18 @@ GH_PROMPTS_DIR="$OMU_ROOT/.github/prompts"
 CLAUDE_SKILLS_DIR="$OMU_ROOT/.claude/skills"
 CURSOR_RULES_DIR="$OMU_ROOT/.cursor/rules"
 WINDSURF_RULES="$OMU_ROOT/.windsurfrules"
+
+# Sanity: refuse to operate if the repo path has shell-meaningful control characters.
+# Our marker injections include this path verbatim — newlines/CR in the path
+# could forge a fake marker boundary in user files. (Bash strings cannot contain
+# null bytes, so no need to check for those.)
+case "$OMU_ROOT" in
+    *$'\n'*|*$'\r'*)
+        echo "ERROR: Repo path contains control characters (newline/CR) — refusing to run." >&2
+        echo "  Path: $OMU_ROOT" >&2
+        exit 1
+        ;;
+esac
 
 MARKER='# [oh-my-universal]'
 MARKER_START='# >>> oh-my-universal START >>>'
@@ -135,6 +160,7 @@ EOF
 
 # Append (or refresh) the oh-my-universal section in a shared file.
 # Preserves any user content above and below the markers.
+# Refuses to touch malformed files (start marker without end).
 add_omu_marked_section() {
     local target_file="$1"
     local body
@@ -150,11 +176,14 @@ add_omu_marked_section() {
         return
     fi
 
-    # Read existing content
-    local existing
-    existing="$(cat "$target_file")"
+    # Refuse if marker-start exists without marker-end (malformed).
+    if grep -qF "$MARKER_START" "$target_file" && ! grep -qF "$MARKER_END" "$target_file"; then
+        err "Malformed marker in $target_file: '$MARKER_START' without matching '$MARKER_END'."
+        err "Refusing to modify — fix the file manually (close the marker block) and re-run."
+        return 1
+    fi
 
-    if printf '%s' "$existing" | grep -qF "$MARKER_START"; then
+    if grep -qF "$MARKER_START" "$target_file"; then
         # Replace existing block via awk (preserves before/after content exactly)
         awk -v start="$MARKER_START" -v end="$MARKER_END" -v repl="$section" '
             BEGIN { in_block = 0; printed = 0 }
@@ -164,16 +193,24 @@ add_omu_marked_section() {
         ' "$target_file" > "$target_file.omu.tmp" && mv "$target_file.omu.tmp" "$target_file"
     else
         # Append with a blank line separator
+        local existing
+        existing="$(cat "$target_file")"
         printf '%s\n\n%s\n' "$existing" "$section" > "$target_file"
     fi
 }
 
 # Remove only the oh-my-universal section, leaving everything else intact.
 # Returns 0 if section was removed, 1 otherwise.
+# Refuses to touch malformed files (start marker without end).
 remove_omu_marked_section() {
     local target_file="$1"
     [ -f "$target_file" ] || return 1
     if ! grep -qF "$MARKER_START" "$target_file"; then
+        return 1
+    fi
+    if ! grep -qF "$MARKER_END" "$target_file"; then
+        err "Malformed marker in $target_file: '$MARKER_START' without matching '$MARKER_END'."
+        err "Refusing to modify — fix the file manually and re-run uninstall."
         return 1
     fi
     awk -v start="$MARKER_START" -v end="$MARKER_END" '

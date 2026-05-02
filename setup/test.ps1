@@ -113,9 +113,17 @@ if (Get-Command python -ErrorAction SilentlyContinue) {
     $env:PYTHONIOENCODING = 'utf-8'
     Write-Host ''
     Write-Host '  --- delegating to test.py for cross-runtime checks ---' -ForegroundColor DarkGray
-    & python (Join-Path $here 'test.py')
-    if ($LASTEXITCODE -eq 0) { _Pass 'test.py reports all green' }
-    else                     { _Fail 'test.py reported failures' }
+    $pyOutput = & python (Join-Path $here 'test.py') 2>&1
+    $pyExit = $LASTEXITCODE
+    if ($pyExit -eq 0) {
+        _Pass 'test.py reports all green'
+    } else {
+        _Fail "test.py reported failures (exit=$pyExit)"
+        Write-Host '  --- last 20 lines of test.py output ---' -ForegroundColor DarkGray
+        $pyOutput | Select-Object -Last 20 | ForEach-Object {
+            Write-Host "    $_" -ForegroundColor DarkGray
+        }
+    }
 } else {
     _Skip 'python not installed -- skipping cross-runtime delegation'
 }

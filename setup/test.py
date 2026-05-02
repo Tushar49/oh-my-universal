@@ -31,6 +31,7 @@ HERE = Path(__file__).resolve().parent
 PS1 = HERE / "setup.ps1"
 SH = HERE / "setup.sh"
 PY = HERE / "setup.py"
+OMU_ROOT = HERE.parent
 
 USE_COLOR = sys.stdout.isatty()
 
@@ -342,7 +343,218 @@ def test_router_patching():
 
 # Need MARKER from setup.py for the above check.
 MARKER = "# [oh-my-universal]"
+MARKER_START = "# >>> oh-my-universal START >>>"
+MARKER_END = "# <<< oh-my-universal END <<<"
 test_router_patching()
+
+
+# ── Test 8: regression test for the rogue-junction bug ──────────────────────
+def test_junction_into_repo_refused():
+    """Verify installer REFUSES when the install target resolves inside the repo
+    (e.g., ~/.copilot/skills is a junction back into the repo). This is the bug
+    that shipped — without this test, source-corruption could silently regress."""
+    fake_home = Path(tempfile.mkdtemp(prefix="omu-junction-"))
+    try:
+        copilot_dir = fake_home / ".copilot"
+        copilot_dir.mkdir(parents=True)
+
+        # Create a junction (Windows) or symlink (Unix) from the would-be install
+        # location back into the repo's .github/skills/.
+        skills_link = copilot_dir / "skills"
+        repo_skills = OMU_ROOT / ".github" / "skills"
+
+        if platform.system() == "Windows":
+            res = subprocess.run(
+                ["cmd", "/c", "mklink", "/J", str(skills_link), str(repo_skills)],
+                capture_output=True, text=True
+            )
+            if res.returncode != 0:
+                skip(f"cannot create junction for test: {res.stderr.strip()[:120]}")
+                return
+        else:
+            try:
+                skills_link.symlink_to(repo_skills, target_is_directory=True)
+            except OSError as e:
+                skip(f"cannot create symlink for test: {e}")
+                return
+
+        # Snapshot a source file that would be corrupted if install proceeded.
+        canary = repo_skills / "oh-my-universal" / "SKILL.md"
+        if not canary.is_file():
+            skip(f"canary file missing: {canary}")
+            return
+        before_bytes = canary.read_bytes()
+
+        # Try to install with USERPROFILE/HOME pointing at the junction-poisoned home.
+        env_bad = env.copy()
+        if platform.system() == "Windows":
+            env_bad["USERPROFILE"] = str(fake_home)
+        else:
+            env_bad["HOME"] = str(fake_home)
+
+        res = subprocess.run(
+            [sys.executable, str(PY), "install", "copilot"],
+            capture_output=True, text=True, env=env_bad, timeout=60
+        )
+        combined = (res.stdout or "") + (res.stderr or "")
+
+        # 1) The installer must NOT corrupt the canary in source.
+        after_bytes = canary.read_bytes()
+        if before_bytes != after_bytes:
+            failed("install corrupted source file via rogue junction")
+            return
+
+        # 2) The installer must say it refused (return code may still be 0
+        #    if it printed the refusal and continued past, but the message
+        #    must be present so the user is informed).
+        if "REFUSING to install" not in combined:
+            failed("installer didn't print REFUSING message — silent skip is dangerous")
+            return
+
+        passed("installer refuses when ~/.copilot/skills is a junction into repo")
+    finally:
+        # Clean up junction first (so rmtree doesn't follow it into the repo)
+        try:
+            link = fake_home / ".copilot" / "skills"
+            if link.exists() or link.is_symlink():
+                if platform.system() == "Windows":
+                    subprocess.run(["cmd", "/c", "rmdir", str(link)], capture_output=True)
+                else:
+                    link.unlink()
+        except OSError:
+            pass
+        shutil.rmtree(fake_home, ignore_errors=True)
+
+
+test_junction_into_repo_refused()
+
+
+# ── Test 9: idempotence — install x2 + uninstall x2 ─────────────────────────
+def test_per_project_idempotence():
+    """install→install must produce identical state (no duplicate marker block).
+    uninstall→uninstall must not delete the user file on second run."""
+    proj = Path(tempfile.mkdtemp(prefix="omu-idem-"))
+    try:
+        target = proj / "AGENTS.md"
+        target.write_text(ORIGINAL, encoding="utf-8")
+
+        for _ in range(2):
+            subprocess.run(
+                [sys.executable, str(PY), "install", "codex", "--project", str(proj)],
+                capture_output=True, text=True, env=env, timeout=30
+            )
+        after = target.read_text(encoding="utf-8")
+        if after.count(MARKER_START) != 1:
+            failed(f"install x2 produced {after.count(MARKER_START)} markers (expected 1)")
+            return
+        passed("install x2 keeps exactly one marker block")
+
+        for _ in range(2):
+            subprocess.run(
+                [sys.executable, str(PY), "uninstall", "codex", "--project", str(proj)],
+                capture_output=True, text=True, env=env, timeout=30
+            )
+        if not target.is_file():
+            failed("uninstall x2 deleted the user file")
+            return
+        if target.read_text(encoding="utf-8").rstrip() != ORIGINAL.rstrip():
+            failed("uninstall x2 altered user content")
+            return
+        passed("uninstall x2 leaves user content intact")
+    finally:
+        shutil.rmtree(proj, ignore_errors=True)
+
+
+# ── Test 10: per-project install on missing target file ──────────────────────
+def test_per_project_creates_missing_file():
+    """install into a project with no pre-existing AGENTS.md must create it."""
+    proj = Path(tempfile.mkdtemp(prefix="omu-missing-"))
+    try:
+        target = proj / "AGENTS.md"
+        if target.exists():
+            target.unlink()
+        res = subprocess.run(
+            [sys.executable, str(PY), "install", "codex", "--project", str(proj)],
+            capture_output=True, text=True, env=env, timeout=30
+        )
+        if not target.is_file():
+            failed(f"install on missing AGENTS.md didn't create the file: {res.stderr.strip()[:120]}")
+            return
+        if MARKER_START not in target.read_text(encoding="utf-8"):
+            failed("created file is missing the marker block")
+            return
+        passed("install creates AGENTS.md when missing")
+    finally:
+        shutil.rmtree(proj, ignore_errors=True)
+
+
+# ── Test 11: uninstall preserves user file that mentions oh-my-universal ────
+def test_uninstall_preserves_user_mention():
+    """If a user file mentions 'oh-my-universal' but has NO marker block,
+    uninstall must leave it completely untouched."""
+    proj = Path(tempfile.mkdtemp(prefix="omu-mention-"))
+    try:
+        target = proj / "AGENTS.md"
+        user_content = (
+            "# My Project\n\n"
+            "I love oh-my-universal but never installed it via the script.\n"
+            "These are my own notes about the oh-my-universal repo.\n"
+        )
+        target.write_text(user_content, encoding="utf-8")
+
+        res = subprocess.run(
+            [sys.executable, str(PY), "uninstall", "codex", "--project", str(proj)],
+            capture_output=True, text=True, env=env, timeout=30
+        )
+        if not target.is_file():
+            failed("uninstall deleted user file that just mentions 'oh-my-universal'")
+            return
+        if target.read_text(encoding="utf-8") != user_content:
+            failed("uninstall altered user file with no marker block")
+            return
+        passed("uninstall preserves user file mentioning 'oh-my-universal'")
+    finally:
+        shutil.rmtree(proj, ignore_errors=True)
+
+
+# ── Test 12: refuse to operate on malformed marker ──────────────────────────
+def test_malformed_marker_refused():
+    """If a file has marker-start without marker-end, install/uninstall must
+    refuse rather than silently dropping content after the start marker."""
+    proj = Path(tempfile.mkdtemp(prefix="omu-malform-"))
+    try:
+        target = proj / "AGENTS.md"
+        malformed = (
+            "# My Project\n\n"
+            f"{MARKER_START}\n"
+            "# user accidentally deleted the end marker\n"
+            "# but this content must be preserved\n"
+        )
+        target.write_text(malformed, encoding="utf-8")
+        before = target.read_text(encoding="utf-8")
+
+        for action in ("install", "uninstall"):
+            res = subprocess.run(
+                [sys.executable, str(PY), action, "codex", "--project", str(proj)],
+                capture_output=True, text=True, env=env, timeout=30
+            )
+            after = target.read_text(encoding="utf-8")
+            if after != before:
+                failed(f"{action} on malformed marker MUTATED the file (data loss risk)")
+                return
+            combined = (res.stdout or "") + (res.stderr or "")
+            if "Malformed marker" not in combined:
+                failed(f"{action} on malformed marker didn't print warning")
+                return
+        passed("malformed marker file is preserved by both install and uninstall")
+    finally:
+        shutil.rmtree(proj, ignore_errors=True)
+
+
+test_per_project_idempotence()
+test_per_project_creates_missing_file()
+test_uninstall_preserves_user_mention()
+test_malformed_marker_refused()
 
 # ── Summary ──────────────────────────────────────────────────────────────────
 print()

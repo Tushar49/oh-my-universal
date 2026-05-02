@@ -15,6 +15,11 @@ Usage:
     python setup.py uninstall codex --project /path/to/proj   # Per-project uninstall
 """
 
+# Defer evaluation of all annotations to runtime — lets us use PEP 585
+# generics (dict[str, bool], list[str]) on any Python 3.7+ at parse time
+# while still gating execution on Python 3.9+ below.
+from __future__ import annotations
+
 import hashlib
 import os
 import platform
@@ -55,6 +60,14 @@ GH_PROMPTS_DIR = OMU_ROOT / ".github" / "prompts"
 CLAUDE_SKILLS_DIR = OMU_ROOT / ".claude" / "skills"
 CURSOR_RULES_DIR = OMU_ROOT / ".cursor" / "rules"
 WINDSURF_RULES = OMU_ROOT / ".windsurfrules"
+
+# Sanity: refuse to operate if the repo path has shell-meaningful control characters.
+# Our marker injections include this path verbatim — newlines/CR/null in the path
+# could forge a fake marker boundary in user files.
+if any(c in str(OMU_ROOT) for c in ("\n", "\r", "\x00")):
+    print(f"ERROR: Repo path contains control characters (newline/CR/null) — refusing to run.")
+    print(f"  Path: {OMU_ROOT!r}")
+    sys.exit(1)
 
 MARKER = "# [oh-my-universal]"
 MARKER_START = "# >>> oh-my-universal START >>>"
@@ -612,6 +625,8 @@ def add_omu_marked_section(path: Path, body: str):
     """Append (or update) the oh-my-universal section in a shared file.
 
     Preserves any user content above and below the markers.
+    Refuses to touch malformed files (start marker without end) — silent
+    data loss is worse than a clear error message.
     """
     section = f"{MARKER_START}\n{body}\n{MARKER_END}"
     existing = path.read_text(encoding="utf-8") if path.is_file() else ""
@@ -620,15 +635,16 @@ def add_omu_marked_section(path: Path, body: str):
         start_idx = existing.index(MARKER_START)
         end_search = existing.find(MARKER_END, start_idx)
         if end_search < 0:
-            new_content = existing[:start_idx].rstrip() + "\n\n" + section + "\n"
-        else:
-            end_of_block = end_search + len(MARKER_END)
-            before = existing[:start_idx].rstrip()
-            after = existing[end_of_block:].lstrip("\r\n")
-            new_content = section if not before else f"{before}\n\n{section}"
-            if after:
-                new_content = f"{new_content}\n\n{after}"
-            new_content = new_content.rstrip() + "\n"
+            err(f"Malformed marker in {path}: '{MARKER_START}' without matching '{MARKER_END}'.")
+            err("Refusing to modify — fix the file manually (close the marker block) and re-run.")
+            return
+        end_of_block = end_search + len(MARKER_END)
+        before = existing[:start_idx].rstrip()
+        after = existing[end_of_block:].lstrip("\r\n")
+        new_content = section if not before else f"{before}\n\n{section}"
+        if after:
+            new_content = f"{new_content}\n\n{after}"
+        new_content = new_content.rstrip() + "\n"
     elif existing.strip():
         new_content = existing.rstrip() + "\n\n" + section + "\n"
     else:
@@ -642,6 +658,7 @@ def remove_omu_marked_section(path: Path) -> bool:
     """Remove only the oh-my-universal section, leaving everything else intact.
 
     Returns True if a section was removed, False otherwise.
+    Refuses to touch malformed files (start marker without end).
     """
     if not path.is_file():
         return False
@@ -651,6 +668,8 @@ def remove_omu_marked_section(path: Path) -> bool:
         return False
     end_search = content.find(MARKER_END, start_idx)
     if end_search < 0:
+        err(f"Malformed marker in {path}: '{MARKER_START}' without matching '{MARKER_END}'.")
+        err("Refusing to modify — fix the file manually and re-run uninstall.")
         return False
     end_of_block = end_search + len(MARKER_END)
     before = content[:start_idx].rstrip()
